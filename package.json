@@ -2,7 +2,7 @@
   "name": "pintle",
   "version": "0.0.1",
   "description": "Foobar",
-  "main": "dist/index.js",
+  "main": "dist/main.js",
   "scripts": {
     "format": "npx prettier --write .",
     "build": "tsc",
@@ -16,5 +16,9 @@
     "eslint-config-prettier": "^8.7.0",
     "prettier": "2.8.4",
     "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "^0.18.1",
+    "reflect-metadata": "^0.1.13"
   }
 }

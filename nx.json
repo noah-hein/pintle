@@ -1,0 +1,21 @@
+{
+  "extends": "nx/presets/npm.json",
+  "$schema": "../test2/pintle/node_modules/nx/schemas/nx-schema.json",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
+        "accessToken": "ODk1Y2ZhNGMtZmMyZS00ZWZiLTgzODAtZTE4Mzk2YTM2ODVlfHJlYWQtd3JpdGU="
+      }
+    }
+  }
+}

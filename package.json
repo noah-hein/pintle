@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {},
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+
+  },
   "devDependencies": {
     "@nrwl/nx-cloud": "latest",
     "nx": "15.9.2"

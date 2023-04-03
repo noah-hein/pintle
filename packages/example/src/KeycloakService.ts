@@ -4,7 +4,7 @@ import {Resource, Service} from "@pintle/core";
 @Service({
   namespace: "keycloak",
 })
-export class Keycloak {
+export class KeycloakService {
 
 
   @Resource()

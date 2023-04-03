@@ -4,6 +4,19 @@
   "sourceRoot": "packages/example/src",
   "projectType": "library",
   "targets": {
+    "run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run example:build && nx run example:node"
+      }
+    },
+    "node": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "example:build",
+        "watch": false
+      }
+    },
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],

@@ -2,11 +2,15 @@ import {V1ObjectMeta} from "@kubernetes/client-node/dist/gen/model/v1ObjectMeta"
 import "reflect-metadata";
 
 export function Resource() {
-  return Reflect.metadata("foo", "bar");
+  return function (target: any, key: string, descriptor: PropertyDescriptor) {
+
+
+    return descriptor;
+  }
 }
 
 export function Service(metadata: V1ObjectMeta) {
-  return (fn: Function) => {
-    console.log("foobar");
+  return (constructor: Function) => {
+    constructor.prototype.metadata = metadata;
   }
 }

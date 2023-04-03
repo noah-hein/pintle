@@ -13,10 +13,15 @@ export class Pintle {
 
   static create(options: PintleOptions) {
 
-    console.log(options)
-    console.log()
+    const services = options.services;
+
+    services?.forEach(service => {
+
+      console.log(service.constructor)
 
 
+
+    });
   }
 
 

@@ -1,10 +1,9 @@
 import {Resource, Service} from "@pintle/core";
 
-
 @Service({
-  namespace: "keycloak"
+  namespace: "mysql"
 })
-export class KeycloakService {
+export class MySQLService {
 
 
   @Resource()

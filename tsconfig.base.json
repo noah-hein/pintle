@@ -13,10 +13,11 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": "../test/pintle",
+    "baseUrl": ".",
     "paths": {
       "@pintle/cli": ["packages/cli/src/index.ts"],
-      "@pintle/core": ["packages/core/src/index.ts"]
+      "@pintle/core": ["packages/core/src/index.ts"],
+      "@pintle/example": ["packages/example/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

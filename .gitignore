@@ -6,7 +6,7 @@ tmp
 /out-tsc
 
 # dependencies
-../test2/pintle/node_modules
+node_modules
 
 # IDEs and editors
 /.idea

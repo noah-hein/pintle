@@ -1,5 +1,4 @@
-
-
+import {resources} from "./Resource";
 
 
 interface PintleOptions {
@@ -22,6 +21,8 @@ export class Pintle {
 
 
     });
+
+    console.log(resources)
   }
 
 

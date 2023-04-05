@@ -1,4 +1,4 @@
-import {resources} from "./Resource";
+import {services} from "./Resource";
 
 
 interface PintleOptions {
@@ -14,15 +14,8 @@ export class Pintle {
 
     const services = options.services;
 
-    services?.forEach(service => {
 
-      console.log(service.constructor)
-
-
-
-    });
-
-    console.log(resources)
+    console.log(services)
   }
 
 

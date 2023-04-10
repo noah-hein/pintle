@@ -1,28 +1,23 @@
 import * as YAML from "yaml";
 import * as fs from "fs";
 import {ResourceGroup} from "./Resource";
+import {defaultYamlOptions} from "./YamlOptions";
+import {parseOptions, defaultPintleOptions, PintleOptions} from "./PintleOptions";
 
-interface PintleOptions {
-  createYaml?: boolean;
-  apply?: boolean;
-  yaml?: YamlOptions;
-  services?: object[];
 
-  resourceGroups?: { [key: string]: ResourceGroup }
-
-}
-
-export interface YamlOptions {
-  output: string;
-  singleFile?: boolean;
-
-}
 
 export class Pintle {
 
-  static create(options: PintleOptions) {
+  create(options: PintleOptions, resourceGroups: {[key: string]: ResourceGroup }) {
+    //Parse options and log
+    parseOptions(options);
+    console.log("Options:", options);
+
+
+
+
+
     //
-    const resourceGroups = options.resourceGroups;
     const resourceGroupEntries = resourceGroups ? Object.entries(resourceGroups) : [];
     resourceGroupEntries.forEach(resourceGroup => {
 
@@ -45,28 +40,6 @@ export class Pintle {
 
       });
     });
-
-
-
-
-    // resourceGroups?.forEach(resourceGroup => {
-    //
-    //   console.log(resourceGrou)
-    //
-    //   //
-    //   const resources = Object.entries(resourceGroup);
-    //   resources.forEach(resource => {
-    //
-    //     const name = resource[0];
-    //     const definition = resource[1];
-    //
-    //     const yaml = YAML.stringify(definition)
-    //     console.log(yaml)
-    //     console.log("---")
-    //   });
-    // });
   }
-
-
 }
 

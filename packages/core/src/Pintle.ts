@@ -1,12 +1,20 @@
 import * as YAML from "yaml";
+import * as fs from "fs";
 import {ResourceGroup} from "./Resource";
 
 interface PintleOptions {
   createYaml?: boolean;
-  push?: boolean;
+  apply?: boolean;
+  yaml?: YamlOptions;
   services?: object[];
 
   resourceGroups?: { [key: string]: ResourceGroup }
+
+}
+
+export interface YamlOptions {
+  output: string;
+  singleFile?: boolean;
 
 }
 
@@ -28,8 +36,10 @@ export class Pintle {
 
         //Convert to yaml
         const yaml = YAML.stringify(definition)
-        console.log(yaml)
-        console.log("---")
+        //console.log(yaml)
+        //console.log("---")
+
+        fs.writeFileSync("test.yaml", yaml)
 
         //Log resource data
 

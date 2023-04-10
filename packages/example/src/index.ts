@@ -6,7 +6,7 @@ function bootstrap() {
 
   Pintle.create({
     createYaml: true,
-    push: false,
+    apply: false,
     resourceGroups: {
       keycloak
     }

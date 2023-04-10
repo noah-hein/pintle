@@ -1,20 +1,16 @@
-import {Pintle} from "@pintle/core";
-import {KeycloakService} from "./KeycloakService";
-import {MySQLService} from "./MySQLService";
+import {Pintle, Resource} from "@pintle/core";
+import {keycloak } from "./KeycloakService";
+import {V1Namespace} from "@kubernetes/client-node";
 
 function bootstrap() {
-
-
-  const service = KeycloakService;
-  console.log()
 
   Pintle.create({
     createYaml: true,
     push: false,
-    services: [
-      MySQLService,
-      KeycloakService
-    ]
-  })
+    resourceGroups: {
+      keycloak
+    }
+  });
 }
+
 bootstrap();

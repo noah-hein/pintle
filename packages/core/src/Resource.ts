@@ -24,7 +24,8 @@ export function Service(options: ServiceOptions) {
   }
 }
 
-
+export interface ResourceGroup {[key: string]: object}
+export interface Resource {[key: string]: object}
 
 
 

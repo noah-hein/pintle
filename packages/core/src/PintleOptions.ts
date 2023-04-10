@@ -8,7 +8,7 @@ export interface PintleOptions {
 
 export const defaultPintleOptions: PintleOptions = {
   apply: false,
-  yaml: {}
+  yaml: defaultYamlOptions
 }
 
 export function parseOptions(options: PintleOptions) {

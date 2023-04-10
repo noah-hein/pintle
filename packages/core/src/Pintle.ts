@@ -1,14 +1,17 @@
 import * as YAML from "yaml";
 import * as fs from "fs";
 import {ResourceGroup} from "./Resource";
+import {defaultPintleOptions, parseOptions, PintleOptions} from "./PintleOptions";
 import {defaultYamlOptions} from "./YamlOptions";
-import {parseOptions, defaultPintleOptions, PintleOptions} from "./PintleOptions";
 
 
 
 export class Pintle {
 
-  create(options: PintleOptions, resourceGroups: {[key: string]: ResourceGroup }) {
+  create(
+    options: PintleOptions = defaultPintleOptions,
+    resourceGroups: {[key: string]: ResourceGroup }
+  ) {
     //Parse options and log
     parseOptions(options);
     console.log("Options:", options);
@@ -34,7 +37,7 @@ export class Pintle {
         //console.log(yaml)
         //console.log("---")
 
-        fs.writeFileSync("test.yaml", yaml)
+        //fs.writeFileSync("", yaml)
 
         //Log resource data
 

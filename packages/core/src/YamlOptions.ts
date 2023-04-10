@@ -1,11 +1,11 @@
 export interface YamlOptions {
   create?: boolean;
-  outputPath?: string;
+  outputDir?: string;
   singleFile?: boolean;
 }
 
 export const defaultYamlOptions: YamlOptions = {
   create: true,
-  outputPath: ".",
+  outputDir: ".",
   singleFile: true
 }

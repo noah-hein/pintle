@@ -8,18 +8,13 @@ import {defaultYamlOptions} from "./YamlOptions";
 
 export class Pintle {
 
-  create(
-    options: PintleOptions = defaultPintleOptions,
-    resourceGroups: {[key: string]: ResourceGroup }
-  ) {
+  constructor(private options: PintleOptions = defaultPintleOptions) {
     //Parse options and log
     parseOptions(options);
     console.log("Options:", options);
+  }
 
-
-
-
-
+  create(resourceGroups: {[key: string]: ResourceGroup }) {
     //
     const resourceGroupEntries = resourceGroups ? Object.entries(resourceGroups) : [];
     resourceGroupEntries.forEach(resourceGroup => {

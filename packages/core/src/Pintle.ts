@@ -2,7 +2,6 @@ import * as YAML from "yaml";
 import * as fs from "fs";
 import {ResourceGroup} from "./Resource";
 import {defaultPintleOptions, parseOptions, PintleOptions} from "./PintleOptions";
-import {defaultYamlOptions} from "./YamlOptions";
 
 
 
@@ -14,7 +13,11 @@ export class Pintle {
     console.log("Options:", options);
   }
 
-  create(resourceGroups: {[key: string]: ResourceGroup }) {
+  add() {
+
+  }
+
+  addAll(resourceGroups: {[key: string]: ResourceGroup }) {
     //
     const resourceGroupEntries = resourceGroups ? Object.entries(resourceGroups) : [];
     resourceGroupEntries.forEach(resourceGroup => {

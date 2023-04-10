@@ -4,13 +4,13 @@ import {V1Namespace} from "@kubernetes/client-node";
 
 function bootstrap() {
 
-  const k8 = new Pintle();
-  k8.create({
+  const pintle = new Pintle({
     apply: true,
     yaml: {
       singleFile: false
     }
-  }, {
+  });
+  pintle.addAll({
     keycloak
   });
 }

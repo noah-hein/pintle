@@ -1,20 +1,20 @@
-import {defaultYamlOptions, YamlOptions} from "./YamlOptions";
+import {defaultFileOptions, FileOptions} from "./FileOptions";
 
 export interface PintleOptions {
   apply?: boolean;
-  yaml?: YamlOptions;
+  file?: FileOptions;
 
 }
 
 export const defaultPintleOptions: PintleOptions = {
   apply: false,
-  yaml: defaultYamlOptions
+  file: defaultFileOptions
 }
 
 export function parseOptions(options: PintleOptions) {
-  options.yaml = {
-    ...defaultYamlOptions,
-    ...options.yaml
+  options.file = {
+    ...defaultFileOptions,
+    ...options.file
   }
   return {
     ...defaultPintleOptions,

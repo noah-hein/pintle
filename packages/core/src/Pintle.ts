@@ -1,46 +1,65 @@
 import * as YAML from "yaml";
 import * as fs from "fs";
-import {ResourceGroup} from "./Resource";
 import {defaultPintleOptions, parseOptions, PintleOptions} from "./PintleOptions";
-
+import {OutputFileTypes} from "./FileOptions";
 
 
 export class Pintle {
 
   constructor(private options: PintleOptions = defaultPintleOptions) {
     //Parse options and log
-    parseOptions(options);
+    this.options = parseOptions(options);
     console.log("Options:", options);
   }
 
-  add() {
+  public add(name: string, resources: object[]) {
+    const fileEnding = this.options.file?.type
+    const filename = name + "." + fileEnding;
+    const location = this.options.file?.outputDir + "/" + filename;
 
+    //Create definition as JSON or YAML
+    const definition = (this.options.file?.type === OutputFileTypes.YAML) ?
+      YAML.stringify(resources, {
+
+      }) : JSON.stringify(resources, null, 3);
+
+
+
+    fs.appendFileSync(location, definition);
+
+
+    // resources.forEach(definition => {
+    //   this.buildDefinition(name, definition);
+    // });
   }
 
-  addAll(resourceGroups: {[key: string]: ResourceGroup }) {
-    //
-    const resourceGroupEntries = resourceGroups ? Object.entries(resourceGroups) : [];
-    resourceGroupEntries.forEach(resourceGroup => {
+  private buildDefinition(name: string, resource: object) {
+    const fileEnding = this.options.file?.type
+    const filename = name + "." + fileEnding;
+    const location = this.options.file?.outputDir + "/" + filename;
 
-      const resourceGroupName = resourceGroup[0];
-      const resources = Object.entries(resourceGroup[1]);
+    //Create definition as JSON or YAML
+    const definition = (this.options.file?.type === OutputFileTypes.YAML) ?
+      YAML.stringify(resource) : JSON.stringify(resource);
 
-      resources.forEach(resource => {
-        //Get resource data
-        const resourceName = resource[0];
-        const definition = resource[1];
-
-        //Convert to yaml
-        const yaml = YAML.stringify(definition)
-        //console.log(yaml)
-        //console.log("---")
-
-        //fs.writeFileSync("", yaml)
-
-        //Log resource data
-
-      });
-    });
+    //Write definition to file
+    switch (this.options.file?.type) {
+      case OutputFileTypes.YAML:
+        fs.appendFileSync(location, definition + "---\r\n");
+        break;
+      case OutputFileTypes.JSON:
+        fs.appendFileSync(location, definition);
+        break;
+    }
   }
+
+  // public addAll(resourceGroups: {[key: string]: ResourceGroup }) {
+  //   //
+  //   const resourceGroupEntries = resourceGroups ? Object.entries(resourceGroups) : [];
+  //   resourceGroupEntries.forEach(resourceGroup => {
+  //
+  //
+  //   });
+  // }
 }
 

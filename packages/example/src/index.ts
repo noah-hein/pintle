@@ -1,18 +1,13 @@
-import {Pintle, Resource} from "@pintle/core";
-import {keycloak } from "./KeycloakService";
-import {V1Namespace} from "@kubernetes/client-node";
+import {OutputFileTypes, Pintle} from "@pintle/core";
+import {keycloak} from "./KeycloakService";
 
 function bootstrap() {
-
   const pintle = new Pintle({
-    apply: true,
-    yaml: {
-      singleFile: false
+    file: {
+      type: OutputFileTypes.JSON
     }
   });
-  pintle.addAll({
-    keycloak
-  });
+  pintle.add("keycloak", keycloak);
 }
 
 bootstrap();

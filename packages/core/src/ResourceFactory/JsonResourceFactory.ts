@@ -1,5 +1,5 @@
 import {ResourceFactory} from "./ResourceFactory";
-import {ResourceGroup} from "../ResourceGroup";
+import {ResourceGroup} from "../Resource/ResourceGroup";
 
 export class JsonResourceFactory extends ResourceFactory {
   parseSingle(resourceGroup: ResourceGroup): string {

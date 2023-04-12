@@ -1,4 +1,4 @@
-import {defaultFileOptions, FileOptions} from "./FileOptions";
+import {defaultFileOptions, FileOptions} from "./File";
 
 export interface PintleOptions {
   apply?: boolean;
@@ -9,15 +9,4 @@ export interface PintleOptions {
 export const defaultPintleOptions: PintleOptions = {
   apply: false,
   file: defaultFileOptions
-}
-
-export function parseOptions(options: PintleOptions) {
-  options.file = {
-    ...defaultFileOptions,
-    ...options.file
-  }
-  return {
-    ...defaultPintleOptions,
-    ...options
-  }
 }

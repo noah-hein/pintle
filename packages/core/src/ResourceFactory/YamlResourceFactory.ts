@@ -1,6 +1,6 @@
 import * as YAML from "yaml";
 import {ResourceFactory} from "./ResourceFactory";
-import {ResourceGroup} from "../ResourceGroup";
+import {ResourceGroup} from "../Resource/ResourceGroup";
 
 export class YamlResourceFactory extends ResourceFactory {
   parseSingle(resourceGroup: ResourceGroup): string {

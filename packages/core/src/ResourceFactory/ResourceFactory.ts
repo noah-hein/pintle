@@ -1,6 +1,6 @@
 import * as fs from "fs";
-import { FileOptions } from "../FileOptions";
-import {ResourceGroup} from "../ResourceGroup";
+import { FileOptions } from "../File";
+import {ResourceGroup} from "../Resource/ResourceGroup";
 
 export abstract class ResourceFactory {
 

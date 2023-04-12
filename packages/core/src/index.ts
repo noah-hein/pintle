@@ -1,5 +1,4 @@
 
-export * from "./ResourceTempaltes";
+export * from "./Resource/ResourceTempaltes";
 export * from "./Pintle";
-export * from "./FileOptions";
-export * from "./OutputFileTypes";
+export * from "./File";

@@ -1,10 +1,13 @@
-import {defaultPintleOptions, parseOptions, PintleOptions} from "./PintleOptions";
-import {defaultFileOptions} from "./FileOptions";
-import {ResourceGroup} from "./ResourceGroup";
+import {defaultPintleOptions, PintleOptions} from "./PintleOptions";
+import {defaultFileOptions, factoryOptions, FileTypes} from "./File";
+import {ResourceGroup} from "./Resource/ResourceGroup";
 import {ResourceFactory} from "./ResourceFactory/ResourceFactory";
-import {factoryOptions, OutputFileTypes} from "./OutputFileTypes";
 
 export class Pintle {
+
+  /*==================================================================================================================
+        Private Members
+    ==================================================================================================================*/
 
   private options: PintleOptions;
 
@@ -12,9 +15,13 @@ export class Pintle {
 
   private readonly resourceFactory: ResourceFactory;
 
+  /*==================================================================================================================
+        Constructors
+    ==================================================================================================================*/
+
   constructor(options: PintleOptions = defaultPintleOptions, resourceGroups: {[name: string]: object[]}) {
     //Parse options and log
-    this.options = parseOptions(options);
+    this.options = this.parseOptions(options);
     this.resourceFactory = this.selectFactories();
     console.log("Options:", options);
 
@@ -22,6 +29,21 @@ export class Pintle {
     this.addMany(resourceGroups);
     this.build();
   }
+
+  /*==================================================================================================================
+        Public Methods
+    ==================================================================================================================*/
+
+  public static create(
+    options: PintleOptions = defaultPintleOptions,
+    resourceGroups: {[name: string]: object[]}
+  ): Pintle {
+    return new Pintle(options, resourceGroups);
+  }
+
+  /*==================================================================================================================
+        Private Methods
+    ==================================================================================================================*/
 
   private add(name: string, resources: object[]) {
     const fileOptions = this.options.file;
@@ -53,7 +75,7 @@ export class Pintle {
 
   private selectFactories(): ResourceFactory {
     const fileOptions = this.options.file ? this.options.file : defaultFileOptions;
-    const fileType = fileOptions.type ? fileOptions.type : OutputFileTypes.YAML;
+    const fileType = fileOptions.type ? fileOptions.type : FileTypes.YAML;
     const resourceGroups = this.resourceGroups;
     return factoryOptions(fileOptions, resourceGroups)[fileType]
   }
@@ -62,6 +84,17 @@ export class Pintle {
     const fileEnding = this.options.file?.type;
     const fileWithEnding = name + "." + fileEnding;
     return this.options.file?.outputDir + "/" + fileWithEnding;
+  }
+
+  private parseOptions(options: PintleOptions) {
+    options.file = {
+      ...defaultFileOptions,
+      ...options.file
+    }
+    return {
+      ...defaultPintleOptions,
+      ...options
+    }
   }
 }
 

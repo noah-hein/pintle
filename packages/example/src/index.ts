@@ -8,10 +8,9 @@ function bootstrap() {
       singleFile: true,
       type: OutputFileTypes.YAML
     }
+  }, {
+    keycloak
   });
-  pintle.add("keycloak", keycloak);
-  pintle.add("foobar", keycloak);
-  pintle.build();
 }
 
 bootstrap();

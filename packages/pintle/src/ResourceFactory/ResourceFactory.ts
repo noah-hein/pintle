@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { FileOptions } from '../File';
+import { FileOptions } from 'pintle';
 import { Collection } from '../Collection';
 
 export abstract class ResourceFactory {

@@ -1,4 +1,4 @@
-import { Templates } from '@pintle/pintle';
+import { Templates } from 'pintle';
 import { V1Deployment } from '@kubernetes/client-node';
 
 const namespace = Templates.createNamespace('keycloak');

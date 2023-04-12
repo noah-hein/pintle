@@ -1,4 +1,4 @@
-import { FileTypes, Pintle } from '@pintle/pintle';
+import { FileTypes, Pintle } from 'pintle';
 import { keycloak } from './KeycloakService';
 
 Pintle.create(

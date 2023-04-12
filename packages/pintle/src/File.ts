@@ -1,11 +1,11 @@
-import {Collection} from "./Collection";
-import {ResourceFactory} from "./ResourceFactory/ResourceFactory";
-import {YamlResourceFactory} from "./ResourceFactory/YamlResourceFactory";
-import {JsonResourceFactory} from "./ResourceFactory/JsonResourceFactory";
+import { Collection } from './Collection';
+import { ResourceFactory } from './ResourceFactory/ResourceFactory';
+import { YamlResourceFactory } from './ResourceFactory/YamlResourceFactory';
+import { JsonResourceFactory } from './ResourceFactory/JsonResourceFactory';
 
 export enum FileTypes {
-  JSON = "json",
-  YAML = "yaml"
+  JSON = 'json',
+  YAML = 'yaml',
 }
 
 export const factoryOptions = (
@@ -15,8 +15,8 @@ export const factoryOptions = (
   return {
     yaml: new YamlResourceFactory(fileOptions, collections),
     json: new JsonResourceFactory(fileOptions, collections),
-  }
-}
+  };
+};
 
 export interface FileOptions {
   type?: FileTypes;
@@ -29,7 +29,7 @@ export interface FileOptions {
 export const defaultFileOptions: FileOptions = {
   type: FileTypes.YAML,
   create: true,
-  outputDir: ".",
+  outputDir: '.',
   singleFile: true,
-  filename: "definitions"
-}
+  filename: 'definitions',
+};

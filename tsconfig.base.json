@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pintle/core": ["packages/core/src/index.ts"],
-      "@pintle/example": ["packages/example/src/index.ts"]
+      "@pintle/example": ["packages/example/src/index.ts"],
+      "@pintle/pintle": ["packages/pintle/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

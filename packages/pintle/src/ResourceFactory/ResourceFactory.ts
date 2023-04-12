@@ -1,9 +1,8 @@
-import * as fs from "fs";
-import { FileOptions } from "../File";
-import {Collection} from "../Collection";
+import * as fs from 'fs';
+import { FileOptions } from '../File';
+import { Collection } from '../Collection';
 
 export abstract class ResourceFactory {
-
   private readonly fileOptions: FileOptions;
 
   private readonly resourceGroups: Collection[];
@@ -22,12 +21,15 @@ export abstract class ResourceFactory {
     const resourceGroups = this.resourceGroups;
     if (fileOptions.filename && fileOptions.singleFile) {
       //Put everything into a single file
-      this.buildFile(resourceGroups[0].filename, this.parseMany(resourceGroups));
+      this.buildFile(
+        resourceGroups[0].filename,
+        this.parseMany(resourceGroups)
+      );
     } else {
       //Break into individual files
-      resourceGroups.forEach(resourceGroup => {
+      resourceGroups.forEach((resourceGroup) => {
         this.buildFile(resourceGroup.filename, this.parseSingle(resourceGroup));
-      })
+      });
     }
   }
 
@@ -39,7 +41,7 @@ export abstract class ResourceFactory {
 
   private buildFile(filename: string, content: string) {
     this.clearFile(filename);
-    fs.mkdirSync("" + this.fileOptions.outputDir + "", {recursive: true})
+    fs.mkdirSync('' + this.fileOptions.outputDir + '', { recursive: true });
     fs.appendFileSync(filename, content);
   }
 }

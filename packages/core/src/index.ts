@@ -1,4 +1,4 @@
 
-export * from "./Resource/ResourceTempaltes";
+export * from "./Templates";
 export * from "./Pintle";
 export * from "./File";

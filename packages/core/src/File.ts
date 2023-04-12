@@ -1,4 +1,4 @@
-import {ResourceGroup} from "./Resource/ResourceGroup";
+import {Collection} from "./Collection";
 import {ResourceFactory} from "./ResourceFactory/ResourceFactory";
 import {YamlResourceFactory} from "./ResourceFactory/YamlResourceFactory";
 import {JsonResourceFactory} from "./ResourceFactory/JsonResourceFactory";
@@ -10,11 +10,11 @@ export enum FileTypes {
 
 export const factoryOptions = (
   fileOptions: FileOptions,
-  resourceGroups: ResourceGroup[]
+  collections: Collection[]
 ): { [name in FileTypes]: ResourceFactory } => {
   return {
-    yaml: new YamlResourceFactory(fileOptions, resourceGroups),
-    json: new JsonResourceFactory(fileOptions, resourceGroups),
+    yaml: new YamlResourceFactory(fileOptions, collections),
+    json: new JsonResourceFactory(fileOptions, collections),
   }
 }
 

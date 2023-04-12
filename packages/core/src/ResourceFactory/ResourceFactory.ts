@@ -1,21 +1,21 @@
 import * as fs from "fs";
 import { FileOptions } from "../File";
-import {ResourceGroup} from "../Resource/ResourceGroup";
+import {Collection} from "../Collection";
 
 export abstract class ResourceFactory {
 
   private readonly fileOptions: FileOptions;
 
-  private readonly resourceGroups: ResourceGroup[];
+  private readonly resourceGroups: Collection[];
 
-  constructor(fileOptions: FileOptions, resourceGroups: ResourceGroup[]) {
+  constructor(fileOptions: FileOptions, resourceGroups: Collection[]) {
     this.fileOptions = fileOptions;
     this.resourceGroups = resourceGroups;
   }
 
-  abstract parseSingle(resourceGroup: ResourceGroup): string;
+  abstract parseSingle(resourceGroup: Collection): string;
 
-  abstract parseMany(resourceGroup: ResourceGroup[]): string;
+  abstract parseMany(resourceGroup: Collection[]): string;
 
   public build() {
     const fileOptions = this.fileOptions;

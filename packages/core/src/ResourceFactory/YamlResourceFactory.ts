@@ -1,9 +1,9 @@
 import * as YAML from "yaml";
 import {ResourceFactory} from "./ResourceFactory";
-import {ResourceGroup} from "../Resource/ResourceGroup";
+import {Collection} from "../Collection";
 
 export class YamlResourceFactory extends ResourceFactory {
-  parseSingle(resourceGroup: ResourceGroup): string {
+  parseSingle(resourceGroup: Collection): string {
     const resources = resourceGroup.resources;
     let outputString = "";
     resources.forEach(resource => {
@@ -12,7 +12,7 @@ export class YamlResourceFactory extends ResourceFactory {
     return outputString;
   }
 
-  parseMany(resourceGroups: ResourceGroup[]): string {
+  parseMany(resourceGroups: Collection[]): string {
     let outputString = "";
     resourceGroups.forEach(resourceGroup => {
       outputString = outputString + this.parseSingle(resourceGroup);

@@ -1,7 +1,8 @@
 import {defaultPintleOptions, PintleOptions} from "./PintleOptions";
 import {defaultFileOptions, factoryOptions, FileTypes} from "./File";
-import {ResourceGroup} from "./Resource/ResourceGroup";
+import {Collection, Collections} from "./Collection";
 import {ResourceFactory} from "./ResourceFactory/ResourceFactory";
+
 
 export class Pintle {
 
@@ -11,7 +12,7 @@ export class Pintle {
 
   private options: PintleOptions;
 
-  private resourceGroups: ResourceGroup[] = [];
+  private collections: Collection[] = [];
 
   private readonly resourceFactory: ResourceFactory;
 
@@ -19,14 +20,14 @@ export class Pintle {
         Constructors
     ==================================================================================================================*/
 
-  constructor(options: PintleOptions = defaultPintleOptions, resourceGroups: {[name: string]: object[]}) {
+  constructor(options: PintleOptions = defaultPintleOptions, collections: Collections) {
     //Parse options and log
     this.options = this.parseOptions(options);
     this.resourceFactory = this.selectFactories();
     console.log("Options:", options);
 
     //Add and Build
-    this.addMany(resourceGroups);
+    this.addMany(collections);
     this.build();
   }
 
@@ -36,9 +37,9 @@ export class Pintle {
 
   public static create(
     options: PintleOptions = defaultPintleOptions,
-    resourceGroups: {[name: string]: object[]}
+    collections: Collections
   ): Pintle {
-    return new Pintle(options, resourceGroups);
+    return new Pintle(options, collections);
   }
 
   /*==================================================================================================================
@@ -49,15 +50,15 @@ export class Pintle {
     const fileOptions = this.options.file;
     const resourceName = fileOptions?.singleFile ? "" + fileOptions.filename + "" : name;
     const filename = this.determineFilename(resourceName);
-    this.resourceGroups.push({
+    this.collections.push({
       name,
       resources,
       filename
     });
   }
 
-  private addMany(resourceGroups: {[name: string]: object[]}) {
-    const resourceGroupsEntries = Object.entries(resourceGroups);
+  private addMany(collections: Collections) {
+    const resourceGroupsEntries = Object.entries(collections);
     resourceGroupsEntries.forEach(entry => {
       const name = entry[0];
       const resources = entry[1];
@@ -76,7 +77,7 @@ export class Pintle {
   private selectFactories(): ResourceFactory {
     const fileOptions = this.options.file ? this.options.file : defaultFileOptions;
     const fileType = fileOptions.type ? fileOptions.type : FileTypes.YAML;
-    const resourceGroups = this.resourceGroups;
+    const resourceGroups = this.collections;
     return factoryOptions(fileOptions, resourceGroups)[fileType]
   }
 

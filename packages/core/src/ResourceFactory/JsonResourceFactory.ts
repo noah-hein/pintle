@@ -4,6 +4,6 @@ import {ResourceGroup} from "../ResourceGroup";
 export class JsonResourceFactory extends ResourceFactory {
   toFile(resourceGroup: ResourceGroup): string {
     const resources = resourceGroup.resources;
-    return JSON.stringify(resources);
+    return JSON.stringify(resources, null, 3);
   }
 }

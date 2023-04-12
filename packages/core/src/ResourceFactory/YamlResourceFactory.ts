@@ -7,7 +7,7 @@ export class YamlResourceFactory extends ResourceFactory {
     const resources = resourceGroup.resources;
     let outputString = "";
     resources.forEach(resource => {
-      outputString = outputString + YAML.stringify(resource) + "\r\n---\r\n";
+      outputString = outputString + YAML.stringify(resource) + "---\r\n";
     });
     return outputString;
   }

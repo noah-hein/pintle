@@ -1,9 +1,4 @@
-
-
-// export interface ResourceFactory {
-//
-// }
-
+import * as fs from "fs";
 import { FileOptions } from "../FileOptions";
 import {ResourceGroup} from "../ResourceGroup";
 
@@ -20,22 +15,17 @@ export abstract class ResourceFactory {
 
   abstract toFile(resourceGroup: ResourceGroup): string;
 
-  //abstract singleFile(resourceGroup: ResourceGroup): ResourceFile[];
-
-  //abstract multipleFiles(resourceGroup: ResourceGroup): ResourceFile[];
-
-  // public build(resourceGroup: ResourceGroup) {
-  //   const buildMethod = this.fileOptions.singleFile ? this.singleFile : this.multipleFiles;
-  //   const resourceFiles = buildMethod(resourceGroup);
-  // }
-
-  public getResourceGroups() {
+  public build() {
     this.resourceGroups.forEach(resourceGroup => {
+      //Clear out yaml
+      const filename = resourceGroup.filename;
+      if (fs.existsSync(filename)) {
+        fs.truncateSync(filename, 0);
+      }
 
+      //Generate from factory
+      const definition = this.toFile(resourceGroup);
+      fs.appendFileSync(filename, definition);
     })
   }
-
-
-
-
 }

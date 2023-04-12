@@ -5,7 +5,7 @@ function bootstrap() {
   const pintle = new Pintle({
     file: {
       singleFile: true,
-      type: OutputFileTypes.YAML
+      type: OutputFileTypes.JSON
     }
   });
   pintle.add("keycloak", keycloak);

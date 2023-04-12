@@ -3,8 +3,7 @@ import {ResourceGroup} from "../ResourceGroup";
 
 export class JsonResourceFactory extends ResourceFactory {
   toFile(resourceGroup: ResourceGroup): string {
-    return "";
+    const resources = resourceGroup.resources;
+    return JSON.stringify(resources);
   }
-
-
 }

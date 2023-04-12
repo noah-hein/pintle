@@ -2,6 +2,7 @@ import {ResourceTemplates } from "@pintle/core";
 import {V1Deployment} from "@kubernetes/client-node";
 
 const namespace = ResourceTemplates.createNamespace("keycloak");
+
 const deployment: V1Deployment = {
   apiVersion: "apps/v1",
   kind: "Deployment",
@@ -31,20 +32,4 @@ const deployment: V1Deployment = {
 export const keycloak = [
   namespace,
   deployment,
-]
-
-// @Service({
-//   namespace: "keycloak"
-// })
-// export class KeycloakService {
-//
-//   constructor() {
-//
-//   }
-//
-//   @Resource()
-//   deployment() {
-//
-//   }
-//
-// }
+];

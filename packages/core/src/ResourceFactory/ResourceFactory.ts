@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import { FileOptions } from "../FileOptions";
 import {ResourceGroup} from "../ResourceGroup";
+import * as path from "path";
 
 export abstract class ResourceFactory {
 
@@ -25,6 +26,7 @@ export abstract class ResourceFactory {
 
       //Generate from factory
       const definition = this.toFile(resourceGroup);
+      fs.mkdirSync("" + this.fileOptions.outputDir + "", {recursive: true})
       fs.appendFileSync(filename, definition);
     })
   }

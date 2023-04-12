@@ -1,7 +1,4 @@
-export enum OutputFileTypes {
-  JSON = "json",
-  YAML = "yaml"
-}
+import {OutputFileTypes} from "./OutputFileTypes";
 
 export interface FileOptions {
   type?: OutputFileTypes;

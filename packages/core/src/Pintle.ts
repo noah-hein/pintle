@@ -1,9 +1,8 @@
 import {defaultPintleOptions, parseOptions, PintleOptions} from "./PintleOptions";
-import {defaultFileOptions, OutputFileTypes} from "./FileOptions";
+import {defaultFileOptions} from "./FileOptions";
 import {ResourceGroup} from "./ResourceGroup";
 import {ResourceFactory} from "./ResourceFactory/ResourceFactory";
-import {YamlResourceFactory} from "./ResourceFactory/YamlResourceFactory";
-import {JsonResourceFactory} from "./ResourceFactory/JsonResourceFactory";
+import {factoryOptions, OutputFileTypes} from "./OutputFileTypes";
 
 export class Pintle {
 
@@ -54,19 +53,9 @@ export class Pintle {
 
   private selectFactories(): ResourceFactory {
     const fileOptions = this.options.file ? this.options.file : defaultFileOptions;
+    const fileType = fileOptions.type ? fileOptions.type : OutputFileTypes.YAML;
     const resourceGroups = this.resourceGroups;
-
-    //Select factory
-    let factory;
-    switch (fileOptions.type) {
-      case OutputFileTypes.JSON:
-        factory = new JsonResourceFactory(fileOptions, resourceGroups);
-        break;
-      default:
-        factory = new YamlResourceFactory(fileOptions, resourceGroups);
-        break;
-    }
-    return factory;
+    return factoryOptions(fileOptions, resourceGroups)[fileType]
   }
 
   private determineFilename(name: string) {

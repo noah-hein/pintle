@@ -4,4 +4,4 @@ export interface Collection {
   filename: string;
 }
 
-export type Collections = {[name: string]: Collection[]};
+export type Collections = {[name: string]: object[]};

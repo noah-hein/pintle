@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pintle/cli": ["packages/cli/src/index.ts"],
       "@pintle/core": ["packages/core/src/index.ts"],
       "@pintle/example": ["packages/example/src/index.ts"]
     }

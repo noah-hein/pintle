@@ -4,10 +4,12 @@ import {keycloak} from "./KeycloakService";
 function bootstrap() {
   const pintle = new Pintle({
     file: {
-      type: OutputFileTypes.JSON
+      singleFile: true,
+      type: OutputFileTypes.YAML
     }
   });
   pintle.add("keycloak", keycloak);
+  pintle.build();
 }
 
 bootstrap();

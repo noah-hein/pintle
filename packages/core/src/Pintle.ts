@@ -1,23 +1,22 @@
-import * as YAML from "yaml";
-import * as fs from "fs";
 import {defaultPintleOptions, parseOptions, PintleOptions} from "./PintleOptions";
-import {OutputFileTypes} from "./FileOptions";
-
-interface ResourceGroups {
-  name: string;
-  resources: object[];
-  filename: string;
-}
+import {defaultFileOptions, OutputFileTypes} from "./FileOptions";
+import {ResourceGroup} from "./ResourceGroup";
+import {ResourceFactory} from "./ResourceFactory/ResourceFactory";
+import {YamlResourceFactory} from "./ResourceFactory/YamlResourceFactory";
+import {JsonResourceFactory} from "./ResourceFactory/JsonResourceFactory";
 
 export class Pintle {
 
   private options: PintleOptions;
 
-  private resourceGroups: ResourceGroups[] = [];
+  private resourceGroups: ResourceGroup[] = [];
+
+  private resourceFactory: ResourceFactory;
 
   constructor(options: PintleOptions = defaultPintleOptions) {
     //Parse options and log
     this.options = parseOptions(options);
+    this.resourceFactory = this.selectFactories();
     console.log("Options:", options);
   }
 
@@ -28,21 +27,6 @@ export class Pintle {
       resources,
       filename
     });
-
-    //Create definition as JSON or YAML
-    // const definition = (this.options.file?.type === OutputFileTypes.YAML) ?
-    //   YAML.stringify(resources, {
-    //
-    //   }) : JSON.stringify(resources, null, 3);
-
-
-
-    //fs.appendFileSync(location, definition);
-
-
-    // resources.forEach(definition => {
-    //   this.buildDefinition(name, definition);
-    // });
   }
 
   public addMany(resourceArray: {[name: string]: object[]}) {
@@ -54,38 +38,92 @@ export class Pintle {
     });
   }
 
-  public buildYaml() {
-    this.resourceGroups.forEach(resourceGroup => {
-      const filename = resourceGroup.filename;
-      fs.appendFileSync(resourceGroup.filename, "---\r\n");
-    });
-  }
+  // public buildYaml() {
+  //   this.resourceGroups.forEach(resourceGroup => {
+  //     const filename = resourceGroup.filename;
+  //     const resources = resourceGroup.resources;
+  //
+  //     //Clear out yaml
+  //     if (fs.existsSync(filename)) {
+  //       fs.truncateSync(filename, 0);
+  //     }
+  //
+  //     //Add resources to yaml
+  //     fs.appendFileSync(resourceGroup.filename, "---\r\n");
+  //     resources.forEach(resource => {
+  //       const resourceYaml = YAML.stringify(resource);
+  //       fs.appendFileSync(resourceGroup.filename, resourceYaml);
+  //       fs.appendFileSync(resourceGroup.filename, "---\r\n");
+  //     });
+  //   });
+  // }
 
-  public buildJson() {
+  // public build() {
+  //   this.resourceGroups.forEach(resourceGroup => {
+  //     const filename = resourceGroup.filename;
+  //     const resources = resourceGroup.resources;
+  //
+  //     //Clear out yaml
+  //     if (fs.existsSync(filename)) {
+  //       fs.truncateSync(filename, 0);
+  //     }
+  //
+  //     //Determine how many files to generate
+  //     if (this.options.file?.singleFile) {
+  //
+  //     } else {
+  //
+  //     }
+  //   });
+  // }
 
-  }
+  public build() {
+    const type = this.options.file?.type;
+    if (type) {
 
-  private buildDefinition(name: string, resource: object) {
-    const fileEnding = this.options.file?.type
-    const filename = name + "." + fileEnding;
-    const location = this.options.file?.outputDir + "/" + filename;
+      const resourceFactory = this.resourceFactory.getResourceGroups();
 
-    //Create definition as JSON or YAML
-    const definition = (this.options.file?.type === OutputFileTypes.YAML) ?
-      YAML.stringify(resource) : JSON.stringify(resource);
-
-    //Write definition to file
-    switch (this.options.file?.type) {
-      case OutputFileTypes.YAML:
-        fs.appendFileSync(location, definition + "---\r\n");
-        break;
-      case OutputFileTypes.JSON:
-        fs.appendFileSync(location, definition);
-        break;
     }
   }
 
-  determineFilename(name: string) {
+  private selectFactories(): ResourceFactory {
+    const fileOptions = this.options.file ? this.options.file : defaultFileOptions;
+    const resourceGroups = this.resourceGroups;
+
+    //Select factory
+    let factory;
+    switch (fileOptions.type) {
+      case OutputFileTypes.JSON:
+        factory = new JsonResourceFactory(fileOptions, resourceGroups);
+        break;
+      default:
+        factory = new YamlResourceFactory(fileOptions, resourceGroups);
+        break;
+    }
+    return factory;
+  }
+
+  // private buildDefinition(name: string, resource: object) {
+  //   const fileEnding = this.options.file?.type
+  //   const filename = name + "." + fileEnding;
+  //   const location = this.options.file?.outputDir + "/" + filename;
+  //
+  //   //Create definition as JSON or YAML
+  //   const definition = (this.options.file?.type === OutputFileTypes.YAML) ?
+  //     YAML.stringify(resource) : JSON.stringify(resource);
+  //
+  //   //Write definition to file
+  //   switch (this.options.file?.type) {
+  //     case OutputFileTypes.YAML:
+  //       fs.appendFileSync(location, definition + "---\r\n");
+  //       break;
+  //     case OutputFileTypes.JSON:
+  //       fs.appendFileSync(location, definition);
+  //       break;
+  //   }
+  // }
+
+  private determineFilename(name: string) {
     const fileEnding = this.options.file?.type;
     const fileWithEnding = name + "." + fileEnding;
     return this.options.file?.outputDir + "/" + fileWithEnding;

@@ -21,7 +21,9 @@ export class Pintle {
   }
 
   public add(name: string, resources: object[]) {
-    const filename = this.determineFilename(name);
+    const fileOptions = this.options.file;
+    const resourceName = fileOptions?.singleFile ? "" + fileOptions.filename + "" : name;
+    const filename = this.determineFilename(resourceName);
     this.resourceGroups.push({
       name,
       resources,

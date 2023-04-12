@@ -4,7 +4,7 @@ import {keycloak} from "./KeycloakService";
 function bootstrap() {
   const pintle = new Pintle({
     file: {
-      outputDir: "dist/resources",
+      outputDir: "dist/test",
       singleFile: true,
       type: OutputFileTypes.YAML
     }

@@ -8,11 +8,13 @@ export interface FileOptions {
   create?: boolean;
   outputDir?: string;
   singleFile?: boolean;
+  filename?: string;
 }
 
 export const defaultFileOptions: FileOptions = {
   type: OutputFileTypes.YAML,
   create: true,
   outputDir: ".",
-  singleFile: true
+  singleFile: true,
+  filename: "definitions"
 }

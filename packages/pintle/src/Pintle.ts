@@ -2,7 +2,6 @@ import { defaultPintleOptions, PintleOptions } from './PintleOptions';
 import { defaultFileOptions, factoryOptions, FileTypes } from './File';
 import { Collection, Collections } from './Collection';
 import { ResourceFactory } from './ResourceFactory/ResourceFactory';
-//import chalk from "chalk";
 
 export class Pintle {
   /*==================================================================================================================
@@ -26,7 +25,7 @@ export class Pintle {
     //Parse options and log
     this.options = this.parseOptions(options);
     this.resourceFactory = this.selectFactories();
-    console.log('Options:', options);
+    console.log("Options:" , options);
 
     //Add and Build
     console.log("Building resources")

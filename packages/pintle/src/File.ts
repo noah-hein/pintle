@@ -2,6 +2,7 @@ import { Collection } from './Collection';
 import { ResourceFactory } from './ResourceFactory/ResourceFactory';
 import { YamlResourceFactory } from './ResourceFactory/YamlResourceFactory';
 import { JsonResourceFactory } from './ResourceFactory/JsonResourceFactory';
+import {PintleOptions} from "./PintleOptions";
 
 export enum FileTypes {
   JSON = 'json',
@@ -9,12 +10,12 @@ export enum FileTypes {
 }
 
 export const factoryOptions = (
-  fileOptions: FileOptions,
+  options: PintleOptions,
   collections: Collection[]
 ): { [name in FileTypes]: ResourceFactory } => {
   return {
-    yaml: new YamlResourceFactory(fileOptions, collections),
-    json: new JsonResourceFactory(fileOptions, collections),
+    yaml: new YamlResourceFactory(options, collections),
+    json: new JsonResourceFactory(options, collections),
   };
 };
 

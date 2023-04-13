@@ -1,16 +1,16 @@
-import { defaultPintleOptions, PintleOptions } from './PintleOptions';
-import { defaultFileOptions, factoryOptions, FileTypes } from './File';
-import { Collection, Collections } from './Collection';
-import { ResourceFactory } from './ResourceFactory/ResourceFactory';
+import {defaultPintleOptions, PintleOptions} from './PintleOptions';
+import {defaultFileOptions, factoryOptions, FileTypes} from './File';
+import {Collection, Collections} from './Collection';
+import {ResourceFactory} from './ResourceFactory/ResourceFactory';
 
 export class Pintle {
   /*==================================================================================================================
         Private Members
     ==================================================================================================================*/
 
-  private options: PintleOptions;
-
   private collections: Collection[] = [];
+
+  private readonly options: PintleOptions;
 
   private readonly resourceFactory: ResourceFactory;
 
@@ -32,8 +32,6 @@ export class Pintle {
     this.addMany(collections);
     this.build();
     console.log("Finished building resources")
-
-    //
   }
 
   /*==================================================================================================================
@@ -82,18 +80,18 @@ export class Pintle {
   }
 
   private selectFactories(): ResourceFactory {
-    const fileOptions = this.options.file
-      ? this.options.file
-      : defaultFileOptions;
+    const fileOptions = this.options.file || defaultFileOptions;
     const fileType = fileOptions.type ? fileOptions.type : FileTypes.YAML;
     const resourceGroups = this.collections;
-    return factoryOptions(fileOptions, resourceGroups)[fileType];
+    return factoryOptions(this.options, resourceGroups)[fileType];
   }
 
   private determineFilename(name: string) {
-    const fileEnding = this.options.file?.type;
+    const fileOptions = this.options.file || defaultFileOptions;
+    const outputDir = fileOptions.outputDir;
+    const fileEnding = fileOptions.type;
     const fileWithEnding = name + '.' + fileEnding;
-    return this.options.file?.outputDir + '/' + fileWithEnding;
+    return outputDir + '/' + fileWithEnding;
   }
 
   private parseOptions(options: PintleOptions) {

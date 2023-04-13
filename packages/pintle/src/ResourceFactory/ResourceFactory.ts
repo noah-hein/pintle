@@ -1,15 +1,20 @@
 import * as fs from 'fs';
-import { FileOptions } from 'pintle';
+import * as k8s from "@kubernetes/client-node";
+import {defaultFileOptions} from 'pintle';
 import { Collection } from '../Collection';
+import {PintleOptions} from "../PintleOptions";
 
 export abstract class ResourceFactory {
-  private readonly fileOptions: FileOptions;
+  private readonly options: PintleOptions;
 
   private readonly resourceGroups: Collection[];
 
-  constructor(fileOptions: FileOptions, resourceGroups: Collection[]) {
-    this.fileOptions = fileOptions;
+  //private readonly k8Client: k8s.CoreV1Api | null;
+
+  constructor(options: PintleOptions, resourceGroups: Collection[]) {
+    this.options = options;
     this.resourceGroups = resourceGroups;
+    //this.k8Client = this.createK8Client();
   }
 
   abstract parseSingle(resourceGroup: Collection): string;
@@ -17,7 +22,7 @@ export abstract class ResourceFactory {
   abstract parseMany(resourceGroup: Collection[]): string;
 
   public build() {
-    const fileOptions = this.fileOptions;
+    const fileOptions = this.options.file || defaultFileOptions;
     const resourceGroups = this.resourceGroups;
     if (fileOptions.filename && fileOptions.singleFile) {
       //Put everything into a single file
@@ -41,7 +46,18 @@ export abstract class ResourceFactory {
 
   private buildFile(filename: string, content: string) {
     this.clearFile(filename);
-    fs.mkdirSync('' + this.fileOptions.outputDir + '', { recursive: true });
+    const fileOptions = this.options.file || defaultFileOptions;
+    fs.mkdirSync('' + fileOptions.outputDir + '', { recursive: true });
     fs.appendFileSync(filename, content);
+  }
+
+  private createK8Client() {
+    // let client = null;
+    // if (this.options.apply) {
+    //   const kubeConfig = new k8s.KubeConfig();
+    //   kubeConfig.loadFromDefault();
+    //   client = kubeConfig.makeApiClient(k8s.CoreV1Api);
+    // }
+    // return client;
   }
 }

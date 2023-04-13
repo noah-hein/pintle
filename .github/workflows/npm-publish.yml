@@ -17,5 +17,5 @@ jobs:
           fetch-depth: 0
       - uses: nrwl/nx-set-shas@v3
       - run: npm ci
-      - run: nppx nx format:check
+      - run: npx nx format:check
       - run: npx nx affected -t lint --parallel=3

@@ -1,6 +1,13 @@
 # pintle
 
-This library was generated with [Nx](https://nx.dev).
+Concise configuration through functionality
+
+
+
+
+
+
+
 
 ## Building
 

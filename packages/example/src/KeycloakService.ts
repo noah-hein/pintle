@@ -1,5 +1,5 @@
-import { Templates } from 'pintle';
-import { V1Deployment } from '@kubernetes/client-node';
+import { Templates } from "pintle";
+import { V1Deployment } from "@kubernetes/client-node";
 
 const namespace = Templates.createNamespace("testing");
 

@@ -1,1 +1,1 @@
-export * from './lib/pintle-cli';
+export * from "./lib/pintle-cli";

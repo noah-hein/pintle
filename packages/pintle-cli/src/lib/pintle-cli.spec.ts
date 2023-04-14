@@ -1,7 +1,7 @@
-import { pintleCli } from './pintle-cli';
+import { pintleCli } from "./pintle-cli";
 
-describe('pintleCli', () => {
-  it('should work', () => {
-    expect(pintleCli()).toEqual('pintle-cli');
+describe("pintleCli", () => {
+  it("should work", () => {
+    expect(pintleCli()).toEqual("pintle-cli");
   });
 });

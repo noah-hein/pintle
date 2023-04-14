@@ -1,5 +1,5 @@
-import { ResourceFactory } from './ResourceFactory';
-import { Collection } from '../Collection';
+import { ResourceFactory } from "./ResourceFactory";
+import { Collection } from "../Collection";
 
 export class JsonResourceFactory extends ResourceFactory {
   parseSingle(resourceGroup: Collection): string {
@@ -8,6 +8,6 @@ export class JsonResourceFactory extends ResourceFactory {
   }
 
   parseMany(resourceGroup: Collection[]): string {
-    return '';
+    return "";
   }
 }

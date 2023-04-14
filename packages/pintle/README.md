@@ -2,13 +2,6 @@
 
 Concise configuration through functionality
 
-
-
-
-
-
-
-
 ## Building
 
 Run `nx build pintle` to build the library.

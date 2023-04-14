@@ -1,7 +1,7 @@
-import {defaultPintleOptions, PintleOptions} from './PintleOptions';
-import {defaultFileOptions, factoryOptions, FileTypes} from './File';
-import {Collections} from './Collection';
-import {ResourceFactory} from './ResourceFactory/ResourceFactory';
+import { defaultPintleOptions, PintleOptions } from "./PintleOptions";
+import { defaultFileOptions, factoryOptions, FileTypes } from "./File";
+import { Collections } from "./Collection";
+import { ResourceFactory } from "./ResourceFactory/ResourceFactory";
 
 export class Pintle {
   /*==================================================================================================================
@@ -26,12 +26,12 @@ export class Pintle {
     this.collections = collections;
     this.options = this.parseOptions(options);
     this.resourceFactory = this.selectFactories();
-    console.log("Options:" , options);
+    console.log("Options:", options);
 
     //Build collections
-    console.log("Building resources")
+    console.log("Building resources");
     this.build();
-    console.log("Finished building resources")
+    console.log("Finished building resources");
   }
 
   /*==================================================================================================================

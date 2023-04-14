@@ -1,3 +1,3 @@
 export function pintleCli(): string {
-  return 'pintle-cli';
+  return "pintle-cli";
 }

@@ -1,14 +1,14 @@
-import { FileTypes, Pintle } from 'pintle';
-import { keycloak } from './KeycloakService';
+import { FileTypes, Pintle } from "pintle";
+import { keycloak } from "./KeycloakService";
 
 export function bootstrap() {
   Pintle.create(
     {
       file: {
-        outputDir: 'dist/test',
+        outputDir: "dist/test",
         singleFile: false,
         type: FileTypes.YAML,
-      }
+      },
     },
     [
       {
@@ -17,12 +17,12 @@ export function bootstrap() {
           {
             name: "test",
             children: [],
-            resources: keycloak
-          }
+            resources: keycloak,
+          },
         ],
-        resources: keycloak
-      }
+        resources: keycloak,
+      },
     ]
   );
 }
-bootstrap()
+bootstrap();

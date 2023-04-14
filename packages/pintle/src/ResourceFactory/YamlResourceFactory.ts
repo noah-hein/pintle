@@ -6,7 +6,7 @@ export class YamlResourceFactory extends ResourceFactory {
   parseSingle(resourceGroup: Collection): string {
     const resources = resourceGroup.resources;
     let outputString = "";
-    resources.forEach((resource) => {
+    resources?.forEach((resource) => {
       outputString = outputString + YAML.stringify(resource) + "---\r\n";
     });
     return outputString;

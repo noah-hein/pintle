@@ -60,7 +60,7 @@ export abstract class ResourceFactory {
   }
 
   private createChildren(collection: Collection, filepath: string) {
-    collection.children.forEach((childCollection) => {
+    collection.children?.forEach((childCollection) => {
       this.createCollection(
         childCollection,
         filepath + "/" + childCollection.name

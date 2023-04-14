@@ -13,13 +13,6 @@ export function bootstrap() {
     [
       {
         name: "keycloak",
-        children: [
-          {
-            name: "test",
-            children: [],
-            resources: keycloak,
-          },
-        ],
         resources: keycloak,
       },
     ]

@@ -1,4 +1,4 @@
-import { Collection } from './Collection';
+import {Collections} from './Collection';
 import { ResourceFactory } from './ResourceFactory/ResourceFactory';
 import { YamlResourceFactory } from './ResourceFactory/YamlResourceFactory';
 import { JsonResourceFactory } from './ResourceFactory/JsonResourceFactory';
@@ -11,7 +11,7 @@ export enum FileTypes {
 
 export const factoryOptions = (
   options: PintleOptions,
-  collections: Collection[]
+  collections: Collections
 ): { [name in FileTypes]: ResourceFactory } => {
   return {
     yaml: new YamlResourceFactory(options, collections),

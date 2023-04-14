@@ -4,16 +4,25 @@ import { keycloak } from './KeycloakService';
 export function bootstrap() {
   Pintle.create(
     {
-      apply: false,
       file: {
         outputDir: 'dist/test',
-        singleFile: true,
+        singleFile: false,
         type: FileTypes.YAML,
       }
     },
-    {
-      keycloak,
-    }
+    [
+      {
+        name: "keycloak",
+        children: [
+          {
+            name: "test",
+            children: [],
+            resources: keycloak
+          }
+        ],
+        resources: keycloak
+      }
+    ]
   );
 }
 bootstrap()

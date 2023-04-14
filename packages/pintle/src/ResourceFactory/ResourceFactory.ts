@@ -1,41 +1,70 @@
 import * as fs from 'fs';
-import * as k8s from "@kubernetes/client-node";
-import {defaultFileOptions} from 'pintle';
-import { Collection } from '../Collection';
-import {PintleOptions} from "../PintleOptions";
+import {Collection, Collections} from '../Collection';
+import {defaultPintleOptions, PintleOptions} from "../PintleOptions";
+import {defaultFileOptions, FileOptions} from "../File";
 
 export abstract class ResourceFactory {
   private readonly options: PintleOptions;
 
-  private readonly resourceGroups: Collection[];
+  private readonly fileOptions: FileOptions;
 
-  //private readonly k8Client: k8s.CoreV1Api | null;
+  private readonly collections: Collections;
 
-  constructor(options: PintleOptions, resourceGroups: Collection[]) {
-    this.options = options;
-    this.resourceGroups = resourceGroups;
-    //this.k8Client = this.createK8Client();
+  constructor(options: PintleOptions, collections: Collections) {
+    this.options = options || defaultPintleOptions;
+    this.fileOptions = options.file || defaultFileOptions;
+    this.collections = collections;
   }
 
   abstract parseSingle(resourceGroup: Collection): string;
 
-  abstract parseMany(resourceGroup: Collection[]): string;
+  abstract parseMany(resourceGroup: Collections): string;
 
   public build() {
-    const fileOptions = this.options.file || defaultFileOptions;
-    const resourceGroups = this.resourceGroups;
+    const collections = this.collections;
+    const fileOptions = this.fileOptions;
     if (fileOptions.filename && fileOptions.singleFile) {
       //Put everything into a single file
       this.buildFile(
-        resourceGroups[0].filename,
-        this.parseMany(resourceGroups)
+        fileOptions.filename,
+        this.parseMany(collections)
       );
     } else {
       //Break into individual files
-      resourceGroups.forEach((resourceGroup) => {
-        this.buildFile(resourceGroup.filename, this.parseSingle(resourceGroup));
+      collections.forEach((collection) => {
+        this.createCollection(collection, collection.name);
       });
     }
+  }
+
+  createCollection(collection: Collection, filepath: string) {
+    this.createFolder(collection, filepath);
+    this.createChildren(collection, filepath);
+    this.createFile(collection, filepath);
+  }
+
+  private createFile(collection: Collection, filepath: string) {
+    const fileOptions = this.fileOptions;
+    if (collection.resources) {
+      const filename = fileOptions.outputDir + "/" + filepath + "." + fileOptions.type;
+      const content = this.parseSingle(collection);
+      this.clearFile(filename);
+      fs.appendFileSync(filename, content);
+    }
+  }
+
+  private createFolder(collection: Collection, filepath: string) {
+    const children = collection.children;
+    if (children && children.length > 0) {
+      const folderPath = this.fileOptions.outputDir + "/" + filepath;
+      fs.mkdirSync(folderPath, { recursive: true });
+    }
+  }
+
+  private createChildren(collection: Collection, filepath: string) {
+    collection.children.forEach(childCollection => {
+      this.createCollection(childCollection, filepath + "/" + childCollection.name);
+    });
   }
 
   private clearFile(filename: string) {
@@ -44,20 +73,19 @@ export abstract class ResourceFactory {
     }
   }
 
-  private buildFile(filename: string, content: string) {
-    this.clearFile(filename);
+  private determineFilePath(name: string) {
     const fileOptions = this.options.file || defaultFileOptions;
-    fs.mkdirSync('' + fileOptions.outputDir + '', { recursive: true });
-    fs.appendFileSync(filename, content);
+    const outputDir = fileOptions.outputDir;
+    const fileEnding = fileOptions.type;
+    const fileWithEnding = name + '.' + fileEnding;
+    return outputDir + '/' + fileWithEnding;
   }
 
-  private createK8Client() {
-    // let client = null;
-    // if (this.options.apply) {
-    //   const kubeConfig = new k8s.KubeConfig();
-    //   kubeConfig.loadFromDefault();
-    //   client = kubeConfig.makeApiClient(k8s.CoreV1Api);
-    // }
-    // return client;
+  private buildFile(filename: string, content: string) {
+    const filePath = this.determineFilePath(filename);
+    this.clearFile(filePath);
+    const fileOptions = this.options.file || defaultFileOptions;
+    fs.mkdirSync('' + fileOptions.outputDir + '', { recursive: true });
+    fs.appendFileSync(filePath, content);
   }
 }

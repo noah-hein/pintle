@@ -1,6 +1,6 @@
 import {defaultPintleOptions, PintleOptions} from './PintleOptions';
 import {defaultFileOptions, factoryOptions, FileTypes} from './File';
-import {Collection, Collections} from './Collection';
+import {Collections} from './Collection';
 import {ResourceFactory} from './ResourceFactory/ResourceFactory';
 
 export class Pintle {
@@ -8,7 +8,7 @@ export class Pintle {
         Private Members
     ==================================================================================================================*/
 
-  private collections: Collection[] = [];
+  private readonly collections: Collections;
 
   private readonly options: PintleOptions;
 
@@ -23,13 +23,13 @@ export class Pintle {
     collections: Collections
   ) {
     //Parse options and log
+    this.collections = collections;
     this.options = this.parseOptions(options);
     this.resourceFactory = this.selectFactories();
     console.log("Options:" , options);
 
-    //Add and Build
+    //Build collections
     console.log("Building resources")
-    this.addMany(collections);
     this.build();
     console.log("Finished building resources")
   }
@@ -49,28 +49,6 @@ export class Pintle {
         Private Methods
     ==================================================================================================================*/
 
-  private add(name: string, resources: object[]) {
-    const fileOptions = this.options.file;
-    const resourceName = fileOptions?.singleFile
-      ? '' + fileOptions.filename + ''
-      : name;
-    const filename = this.determineFilename(resourceName);
-    this.collections.push({
-      name,
-      resources,
-      filename,
-    });
-  }
-
-  private addMany(collections: Collections) {
-    const resourceGroupsEntries = Object.entries(collections);
-    resourceGroupsEntries.forEach((entry) => {
-      const name = entry[0];
-      const resources = entry[1];
-      this.add(name, resources);
-    });
-  }
-
   private build() {
     const type = this.options.file?.type;
     if (type) {
@@ -82,16 +60,7 @@ export class Pintle {
   private selectFactories(): ResourceFactory {
     const fileOptions = this.options.file || defaultFileOptions;
     const fileType = fileOptions.type ? fileOptions.type : FileTypes.YAML;
-    const resourceGroups = this.collections;
-    return factoryOptions(this.options, resourceGroups)[fileType];
-  }
-
-  private determineFilename(name: string) {
-    const fileOptions = this.options.file || defaultFileOptions;
-    const outputDir = fileOptions.outputDir;
-    const fileEnding = fileOptions.type;
-    const fileWithEnding = name + '.' + fileEnding;
-    return outputDir + '/' + fileWithEnding;
+    return factoryOptions(this.options, this.collections)[fileType];
   }
 
   private parseOptions(options: PintleOptions) {

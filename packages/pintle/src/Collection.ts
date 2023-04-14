@@ -1,7 +1,7 @@
 export interface Collection {
   name: string;
   resources: object[];
-  filename: string;
+  children: Collection[];
 }
 
-export type Collections = { [name: string]: object[] };
+export type Collections = Collection[];

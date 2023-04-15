@@ -1,13 +1,21 @@
 import { ResourceFactory } from "./ResourceFactory";
-import { Collection } from "../Collection";
+import {Collection, Collections} from "../Collection";
 
 export class JsonResourceFactory extends ResourceFactory {
-  parseSingle(resourceGroup: Collection): string {
-    const resources = resourceGroup.resources;
+  parseSingle(collection: Collection): string {
+    const resources = collection.resources;
     return JSON.stringify(resources, null, 3);
   }
 
-  parseMany(resourceGroup: Collection[]): string {
-    return "";
+  parseMany(collections: Collections): string {
+    const output: object[] = [];
+    collections.forEach(collection => {
+      const collectionString = this.parseSingle(collection);
+      const resources: object[] = JSON.parse(collectionString);
+      resources.forEach(resource => {
+        output.push(resource);
+      });
+    });
+    return JSON.stringify(output, null, 3);
   }
 }

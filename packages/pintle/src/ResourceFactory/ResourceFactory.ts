@@ -16,77 +16,90 @@ export abstract class ResourceFactory {
     this.collections = collections;
   }
 
-  abstract parseSingle(resourceGroup: Collection): string;
+  abstract parseSingle(collection: Collection): string;
 
-  abstract parseMany(resourceGroup: Collections): string;
+  abstract parseMany(collections: Collections): string;
 
   public build() {
-    const collections = this.collections;
-    const fileOptions = this.fileOptions;
-    if (fileOptions.filename && fileOptions.singleFile) {
-      //Put everything into a single file
-      this.buildFile(fileOptions.filename, this.parseMany(collections));
+    const isSingleFile = this.fileOptions.singleFile;
+    if (isSingleFile) {
+      this.singleFile();
     } else {
-      //Break into individual files
-      collections.forEach((collection) => {
-        this.createCollection(collection, collection.name);
-      });
+      this.multipleFiles();
     }
   }
 
-  createCollection(collection: Collection, filepath: string) {
-    this.createFolder(collection, filepath);
-    this.createChildren(collection, filepath);
-    this.createFile(collection, filepath);
+  private flattenCollections(collections: Collections): Collections {
+    let flattenedCollections: Collections = [];
+    collections.forEach(collection => {
+      flattenedCollections.push(collection);
+      const children = collection.children;
+      const hasChildren = children && children.length > 0;
+      if (hasChildren) {
+        const flattenedChildren = this.flattenCollections(children);
+        flattenedCollections = flattenedCollections.concat(flattenedChildren);
+      }
+    })
+    return flattenedCollections;
   }
 
-  private createFile(collection: Collection, filepath: string) {
+  singleFile() {
+    const flattenCollections = this.flattenCollections(this.collections);
+    const fileContent = this.parseMany(flattenCollections);
+
+    //Create folder and file
     const fileOptions = this.fileOptions;
-    if (collection.resources) {
-      const filename =
-        fileOptions.outputDir + "/" + filepath + "." + fileOptions.type;
-      const content = this.parseSingle(collection);
-      this.clearFile(filename);
-      fs.appendFileSync(filename, content);
-    }
+    const filePath = this.determinePath(fileOptions.filename + "." + fileOptions.type);
+    this.createFolder(fileOptions.outputDir);
+    this.createFile(fileContent, filePath);
   }
 
-  private createFolder(collection: Collection, filepath: string) {
-    const children = collection.children;
-    if (children && children.length > 0) {
-      const folderPath = this.fileOptions.outputDir + "/" + filepath;
-      fs.mkdirSync(folderPath, { recursive: true });
-    }
-  }
-
-  private createChildren(collection: Collection, filepath: string) {
-    collection.children?.forEach((childCollection) => {
-      this.createCollection(
-        childCollection,
-        filepath + "/" + childCollection.name
-      );
+  private multipleFiles() {
+    this.collections.forEach((collection) => {
+      this.createCollection(collection, collection.name);
     });
+  }
+
+  private createCollection(collection: Collection, filename: string) {
+    const children = collection.children || [];
+    const resources = collection.resources || [];
+
+
+    //Create folder
+    if (children && children.length > 0) {
+      const folderPath = this.determinePath(filename);
+      this.createFolder(folderPath);
+    }
+    //Create file
+    if (resources) {
+      const content = this.parseSingle(collection);
+      const filePath = this.determinePath(filename) + "." + this.fileOptions.type
+      this.createFile(content, filePath);
+    }
+    //Recurse through children
+    children.forEach(child => {
+      this.createCollection(child, filename + "/" + child.name);
+    });
+  }
+
+  private determinePath(path: string) {
+    return this.fileOptions.outputDir + "/" + path;
+  }
+
+  private createFile(content: string, filename: string) {
+    this.clearFile(filename);
+    fs.appendFileSync(filename, content);
+  }
+
+  private createFolder(folderName: string | undefined) {
+    if (folderName) {
+      fs.mkdirSync(folderName, { recursive: true });
+    }
   }
 
   private clearFile(filename: string) {
     if (fs.existsSync(filename)) {
       fs.truncateSync(filename, 0);
     }
-  }
-
-  private determineFilePath(name: string) {
-    const fileOptions = this.options.file || defaultFileOptions;
-    const outputDir = fileOptions.outputDir;
-    const fileEnding = fileOptions.type;
-    const fileWithEnding = name + "." + fileEnding;
-    return outputDir + "/" + fileWithEnding;
-  }
-
-  private buildFile(filename: string, content: string) {
-    const filePath = this.determineFilePath(filename);
-    this.clearFile(filePath);
-    const fileOptions = this.options.file || defaultFileOptions;
-    fs.mkdirSync("" + fileOptions.outputDir + "", { recursive: true });
-    fs.appendFileSync(filePath, content);
   }
 }

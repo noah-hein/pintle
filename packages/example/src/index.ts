@@ -1,20 +1,20 @@
 import { FileTypes, Pintle } from "pintle";
-import { keycloak } from "./KeycloakService";
+import {arkWorld} from "./ark";
 
 export function bootstrap() {
   Pintle.create(
     {
       file: {
-        outputDir: "dist/test",
+        outputDir: "dist/out",
         singleFile: false,
         type: FileTypes.YAML,
       },
     },
     [
-      {
-        name: "keycloak",
-        resources: keycloak,
-      },
+      arkWorld("island"),
+      arkWorld("aberation"),
+      arkWorld("extinction"),
+      arkWorld("scorched-earth")
     ]
   );
 }

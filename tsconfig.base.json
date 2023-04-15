@@ -16,8 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@pintle/example": ["packages/example/src/index.ts"],
-      "pintle": ["packages/pintle/src/index.ts"],
-      "pintle-cli": ["packages/pintle-cli/src/index.ts"]
+      "create-pintle-app": ["packages/create-pintle-app/src/index.ts"],
+      "pintle": ["packages/pintle/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

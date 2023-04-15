@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "create-pintle-app",
+  "version": "0.0.1",
+  "generators": {
+    "create-pintle-app": {
+      "factory": "./src/generators/create-pintle-app/generator",
+      "schema": "./src/generators/create-pintle-app/schema.json",
+      "description": "create-pintle-app generator"
+    }
+  }
+}

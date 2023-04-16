@@ -1,1 +1,4 @@
-export * from "./lib/pintle-cli";
+function test() {
+  console.log("FUCKKKKK!")
+}
+test()

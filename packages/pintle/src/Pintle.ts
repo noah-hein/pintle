@@ -29,9 +29,9 @@ export class Pintle {
     console.log("Options:", options);
 
     //Build collections
-    console.log("Building resources");
+    console.log("Building collections");
     this.build();
-    console.log("Finished building resources");
+    console.log("Finished building collections");
   }
 
   /*==================================================================================================================

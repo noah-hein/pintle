@@ -4,6 +4,14 @@
   "sourceRoot": "packages/pintle-cli/src",
   "projectType": "library",
   "targets": {
+    "node": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "pintle-cli:build",
+        "watch": false
+      },
+      "dependsOn": ["build"]
+    },
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],

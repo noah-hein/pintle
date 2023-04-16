@@ -4,14 +4,6 @@
   "sourceRoot": "packages/pintle-cli/src",
   "projectType": "library",
   "targets": {
-    "node": {
-      "executor": "@nrwl/js:node",
-      "options": {
-        "buildTarget": "pintle-cli:build",
-        "watch": false
-      },
-      "dependsOn": ["build"]
-    },
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
@@ -21,6 +13,16 @@
         "packageJson": "packages/pintle-cli/package.json",
         "main": "packages/pintle-cli/src/index.ts",
         "assets": ["packages/pintle-cli/*.md"]
+      }
+    },
+    "node": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "pintle-cli:build",
+        "watch": false,
+        "args": [
+          "--help"
+        ]
       }
     },
     "publish": {

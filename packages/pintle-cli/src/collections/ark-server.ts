@@ -1,22 +1,13 @@
-import {ResourceCollection, Resources, Templates} from "pintle";
+import {Collection, Templates} from "pintle";
 
 
-export interface ArkServerOptions {
-  name: string
+
+
+export const ArkServer: Collection = {
+  name: "ark-server",
+  resources: [
+    Templates.createNamespace("ark-server")
+  ]
 }
-
-export class ArkServer extends ResourceCollection {
-
-  constructor(private options: ArkServerOptions) {
-    super();
-  }
-
-  exportedResources(): Resources {
-    return [
-      Templates.createNamespace(this.options.name),
-    ];
-  }
-}
-
 
 

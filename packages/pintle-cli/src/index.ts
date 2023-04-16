@@ -1,15 +1,28 @@
-import * as yargs from "yargs";
+import {isCollection} from "pintle";
 
-yargs
-  .scriptName("pintle-cli")
-  .command("hello", "does some shit", (yargs) => {
-    yargs.positional('name', {
-      type: 'string',
-      default: 'Cambi',
-      describe: 'the name to say hello to'
-    })
-  }, (argv) => {
-    console.log("What the fuck is going on")
-  })
-  .help()
-  .argv
+
+function test() {
+
+
+
+  import("./collections/ark-server").then(module => {
+    const moduleExports = Object.entries(module);
+    moduleExports.forEach(moduleExport => {
+      const key = moduleExport[0];
+      const value = moduleExport[1];
+      console.log(isCollection(value))
+    });
+  });
+}
+
+test();
+
+// yargs
+//   .scriptName("pintle-cli")
+//   .command(
+//     "build",
+//     "Finds and compiles all resources into a configurable distribution",
+//     () => null, () => {
+//     })
+//   .help()
+//   .argv

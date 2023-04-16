@@ -21,7 +21,7 @@
         "buildTarget": "pintle-cli:build",
         "watch": false,
         "args": [
-          "--help"
+          "build"
         ]
       }
     },

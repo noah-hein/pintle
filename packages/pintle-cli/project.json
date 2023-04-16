@@ -15,6 +15,13 @@
         "assets": ["packages/pintle-cli/*.md"]
       }
     },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm publish dist/packages/pintle-cli"
+      },
+      "dependsOn": ["build"]
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

@@ -17,7 +17,8 @@
     "paths": {
       "@pintle/example": ["packages/example/src/index.ts"],
       "pintle": ["packages/pintle/src/index.ts"],
-      "pintle-cli": ["packages/pintle-cli/src/index.ts"]
+      "pintle-cli": ["packages/pintle-cli/src/index.ts"],
+      "temp": ["packages/temp/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

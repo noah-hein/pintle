@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import {
-  Collections,
+  Collections, defaultInputOptions,
   defaultPintleOptions,
   Pintle,
   PintleOptions,
@@ -21,8 +21,15 @@ function build() {
 }
 
 export class BuildCommand {
+
+  private options: PintleOptions;
+
+  private collections: Collections;
+
   async run() {
-    new Pintle(await this.getOptions(), await this.findCollections());
+    this.options = await this.getOptions();
+    this.collections = await this.findCollections();
+    new Pintle(this.options, this.collections);
   }
 
   private async getOptions(): Promise<PintleOptions> {
@@ -38,13 +45,16 @@ export class BuildCommand {
         };
       }
     } catch (error) {
-      console.error("Could not read pintle config options");
+      console.error("Could not read pintle config options, using default");
     }
     return config;
   }
 
   private async findCollections(): Promise<Collections> {
-    console.log(path.resolve(__dirname, "./"));
+    const inputOptions = this.options.input;
+    const inputDir: string = inputOptions.dir || defaultInputOptions.dir;
+
+    console.log(path.resolve(__dirname, inputDir));
 
     // const temp = "./collections/*";
     // import(temp).then(module => {

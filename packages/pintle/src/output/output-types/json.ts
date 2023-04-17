@@ -1,4 +1,5 @@
-import { Collection, Collections, OutputType } from "pintle";
+import {Collection, Collections} from "../../collection";
+import {OutputType} from "../output-type";
 
 export class Json extends OutputType {
   parseSingle(collection: Collection): string {

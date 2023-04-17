@@ -1,5 +1,7 @@
 import * as YAML from "yaml";
-import { OutputType, Collection, Collections } from "pintle";
+import {Collection, Collections} from "../../collection";
+import {OutputType} from "../output-type";
+
 
 export class Yaml extends OutputType {
   parseSingle(collection: Collection): string {

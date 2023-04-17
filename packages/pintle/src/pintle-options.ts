@@ -1,5 +1,5 @@
 import { defaultOutputOptions, OutputOptions } from "./output";
-import {InputOptions} from "./input";
+import {defaultInputOptions, InputOptions} from "./input";
 
 export interface PintleOptions {
   input?: InputOptions;
@@ -7,5 +7,6 @@ export interface PintleOptions {
 }
 
 export const defaultPintleOptions: PintleOptions = {
+  input: defaultInputOptions,
   output: defaultOutputOptions,
 };

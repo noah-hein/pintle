@@ -1,8 +1,5 @@
 import * as fs from "fs";
-import {Collection, Collections} from "../collection";
-import {defaultPintleOptions, PintleOptions} from "../pintle-options";
-
-import {defaultFileOptions, FileOptions} from "./file-options";
+import {Collection, Collections, defaultPintleOptions, PintleOptions, defaultFileOptions, FileOptions} from "pintle";
 
 export abstract class FileType {
   /*==================================================================================================================
@@ -65,7 +62,7 @@ export abstract class FileType {
     let flattenedCollections: Collections = [];
     collections.forEach(collection => {
       flattenedCollections.push(collection);
-      const children = collection.children;
+      const children = collection.collections;
       const hasChildren = children && children.length > 0;
       if (hasChildren) {
         const flattenedChildren = this.flattenCollections(children);
@@ -93,7 +90,7 @@ export abstract class FileType {
   }
 
   private createCollection(collection: Collection, filename: string) {
-    const children = collection.children || [];
+    const children = collection.collections || [];
     const resources = collection.resources || [];
     //Create folder
     if (children && children.length > 0) {

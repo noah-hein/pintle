@@ -1,8 +1,8 @@
 import { defaultPintleOptions, PintleOptions } from "./pintle-options";
 import { Collections } from "./collection";
 import {FileType} from "./file-type/file-type";
-import {fileTypes, FileTypes} from "./file-type/file-types";
-import {defaultFileOptions} from "./file-type/file-options";
+import {fileTypes, FileTypes} from "./file-type";
+import {defaultFileOptions} from "./file-type";
 
 export class Pintle {
   /*==================================================================================================================

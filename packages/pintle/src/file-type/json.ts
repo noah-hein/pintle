@@ -1,7 +1,7 @@
-import { ResourceFactory } from "./ResourceFactory";
-import {Collection, Collections} from "../Collection";
+import { FileType } from "./file-type";
+import {Collection, Collections} from "../collection";
 
-export class JsonResourceFactory extends ResourceFactory {
+export class Json extends FileType {
   parseSingle(collection: Collection): string {
     const resources = collection.resources;
     return JSON.stringify(resources, null, 3);

@@ -1,8 +1,8 @@
 import * as YAML from "yaml";
-import { ResourceFactory } from "./ResourceFactory";
-import {Collection, Collections} from "../Collection";
+import { FileType } from "./file-type";
+import {Collection, Collections} from "../collection";
 
-export class YamlResourceFactory extends ResourceFactory {
+export class Yaml extends FileType {
   parseSingle(collection: Collection): string {
     const resources = collection.resources;
     let outputString = "";

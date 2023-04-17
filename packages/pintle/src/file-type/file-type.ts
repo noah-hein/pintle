@@ -1,9 +1,10 @@
 import * as fs from "fs";
-import { Collection, Collections } from "../Collection";
-import { defaultPintleOptions, PintleOptions } from "../PintleOptions";
-import { defaultFileOptions, FileOptions } from "../File";
+import {Collection, Collections} from "../collection";
+import {defaultPintleOptions, PintleOptions} from "../pintle-options";
 
-export abstract class ResourceFactory {
+import {defaultFileOptions, FileOptions} from "./file-options";
+
+export abstract class FileType {
   private readonly options: PintleOptions;
 
   private readonly fileOptions: FileOptions;

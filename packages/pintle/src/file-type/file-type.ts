@@ -5,11 +5,19 @@ import {defaultPintleOptions, PintleOptions} from "../pintle-options";
 import {defaultFileOptions, FileOptions} from "./file-options";
 
 export abstract class FileType {
+  /*==================================================================================================================
+        Private Members
+    ==================================================================================================================*/
+
   private readonly options: PintleOptions;
 
   private readonly fileOptions: FileOptions;
 
   private readonly collections: Collections;
+
+  /*==================================================================================================================
+        Constructors
+    ==================================================================================================================*/
 
   constructor(options: PintleOptions, collections: Collections) {
     this.options = options || defaultPintleOptions;
@@ -17,14 +25,26 @@ export abstract class FileType {
     this.collections = collections;
   }
 
+  /*==================================================================================================================
+        Abstract Methods
+    ==================================================================================================================*/
+
   abstract parseSingle(collection: Collection): string;
 
   abstract parseMany(collections: Collections): string;
+
+  /*==================================================================================================================
+        Public methods
+    ==================================================================================================================*/
 
   public build() {
     this.ensureDirExists(this.fileOptions.outputDir);
     this.determineBuilder(this.fileOptions.singleFile);
   }
+
+  /*==================================================================================================================
+        Private Methods
+    ==================================================================================================================*/
 
   private ensureDirExists(outputDir: string | undefined) {
     const dirExists = outputDir && fs.existsSync(outputDir);
@@ -55,7 +75,7 @@ export abstract class FileType {
     return flattenedCollections;
   }
 
-  singleFile() {
+  private singleFile() {
     const flattenCollections = this.flattenCollections(this.collections);
     const fileContent = this.parseMany(flattenCollections);
 
@@ -75,8 +95,6 @@ export abstract class FileType {
   private createCollection(collection: Collection, filename: string) {
     const children = collection.children || [];
     const resources = collection.resources || [];
-
-
     //Create folder
     if (children && children.length > 0) {
       const folderPath = this.determinePath(filename);

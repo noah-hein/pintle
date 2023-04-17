@@ -17,6 +17,7 @@
     },
     "node": {
       "executor": "@nrwl/js:node",
+      "dependsOn": ["build"],
       "options": {
         "buildTarget": "pintle-cli:build",
         "watch": false,

@@ -1,4 +1,4 @@
-import {defaultFileOptions, FileOptions} from "./file-type/file-options";
+import {defaultFileOptions, FileOptions} from "./file-type";
 
 export interface PintleOptions {
   file?: FileOptions;

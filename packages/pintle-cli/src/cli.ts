@@ -5,8 +5,9 @@ import {
   Pintle,
   PintleOptions,
 } from "pintle";
-import { isCollection } from "yaml";
 import * as path from "path";
+import * as chalk from "chalk";
+import * as Path from "path";
 
 function build() {
   //
@@ -53,8 +54,15 @@ export class BuildCommand {
   private async findCollections(): Promise<Collections> {
     const inputOptions = this.options.input;
     const inputDir: string = inputOptions.dir || defaultInputOptions.dir;
+    const inputDirPath = path.resolve(__dirname, inputDir);
 
-    console.log(path.resolve(__dirname, inputDir));
+    this.inputDirExists(inputDirPath);
+    const files = this.getFilesInDir(inputDirPath);
+
+    console.log(__dirname)
+
+    console.debug(files)
+
 
     // const temp = "./collections/*";
     // import(temp).then(module => {
@@ -69,6 +77,22 @@ export class BuildCommand {
     //   console.log(isCollection(value))
     // });
     return [];
+  }
+
+  private inputDirExists(inputDirPath: string) {
+    console.debug(chalk.blue("Checking for resource directory ") + inputDirPath);
+    if (!fs.existsSync(inputDirPath)) {
+      throw new Error("Could not find resource directory")
+    }
+  }
+
+  getFilesInDir(dirPath: string): string[] {
+    const files = fs.readdirSync(dirPath);
+    return files.map((file) => {
+      const filePath = path.join(dirPath, file);
+      const isDirectory = fs.statSync(filePath).isDirectory();
+      return isDirectory ? this.getFilesInDir(filePath) : filePath;
+    }).flat();
   }
 }
 

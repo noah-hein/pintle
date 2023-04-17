@@ -1,4 +1,4 @@
-import {Collection, Collections, OutputType} from "pintle";
+import { Collection, Collections, OutputType } from "pintle";
 
 export class Json extends OutputType {
   parseSingle(collection: Collection): string {
@@ -8,10 +8,10 @@ export class Json extends OutputType {
 
   parseMany(collections: Collections): string {
     const output: object[] = [];
-    collections.forEach(collection => {
+    collections.forEach((collection) => {
       const collectionString = this.parseSingle(collection);
       const resources: object[] = JSON.parse(collectionString);
-      resources.forEach(resource => {
+      resources.forEach((resource) => {
         output.push(resource);
       });
     });

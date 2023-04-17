@@ -1,8 +1,12 @@
 import * as fs from "fs";
-import {Collections, defaultPintleOptions, Pintle, PintleOptions} from "pintle";
-import {isCollection} from "yaml";
+import {
+  Collections,
+  defaultPintleOptions,
+  Pintle,
+  PintleOptions,
+} from "pintle";
+import { isCollection } from "yaml";
 import * as path from "path";
-
 
 function build() {
   //
@@ -17,12 +21,8 @@ function build() {
 }
 
 export class BuildCommand {
-
   async run() {
-    new Pintle(
-      await this.getOptions(),
-      await this.findCollections()
-    );
+    new Pintle(await this.getOptions(), await this.findCollections());
   }
 
   private async getOptions(): Promise<PintleOptions> {
@@ -34,18 +34,17 @@ export class BuildCommand {
       if (pintleOptions) {
         config = {
           ...config,
-          ...modules.options
+          ...modules.options,
         };
       }
     } catch (error) {
-      console.error("Could not read pintle config options")
+      console.error("Could not read pintle config options");
     }
     return config;
   }
 
   private async findCollections(): Promise<Collections> {
-
-    console.log(path.resolve(__dirname, "./"))
+    console.log(path.resolve(__dirname, "./"));
 
     // const temp = "./collections/*";
     // import(temp).then(module => {
@@ -64,10 +63,7 @@ export class BuildCommand {
 }
 
 const buildCommand = new BuildCommand();
-buildCommand.run()
-
-
-
+buildCommand.run();
 
 // yargs
 //   .scriptName("pintle-cli")

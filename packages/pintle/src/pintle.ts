@@ -1,8 +1,11 @@
 import { defaultPintleOptions, PintleOptions } from "./pintle-options";
 import { Collections } from "./collection";
-import {OutputType} from "./output/output-type";
-import {outputTypes, OutputTypes} from "./output";
-import {defaultOutputOptions} from "./output";
+import {
+  OutputType,
+  outputTypes,
+  OutputTypes,
+  defaultOutputOptions,
+} from "./output";
 
 export class Pintle {
   /*==================================================================================================================
@@ -51,7 +54,7 @@ export class Pintle {
     ==================================================================================================================*/
 
   private build() {
-    const type = this.options.file?.type;
+    const type = this.options.output?.type;
     if (type) {
       const resourceFactory = this.resourceFactory;
       resourceFactory.build();
@@ -59,15 +62,15 @@ export class Pintle {
   }
 
   private selectFactories(): OutputType {
-    const fileOptions = this.options.file || defaultOutputOptions;
-    const fileType = fileOptions.type ? fileOptions.type : OutputTypes.YAML;
+    const outputOptions = this.options.output || defaultOutputOptions;
+    const fileType = outputOptions.type ? outputOptions.type : OutputTypes.YAML;
     return outputTypes(this.options, this.collections)[fileType];
   }
 
   private parseOptions(options: PintleOptions) {
-    options.file = {
+    options.output = {
       ...defaultOutputOptions,
-      ...options.file,
+      ...options.output,
     };
     return {
       ...defaultPintleOptions,

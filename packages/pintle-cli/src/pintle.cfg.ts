@@ -1,9 +1,9 @@
-import {OutputTypes, PintleOptions} from "pintle";
+import { OutputTypes, PintleOptions } from "pintle";
 
 export const options: PintleOptions = {
-  file: {
+  output: {
     outputDir: "dist/out",
     singleFile: false,
-    type: OutputTypes.YAML
+    type: OutputTypes.YAML,
   },
-}
+};

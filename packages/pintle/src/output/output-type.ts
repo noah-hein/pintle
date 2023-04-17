@@ -1,5 +1,12 @@
 import * as fs from "fs";
-import {Collection, Collections, defaultPintleOptions, PintleOptions, defaultOutputOptions, OutputOptions} from "pintle";
+import {
+  Collection,
+  Collections,
+  defaultPintleOptions,
+  PintleOptions,
+  defaultOutputOptions,
+  OutputOptions,
+} from "pintle";
 
 export abstract class OutputType {
   /*==================================================================================================================
@@ -8,7 +15,7 @@ export abstract class OutputType {
 
   private readonly options: PintleOptions;
 
-  private readonly fileOptions: OutputOptions;
+  private readonly outputOptions: OutputOptions;
 
   private readonly collections: Collections;
 
@@ -18,7 +25,7 @@ export abstract class OutputType {
 
   constructor(options: PintleOptions, collections: Collections) {
     this.options = options || defaultPintleOptions;
-    this.fileOptions = options.file || defaultOutputOptions;
+    this.outputOptions = options.output || defaultOutputOptions;
     this.collections = collections;
   }
 
@@ -35,8 +42,8 @@ export abstract class OutputType {
     ==================================================================================================================*/
 
   public build() {
-    this.ensureDirExists(this.fileOptions.outputDir);
-    this.determineBuilder(this.fileOptions.singleFile);
+    this.ensureDirExists(this.outputOptions.outputDir);
+    this.determineBuilder(this.outputOptions.singleFile);
   }
 
   /*==================================================================================================================
@@ -60,7 +67,7 @@ export abstract class OutputType {
 
   private flattenCollections(collections: Collections): Collections {
     let flattenedCollections: Collections = [];
-    collections.forEach(collection => {
+    collections.forEach((collection) => {
       flattenedCollections.push(collection);
       const children = collection.collections;
       const hasChildren = children && children.length > 0;
@@ -68,7 +75,7 @@ export abstract class OutputType {
         const flattenedChildren = this.flattenCollections(children);
         flattenedCollections = flattenedCollections.concat(flattenedChildren);
       }
-    })
+    });
     return flattenedCollections;
   }
 
@@ -77,9 +84,11 @@ export abstract class OutputType {
     const fileContent = this.parseMany(flattenCollections);
 
     //Create folder and file
-    const fileOptions = this.fileOptions;
-    const filePath = this.determinePath(fileOptions.filename + "." + fileOptions.type);
-    this.createFolder(fileOptions.outputDir);
+    const outputOptions = this.outputOptions;
+    const filePath = this.determinePath(
+      outputOptions.filename + "." + outputOptions.type
+    );
+    this.createFolder(outputOptions.outputDir);
     this.createFile(fileContent, filePath);
   }
 
@@ -100,17 +109,18 @@ export abstract class OutputType {
     //Create file
     if (resources) {
       const content = this.parseSingle(collection);
-      const filePath = this.determinePath(filename) + "." + this.fileOptions.type
+      const filePath =
+        this.determinePath(filename) + "." + this.outputOptions.type;
       this.createFile(content, filePath);
     }
     //Recurse through children
-    children.forEach(child => {
+    children.forEach((child) => {
       this.createCollection(child, filename + "/" + child.name);
     });
   }
 
   private determinePath(path: string) {
-    return this.fileOptions.outputDir + "/" + path;
+    return this.outputOptions.outputDir + "/" + path;
   }
 
   private createFile(content: string, filename: string) {

@@ -13,10 +13,10 @@ export class Yaml extends OutputType {
 
   parseMany(collections: Collections): string {
     let yaml = "";
-    collections.forEach(collection => {
+    collections.forEach((collection) => {
       const collectionString = this.parseSingle(collection);
       yaml = yaml + collectionString;
-    })
+    });
     return yaml;
   }
 }

@@ -1,8 +1,8 @@
-import {PintleOptions} from "../../pintle-options";
-import {Collections} from "../../collection";
-import {Yaml} from "./yaml";
-import {Json} from "./json";
-import {OutputType} from "../output-type";
+import { PintleOptions } from "../../pintle-options";
+import { Collections } from "../../collection";
+import { Yaml } from "./yaml";
+import { Json } from "./json";
+import { OutputType } from "../output-type";
 
 export enum OutputTypes {
   JSON = "json",
@@ -18,4 +18,3 @@ export const outputTypes = (
     json: new Json(options, collections),
   };
 };
-

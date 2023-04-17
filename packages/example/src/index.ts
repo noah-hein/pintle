@@ -1,10 +1,10 @@
 import { OutputTypes, Pintle } from "pintle";
-import {arkWorld} from "./ark";
+import { arkWorld } from "./ark";
 
 export function bootstrap() {
   Pintle.create(
     {
-      file: {
+      output: {
         outputDir: "dist/out",
         singleFile: false,
         type: OutputTypes.YAML,
@@ -14,7 +14,7 @@ export function bootstrap() {
       arkWorld("island"),
       arkWorld("aberation"),
       arkWorld("extinction"),
-      arkWorld("scorched-earth")
+      arkWorld("scorched-earth"),
     ]
   );
 }

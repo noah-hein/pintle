@@ -21,9 +21,7 @@
       "options": {
         "buildTarget": "pintle-cli:build",
         "watch": false,
-        "args": [
-          "build"
-        ]
+        "args": ["build"]
       }
     },
     "publish": {

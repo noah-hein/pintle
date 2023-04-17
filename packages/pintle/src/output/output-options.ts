@@ -1,4 +1,4 @@
-import {OutputTypes} from "./output-types";
+import { OutputTypes } from "./output-types";
 
 export interface OutputOptions {
   type?: OutputTypes;

@@ -1,8 +1,7 @@
 import * as YAML from "yaml";
-import { FileType } from "./file-type";
-import {Collection, Collections} from "../collection";
+import { OutputType, Collection, Collections } from "pintle";
 
-export class Yaml extends FileType {
+export class Yaml extends OutputType {
   parseSingle(collection: Collection): string {
     const resources = collection.resources;
     let outputString = "";

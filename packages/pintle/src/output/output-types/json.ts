@@ -1,7 +1,6 @@
-import { FileType } from "./file-type";
-import {Collection, Collections} from "../collection";
+import {Collection, Collections, OutputType} from "pintle";
 
-export class Json extends FileType {
+export class Json extends OutputType {
   parseSingle(collection: Collection): string {
     const resources = collection.resources;
     return JSON.stringify(resources, null, 3);

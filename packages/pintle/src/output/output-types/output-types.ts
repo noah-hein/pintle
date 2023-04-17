@@ -1,18 +1,18 @@
-import {PintleOptions} from "../pintle-options";
-import {Collections} from "../collection";
+import {PintleOptions} from "../../pintle-options";
+import {Collections} from "../../collection";
 import {Yaml} from "./yaml";
 import {Json} from "./json";
-import {FileType} from "./file-type";
+import {OutputType} from "../output-type";
 
-export enum FileTypes {
+export enum OutputTypes {
   JSON = "json",
   YAML = "yaml",
 }
 
-export const fileTypes = (
+export const outputTypes = (
   options: PintleOptions,
   collections: Collections
-): { [name in FileTypes]: FileType } => {
+): { [name in OutputTypes]: OutputType } => {
   return {
     yaml: new Yaml(options, collections),
     json: new Json(options, collections),

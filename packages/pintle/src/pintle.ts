@@ -1,8 +1,8 @@
 import { defaultPintleOptions, PintleOptions } from "./pintle-options";
 import { Collections } from "./collection";
-import {FileType} from "./file-type/file-type";
-import {fileTypes, FileTypes} from "./file-type";
-import {defaultFileOptions} from "./file-type";
+import {OutputType} from "./output/output-type";
+import {outputTypes, OutputTypes} from "./output";
+import {defaultOutputOptions} from "./output";
 
 export class Pintle {
   /*==================================================================================================================
@@ -13,7 +13,7 @@ export class Pintle {
 
   private readonly options: PintleOptions;
 
-  private readonly resourceFactory: FileType;
+  private readonly resourceFactory: OutputType;
 
   /*==================================================================================================================
         Constructors
@@ -58,15 +58,15 @@ export class Pintle {
     }
   }
 
-  private selectFactories(): FileType {
-    const fileOptions = this.options.file || defaultFileOptions;
-    const fileType = fileOptions.type ? fileOptions.type : FileTypes.YAML;
-    return fileTypes(this.options, this.collections)[fileType];
+  private selectFactories(): OutputType {
+    const fileOptions = this.options.file || defaultOutputOptions;
+    const fileType = fileOptions.type ? fileOptions.type : OutputTypes.YAML;
+    return outputTypes(this.options, this.collections)[fileType];
   }
 
   private parseOptions(options: PintleOptions) {
     options.file = {
-      ...defaultFileOptions,
+      ...defaultOutputOptions,
       ...options.file,
     };
     return {

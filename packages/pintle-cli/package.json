@@ -1,4 +1,7 @@
 {
   "name": "pintle-cli",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "bin": {
+    "pintle": "cli.ts"
+  }
 }

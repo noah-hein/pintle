@@ -1,9 +1,9 @@
-import {defaultFileOptions, FileOptions} from "./file-type";
+import {defaultOutputOptions, OutputOptions} from "./output";
 
 export interface PintleOptions {
-  file?: FileOptions;
+  file?: OutputOptions;
 }
 
 export const defaultPintleOptions: PintleOptions = {
-  file: defaultFileOptions,
+  file: defaultOutputOptions,
 };

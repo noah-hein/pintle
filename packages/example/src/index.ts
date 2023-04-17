@@ -1,4 +1,4 @@
-import { FileTypes, Pintle } from "pintle";
+import { OutputTypes, Pintle } from "pintle";
 import {arkWorld} from "./ark";
 
 export function bootstrap() {
@@ -7,7 +7,7 @@ export function bootstrap() {
       file: {
         outputDir: "dist/out",
         singleFile: false,
-        type: FileTypes.YAML,
+        type: OutputTypes.YAML,
       },
     },
     [

@@ -1,9 +1,10 @@
 import * as fs from "fs";
-import {defaultPintleOptions, PintleOptions} from "pintle";
+import {Collections, defaultPintleOptions, Pintle, PintleOptions} from "pintle";
+import {isCollection} from "yaml";
+import * as path from "path";
 
 
 function build() {
-  // const test = "./collections/ark-server.ballsack";
   //
   // import(test).then(module => {
   //   const moduleExports = Object.entries(module);
@@ -18,11 +19,13 @@ function build() {
 export class BuildCommand {
 
   async run() {
-    const config: PintleOptions = await this.getConfig();
-    console.log(config)
+    new Pintle(
+      await this.getOptions(),
+      await this.findCollections()
+    );
   }
 
-  private async getConfig(): Promise<PintleOptions> {
+  private async getOptions(): Promise<PintleOptions> {
     const configPath = "./pintle.cfg";
     let config = defaultPintleOptions;
     try {
@@ -38,6 +41,25 @@ export class BuildCommand {
       console.error("Could not read pintle config options")
     }
     return config;
+  }
+
+  private async findCollections(): Promise<Collections> {
+
+    console.log(path.resolve(__dirname, "./"))
+
+    // const temp = "./collections/*";
+    // import(temp).then(module => {
+    //   console.log(module)
+    // })
+
+    // const moduleExports = Object.entries(module);
+    // moduleExports.forEach(moduleExport => {
+    //   const key = moduleExport[0];
+    //   const value = moduleExport[1];
+    //   console.log(value)
+    //   console.log(isCollection(value))
+    // });
+    return [];
   }
 }
 

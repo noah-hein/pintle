@@ -1,14 +1,14 @@
 import * as fs from "fs";
-import {Collection, Collections, defaultPintleOptions, PintleOptions, defaultFileOptions, FileOptions} from "pintle";
+import {Collection, Collections, defaultPintleOptions, PintleOptions, defaultOutputOptions, OutputOptions} from "pintle";
 
-export abstract class FileType {
+export abstract class OutputType {
   /*==================================================================================================================
         Private Members
     ==================================================================================================================*/
 
   private readonly options: PintleOptions;
 
-  private readonly fileOptions: FileOptions;
+  private readonly fileOptions: OutputOptions;
 
   private readonly collections: Collections;
 
@@ -18,7 +18,7 @@ export abstract class FileType {
 
   constructor(options: PintleOptions, collections: Collections) {
     this.options = options || defaultPintleOptions;
-    this.fileOptions = options.file || defaultFileOptions;
+    this.fileOptions = options.file || defaultOutputOptions;
     this.collections = collections;
   }
 

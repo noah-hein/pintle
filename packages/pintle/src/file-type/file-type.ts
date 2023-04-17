@@ -22,8 +22,19 @@ export abstract class FileType {
   abstract parseMany(collections: Collections): string;
 
   public build() {
-    const isSingleFile = this.fileOptions.singleFile;
-    if (isSingleFile) {
+    this.ensureDirExists(this.fileOptions.outputDir);
+    this.determineBuilder(this.fileOptions.singleFile);
+  }
+
+  private ensureDirExists(outputDir: string | undefined) {
+    const dirExists = outputDir && fs.existsSync(outputDir);
+    if (!dirExists) {
+      this.createFolder(outputDir);
+    }
+  }
+
+  private determineBuilder(singleFile: boolean | undefined) {
+    if (singleFile) {
       this.singleFile();
     } else {
       this.multipleFiles();

@@ -3,9 +3,9 @@ import {isCollection} from "pintle";
 
 function test() {
 
+  const test = "./collections/ark-server.ballsack";
 
-
-  import("./collections/ark-server").then(module => {
+  import(test).then(module => {
     const moduleExports = Object.entries(module);
     moduleExports.forEach(moduleExport => {
       const key = moduleExport[0];

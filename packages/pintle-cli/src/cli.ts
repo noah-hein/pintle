@@ -56,15 +56,27 @@ export class BuildCommand {
     const baseDir = process.cwd();
     const inputDir: string = inputOptions.dir || defaultInputOptions.dir;
     const inputDirPath = path.resolve(baseDir, inputDir);
-    console.log(inputDirPath)
 
     this.inputDirExists(inputDirPath);
-    const files = this.getFilesInDir(inputDirPath);
+    const tsFiles = this.findTsFiles(inputDirPath);
 
-    console.log(__dirname)
-    console.log(process.cwd())
+    tsFiles.forEach(file => {
+      const relativeFilePath = path.relative(inputDir, file);
 
-    console.debug(files)
+      //console.log(file)
+      //console.log(relativeFilePath)
+
+
+      //const temp = path.relative(__dirname, relativeFilePath);
+
+      //console.log(temp)
+      const temp = path.join("../../../", inputOptions.dir, relativeFilePath)
+      console.log(temp)
+
+      import(temp).then(module => {
+        console.log(module)
+      });
+    });
 
 
     // const temp = "./collections/*";
@@ -82,6 +94,12 @@ export class BuildCommand {
     return [];
   }
 
+  private findTsFiles(inputDirPath: string) {
+    const allFiles: string[] = this.getFilesInDir(inputDirPath);
+    const tsFiles = allFiles.filter(file => file.endsWith(".ts"));
+    return tsFiles.map(file => file.replace(".ts", ""));
+  }
+
   private inputDirExists(inputDirPath: string) {
     console.debug(chalk.blue("Checking for resource directory ") + inputDirPath);
     if (!fs.existsSync(inputDirPath)) {
@@ -89,7 +107,7 @@ export class BuildCommand {
     }
   }
 
-  getFilesInDir(dirPath: string): string[] {
+  private getFilesInDir(dirPath: string): string[] {
     const files = fs.readdirSync(dirPath);
     return files.map((file) => {
       const filePath = path.join(dirPath, file);

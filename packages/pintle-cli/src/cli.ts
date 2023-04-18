@@ -53,13 +53,16 @@ export class BuildCommand {
 
   private async findCollections(): Promise<Collections> {
     const inputOptions = this.options.input;
+    const baseDir = process.cwd();
     const inputDir: string = inputOptions.dir || defaultInputOptions.dir;
-    const inputDirPath = path.resolve(__dirname, inputDir);
+    const inputDirPath = path.resolve(baseDir, inputDir);
+    console.log(inputDirPath)
 
     this.inputDirExists(inputDirPath);
     const files = this.getFilesInDir(inputDirPath);
 
     console.log(__dirname)
+    console.log(process.cwd())
 
     console.debug(files)
 

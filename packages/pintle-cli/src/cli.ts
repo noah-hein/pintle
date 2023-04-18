@@ -7,7 +7,7 @@ import {
 } from "pintle";
 import * as path from "path";
 import * as chalk from "chalk";
-import * as Path from "path";
+import {glob} from "glob";
 
 function build() {
   //
@@ -54,29 +54,32 @@ export class BuildCommand {
   private async findCollections(): Promise<Collections> {
     const inputOptions = this.options.input;
     const baseDir = process.cwd();
-    const inputDir: string = inputOptions.dir || defaultInputOptions.dir;
-    const inputDirPath = path.resolve(baseDir, inputDir);
+    const source: string = inputOptions.source || defaultInputOptions.source;
+    const inputDirPath = path.resolve(baseDir, source);
 
-    this.inputDirExists(inputDirPath);
-    const tsFiles = this.findTsFiles(inputDirPath);
+    //this.inputDirExists(inputDirPath);
 
-    tsFiles.forEach(file => {
-      const relativeFilePath = path.relative(inputDir, file);
+    console.log(inputDirPath)
 
-      //console.log(file)
-      //console.log(relativeFilePath)
-
-
-      //const temp = path.relative(__dirname, relativeFilePath);
-
-      //console.log(temp)
-      const temp = path.join("../../../", inputOptions.dir, relativeFilePath)
-      console.log(temp)
-
-      import(temp).then(module => {
-        console.log(module)
-      });
-    });
+    // const collectionsPath = `./${inputDir}/**/*.ts`;
+    // const tsFiles: string[] = glob.sync(collectionsPath);
+    // const files = tsFiles.map(file => file
+    //   .replace(/\\/g, "/")
+    //   .replace(".ts", "")
+    // );
+    //
+    //
+    // console.log(files)
+    //
+    // files.forEach(file => {
+    //   const relativePath = path.relative(baseDir, file);
+    //   console.log(relativePath)
+    //
+    //
+    //   import("./collections/keycloak").then(module => {
+    //     console.log(module)
+    //   });
+    // });
 
 
     // const temp = "./collections/*";
@@ -94,26 +97,11 @@ export class BuildCommand {
     return [];
   }
 
-  private findTsFiles(inputDirPath: string) {
-    const allFiles: string[] = this.getFilesInDir(inputDirPath);
-    const tsFiles = allFiles.filter(file => file.endsWith(".ts"));
-    return tsFiles.map(file => file.replace(".ts", ""));
-  }
-
   private inputDirExists(inputDirPath: string) {
     console.debug(chalk.blue("Checking for resource directory ") + inputDirPath);
     if (!fs.existsSync(inputDirPath)) {
       throw new Error("Could not find resource directory")
     }
-  }
-
-  private getFilesInDir(dirPath: string): string[] {
-    const files = fs.readdirSync(dirPath);
-    return files.map((file) => {
-      const filePath = path.join(dirPath, file);
-      const isDirectory = fs.statSync(filePath).isDirectory();
-      return isDirectory ? this.getFilesInDir(filePath) : filePath;
-    }).flat();
   }
 }
 

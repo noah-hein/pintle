@@ -1,9 +1,9 @@
 export interface InputOptions {
+  source: string;
   dir: string;
-  rawDir: string;
 }
 
 export const defaultInputOptions: InputOptions = {
-  dir: "packages/pintle-cli/src/collections",
-  rawDir: "packages/pintle-cli/src/collections",
+  source: "packages/pintle-cli/src/",
+  dir: "collections",
 };

@@ -2,9 +2,10 @@ import * as fs from "fs";
 import * as path from "path";
 import * as chalk from "chalk";
 import {
+  Collection,
   Collections,
   defaultPintleOptions,
-  InputOptions,
+  InputOptions, isCollection,
   Pintle,
   PintleOptions,
 } from "pintle";
@@ -52,48 +53,29 @@ export class BuildCommand {
     //Ensure the collections dir exists
     this.inputDirExists(collectionsDirPath);
 
-    //Get all typescript files
+    //Import typescript files in collections folder
     const files = this.getTsFiles(inputOptions);
+    this.importFiles(files);
+
+    //
 
 
+    return [];
+  }
 
+  private importFiles(files: string[]) {
     files.forEach(file => {
       const relativePath = "./" + file;
       import(relativePath).then(module => {
-
-
-        console.log(module)
+        const moduleCollections = this.getModuleCollections(module);
+        console.log(moduleCollections)
       })
     })
+  }
 
-    //
-    //
-    // console.log(files)
-    //
-    // files.forEach(file => {
-    //   const relativePath = path.relative(baseDir, file);
-    //   console.log(relativePath)
-    //
-    //
-    //   import("./collections/keycloak").then(module => {
-    //     console.log(module)
-    //   });
-    // });
-
-
-    // const temp = "./collections/*";
-    // import(temp).then(module => {
-    //   console.log(module)
-    // })
-
-    // const moduleExports = Object.entries(module);
-    // moduleExports.forEach(moduleExport => {
-    //   const key = moduleExport[0];
-    //   const value = moduleExport[1];
-    //   console.log(value)
-    //   console.log(isCollection(value))
-    // });
-    return [];
+  private getModuleCollections(module: object[]): Collections {
+    const objects = Object.values(module);
+    return objects.filter(object => isCollection(object)) as Collections;
   }
 
   private getTsFiles(inputOptions: InputOptions): string[] {

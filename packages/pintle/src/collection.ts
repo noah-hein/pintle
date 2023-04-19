@@ -1,6 +1,6 @@
 export interface Collection {
   name: string;
-  resources?: Resources;
+  resources: Resources;
   collections?: Collections;
 }
 

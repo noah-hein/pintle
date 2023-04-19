@@ -1,8 +1,6 @@
 import {Collection, Templates} from "pintle";
 
-export const keycloak: Collection = {
+export const Keycloak: Collection = {
   name: "keycloak",
   resources: [Templates.namespace("keycloak")],
 };
-
-export default keycloak;

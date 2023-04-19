@@ -4,5 +4,3 @@ export const ArkServer: Collection = {
   name: "ark-server",
   resources: [Templates.namespace("ark-server")],
 };
-
-export default ArkServer;

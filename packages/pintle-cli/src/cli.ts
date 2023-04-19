@@ -1,25 +1,14 @@
 import * as fs from "fs";
+import * as path from "path";
+import * as chalk from "chalk";
 import {
-  Collections, defaultInputOptions,
+  Collections,
   defaultPintleOptions,
+  InputOptions,
   Pintle,
   PintleOptions,
 } from "pintle";
-import * as path from "path";
-import * as chalk from "chalk";
 import {glob} from "glob";
-
-function build() {
-  //
-  // import(test).then(module => {
-  //   const moduleExports = Object.entries(module);
-  //   moduleExports.forEach(moduleExport => {
-  //     const key = moduleExport[0];
-  //     const value = moduleExport[1];
-  //     console.log(isCollection(value))
-  //   });
-  // });
-}
 
 export class BuildCommand {
 
@@ -52,21 +41,31 @@ export class BuildCommand {
   }
 
   private async findCollections(): Promise<Collections> {
+    //File and folder locations
     const inputOptions = this.options.input;
     const baseDir = process.cwd();
-    const source: string = inputOptions.source || defaultInputOptions.source;
-    const inputDirPath = path.resolve(baseDir, source);
+    const sourceDir: string = inputOptions.source;
+    const collectionsDir: string = inputOptions.collections;
+    const sourceDirPath = path.resolve(baseDir, sourceDir);
+    const collectionsDirPath = path.resolve(sourceDirPath, collectionsDir);
 
-    //this.inputDirExists(inputDirPath);
+    //Ensure the collections dir exists
+    this.inputDirExists(collectionsDirPath);
 
-    console.log(inputDirPath)
+    //Get all typescript files
+    const files = this.getTsFiles(inputOptions);
 
-    // const collectionsPath = `./${inputDir}/**/*.ts`;
-    // const tsFiles: string[] = glob.sync(collectionsPath);
-    // const files = tsFiles.map(file => file
-    //   .replace(/\\/g, "/")
-    //   .replace(".ts", "")
-    // );
+
+
+    files.forEach(file => {
+      const relativePath = "./" + file;
+      import(relativePath).then(module => {
+
+
+        console.log(module)
+      })
+    })
+
     //
     //
     // console.log(files)
@@ -95,6 +94,27 @@ export class BuildCommand {
     //   console.log(isCollection(value))
     // });
     return [];
+  }
+
+  private getTsFiles(inputOptions: InputOptions): string[] {
+    const sourceDir = inputOptions.source;
+    const collectionsDir = inputOptions.collections;
+
+    //Build path for file search
+    const sourceWithCollections = path
+      .join(sourceDir + collectionsDir)
+      .replace(/\\/g, "/");
+    const collectionsPath = `${sourceWithCollections}/**/*.ts`;
+
+    //Search for files with glob
+    const tsFilesWithEnding = glob.sync(collectionsPath);
+
+    //Parse file and return paths
+    return tsFilesWithEnding.map(file => file
+      .replace(/\\/g, "/")
+      .replace(".ts", "")
+      .replace(sourceDir, "")
+    );
   }
 
   private inputDirExists(inputDirPath: string) {

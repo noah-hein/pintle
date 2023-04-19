@@ -1,3 +1,5 @@
+import {Resources} from "./resource";
+
 export interface Collection {
   name: string;
   resources: Resources;
@@ -14,6 +16,3 @@ export function isCollection(object: unknown): object is Collection {
     "resources" in object
   );
 }
-
-export type Resource = object;
-export type Resources = Resource[];

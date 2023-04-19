@@ -2,24 +2,24 @@ import * as fs from "fs";
 import * as path from "path";
 import * as chalk from "chalk";
 import {
-  Collection,
   Collections,
   defaultPintleOptions,
-  InputOptions, isCollection,
+  InputOptions, isResourceFile,
   Pintle,
-  PintleOptions,
+  PintleOptions, ResourceFile, Resources,
 } from "pintle";
 import {glob} from "glob";
 
+
 export class BuildCommand {
 
-  private options: PintleOptions;
+  private options: PintleOptions = defaultPintleOptions;
 
-  private collections: Collections;
+  private collections: Collections = [];
 
   async run() {
     this.options = await this.getOptions();
-    this.collections = await this.findCollections();
+    await this.compileCollections();
     new Pintle(this.options, this.collections);
   }
 
@@ -41,7 +41,7 @@ export class BuildCommand {
     return config;
   }
 
-  private async findCollections(): Promise<Collections> {
+  private async compileCollections(): Promise<Collections> {
     //File and folder locations
     const inputOptions = this.options.input;
     const baseDir = process.cwd();
@@ -55,7 +55,7 @@ export class BuildCommand {
 
     //Import typescript files in collections folder
     const files = this.getTsFiles(inputOptions);
-    this.importFiles(files);
+    this.importFiles(files, collectionsDir);
 
     //
 
@@ -63,19 +63,47 @@ export class BuildCommand {
     return [];
   }
 
-  private importFiles(files: string[]) {
+  private importFiles(files: string[], collectionsDir: string) {
+    const collections: Collections = [];
+
+    //Loop through each file string
     files.forEach(file => {
       const relativePath = "./" + file;
+      const treeString = file.replace(collectionsDir + "/", "");
+
+      //Dynamically import file by relative path
       import(relativePath).then(module => {
-        const moduleCollections = this.getModuleCollections(module);
-        console.log(moduleCollections)
-      })
-    })
+        const exports: object[] = Object.values(module);
+
+
+        const resources = this.getResources(exports);
+        console.log(resources)
+
+        // const moduleCollections = this.getModuleCollections(module);
+        // const resources = moduleCollections.map(collection => collection.resources);
+        // console.log(resources)
+        // console.log(treeString)
+      });
+    });
   }
 
-  private getModuleCollections(module: object[]): Collections {
-    const objects = Object.values(module);
-    return objects.filter(object => isCollection(object)) as Collections;
+  private getResources(exports: object[]) {
+    let resources: Resources = [];
+    exports.forEach(moduleExport => {
+
+      //Check if the export inherits ResourceFile class
+      if (isResourceFile(moduleExport)) {
+        const temp = moduleExport as unknown as {new(): ResourceFile};
+        const exportResources = new temp().resources();
+
+        //Merge resources into main array
+        resources = [
+          ...resources,
+          ...exportResources
+        ];
+      }
+    });
+    return resources;
   }
 
   private getTsFiles(inputOptions: InputOptions): string[] {

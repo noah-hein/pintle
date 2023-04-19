@@ -1,6 +1,9 @@
-import {Collection, Templates} from "pintle";
+import {ResourceFile, Resources, Templates} from "pintle";
 
-export const Keycloak: Collection = {
-  name: "keycloak",
-  resources: [Templates.namespace("keycloak")],
-};
+export class Keycloak extends ResourceFile {
+  resources(): Resources {
+    return [
+      Templates.namespace("foobar")
+    ]
+  }
+}

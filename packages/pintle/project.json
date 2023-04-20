@@ -9,10 +9,18 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/pintle",
-        "main": "packages/pintle/src/index.ts",
         "tsConfig": "packages/pintle/tsconfig.lib.json",
+        "packageJson": "packages/pintle/package.json",
+        "main": "packages/pintle/src/index.ts",
         "assets": ["packages/pintle/*.md"]
       }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm publish dist/packages/pintle"
+      },
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",

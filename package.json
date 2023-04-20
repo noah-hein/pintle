@@ -6,7 +6,6 @@
   "private": true,
   "dependencies": {
     "@kubernetes/client-node": "^0.18.1",
-    "@types/lodash": "^4.14.194",
     "chalk": "4.1.2",
     "glob": "^10.2.1",
     "lodash": "^4.17.21",
@@ -29,6 +28,7 @@
     "@swc/core": "^1.2.173",
     "@types/jest": "^29.4.0",
     "@types/node": "~18.7.1",
+    "@types/lodash": "^4.14.194",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "eslint": "~8.15.0",

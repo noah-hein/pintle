@@ -14,7 +14,7 @@ import {
   Resources,
 } from "pintle";
 import { glob } from "glob";
-import { Command } from "../command";
+import { Command } from "./command";
 import { Options } from "../options";
 import { Paths } from "../paths";
 

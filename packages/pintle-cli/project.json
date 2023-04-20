@@ -38,15 +38,6 @@
         }
       }
     },
-    "run:build": {
-      "executor": "@nrwl/js:node",
-      "dependsOn": ["build"],
-      "options": {
-        "buildTarget": "pintle-cli:build",
-        "watch": false,
-        "args": ["build"]
-      }
-    },
     "publish": {
       "executor": "nx:run-commands",
       "options": {

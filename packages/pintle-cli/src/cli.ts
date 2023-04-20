@@ -1,6 +1,6 @@
-import { BuildCommand } from "./commands/build";
 import * as yargs from "yargs";
-import { CleanCommand } from "./commands/clean";
+import { BuildCommand } from "./commands";
+import { CleanCommand } from "./commands";
 
 yargs
   .scriptName("pintle-cli")

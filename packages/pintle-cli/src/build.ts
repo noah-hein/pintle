@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as chalk from "chalk";
 import * as fs from "fs";
+import * as _ from "lodash";
 import {
   Collection,
   Collections,
@@ -13,7 +14,6 @@ import {
   Resources
 } from "pintle";
 import {glob} from "glob";
-import * as _ from "lodash";
 
 export class BuildCommand {
 
@@ -83,9 +83,8 @@ export class BuildCommand {
       });
     }
 
-    //Merge all collections
-    const collections = this.mergeCollections(topLevelCollections);
-    console.log(collections)
+    //Merge and set collections
+    this.collections = this.mergeCollections(topLevelCollections);
   }
 
   private mergeCollections(topLevelCollections: Collections): Collections {

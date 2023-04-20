@@ -1,12 +1,7 @@
 import * as fs from "fs";
-import {
-  Collection,
-  Collections,
-  defaultPintleOptions,
-  PintleOptions,
-  defaultOutputOptions,
-  OutputOptions,
-} from "pintle";
+import {defaultPintleOptions, PintleOptions} from "../pintle-options";
+import {defaultOutputOptions, OutputOptions} from "./output-options";
+import {Collection, Collections} from "../collection";
 
 export abstract class OutputType {
   /*==================================================================================================================

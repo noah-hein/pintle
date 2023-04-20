@@ -107,7 +107,7 @@ export abstract class OutputType {
       this.createFolder(folderPath);
     }
     //Create file
-    if (resources) {
+    if (resources && resources.length > 0) {
       const content = this.parseSingle(collection);
       const filePath =
         this.determinePath(filename) + "." + this.outputOptions.type;

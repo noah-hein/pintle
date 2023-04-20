@@ -14,8 +14,9 @@ import {
   Resources
 } from "pintle";
 import {glob} from "glob";
+import {Command} from "./command";
 
-export class BuildCommand {
+export class BuildCommand extends Command {
 
   private options: PintleOptions = defaultPintleOptions;
 

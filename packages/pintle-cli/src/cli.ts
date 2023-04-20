@@ -1,15 +1,19 @@
 import {BuildCommand} from "./build";
+import * as yargs from "yargs";
 
-
-const buildCommand = new BuildCommand();
-buildCommand.run();
-
-// yargs
-//   .scriptName("pintle-cli")
-//   .command(
-//     "build",
-//     "Finds and compiles all resources into a configurable distribution",
-//     () => null, () => {
-//     })
-//   .help()
-//   .argv
+yargs
+  .scriptName("pintle-cli")
+  .help()
+  .command(
+    "build",
+    "Finds and compiles all resources into a configurable distribution",
+    () => null,
+    async () => new BuildCommand().run()
+  )
+  .command(
+    "clean",
+    "Foobar",
+    () => null,
+    async  () => new BuildCommand().run()
+  )
+  .argv

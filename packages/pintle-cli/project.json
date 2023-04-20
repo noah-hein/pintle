@@ -18,10 +18,35 @@
     "node": {
       "executor": "@nrwl/js:node",
       "dependsOn": ["build"],
+      "defaultConfiguration": "clean",
+      "options": {
+        "buildTarget": "pintle-cli:build",
+        "watch": false
+      },
+      "configurations": {
+        "help": {
+          "args": ["--help"]
+        },
+        "version": {
+          "args": ["--version"]
+        },
+        "build": {
+          "args": ["build"]
+        },
+        "clean": {
+          "args": ["clean"]
+        }
+      }
+    },
+    "run:build": {
+      "executor": "@nrwl/js:node",
+      "dependsOn": ["build"],
       "options": {
         "buildTarget": "pintle-cli:build",
         "watch": false,
-        "args": ["build"]
+        "args": [
+          "build"
+        ]
       }
     },
     "publish": {

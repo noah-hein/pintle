@@ -1,4 +1,4 @@
-import {Resources} from "./resource";
+import { Resources } from "./resource";
 
 export interface Collection {
   name: string;

@@ -1,7 +1,6 @@
 import * as YAML from "yaml";
-import {Collection, Collections} from "../../collection";
-import {OutputType} from "../output-type";
-
+import { Collection, Collections } from "../../collection";
+import { OutputType } from "../output-type";
 
 export class Yaml extends OutputType {
   parseSingle(collection: Collection): string {

@@ -1,4 +1,4 @@
-import {V1Namespace} from "@kubernetes/client-node";
+import { V1Namespace } from "@kubernetes/client-node";
 
 export function namespace(name: string, options?: V1Namespace): V1Namespace {
   return {

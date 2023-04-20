@@ -1,5 +1,6 @@
-import {BuildCommand} from "./build";
+import { BuildCommand } from "./commands/build";
 import * as yargs from "yargs";
+import { CleanCommand } from "./commands/clean";
 
 yargs
   .scriptName("pintle-cli")
@@ -14,6 +15,5 @@ yargs
     "clean",
     "Foobar",
     () => null,
-    async  () => new BuildCommand().run()
-  )
-  .argv
+    async () => new CleanCommand().run()
+  ).argv;

@@ -1,7 +1,6 @@
-import {defaultPintleOptions, PintleOptions} from "pintle";
+import { defaultPintleOptions, PintleOptions } from "pintle";
 
 export class Options {
-
   private optionsPath = "./pintle.cfg";
 
   public async import() {

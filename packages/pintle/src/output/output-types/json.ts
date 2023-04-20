@@ -1,5 +1,5 @@
-import {Collection, Collections} from "../../collection";
-import {OutputType} from "../output-type";
+import { Collection, Collections } from "../../collection";
+import { OutputType } from "../output-type";
 
 export class Json extends OutputType {
   parseSingle(collection: Collection): string {

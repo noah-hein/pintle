@@ -18,7 +18,7 @@
     "node": {
       "executor": "@nrwl/js:node",
       "dependsOn": ["build"],
-      "defaultConfiguration": "clean",
+      "defaultConfiguration": "build",
       "options": {
         "buildTarget": "pintle-cli:build",
         "watch": false
@@ -44,9 +44,7 @@
       "options": {
         "buildTarget": "pintle-cli:build",
         "watch": false,
-        "args": [
-          "build"
-        ]
+        "args": ["build"]
       }
     },
     "publish": {

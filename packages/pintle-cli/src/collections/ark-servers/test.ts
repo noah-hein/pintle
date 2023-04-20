@@ -1,6 +1,6 @@
 import {ResourceFile, Resources, Templates} from "pintle";
 
-export class ArkServer extends ResourceFile {
+export class Test extends ResourceFile {
   resources(): Resources {
     return [
       Templates.namespace("island"),

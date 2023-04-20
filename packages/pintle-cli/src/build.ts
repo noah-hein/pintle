@@ -2,6 +2,7 @@ import * as path from "path";
 import * as chalk from "chalk";
 import * as fs from "fs";
 import {
+  Collection,
   Collections,
   defaultPintleOptions,
   InputOptions,
@@ -12,6 +13,7 @@ import {
   Resources
 } from "pintle";
 import {glob} from "glob";
+import * as _ from "lodash";
 
 export class BuildCommand {
 
@@ -57,36 +59,65 @@ export class BuildCommand {
 
     //Import typescript files in collections folder
     const files = this.getTsFiles(inputOptions);
-    this.importFiles(files, collectionsDir);
+    await this.importFiles(files, collectionsDir);
 
-    //
-
-
-    return [];
+    return this.collections;
   }
 
-  private importFiles(files: string[], collectionsDir: string) {
-    const collections: Collections = [];
+  private async importFiles(files: string[], collectionsDir: string) {
+    const topLevelCollections: Collection[] = [];
 
     //Loop through each file string
-    files.forEach(file => {
+    for (const file of files) {
       const relativePath = "./" + file;
       const treeString = file.replace(collectionsDir + "/", "");
 
       //Dynamically import file by relative path
-      import(relativePath).then(module => {
+      await import(relativePath).then(module => {
         const exports: object[] = Object.values(module);
-
-
         const resources = this.getResources(exports);
-        console.log(resources)
 
-        // const moduleCollections = this.getModuleCollections(module);
-        // const resources = moduleCollections.map(collection => collection.resources);
-        // console.log(resources)
-        // console.log(treeString)
+        const collectionNames = treeString.split("/");
+        const topCollection = this.addCollection(collectionNames, resources)[0];
+        topLevelCollections.push(topCollection);
       });
+    }
+
+    //Merge all collections
+    const collections = this.mergeCollections(topLevelCollections);
+    console.log(collections)
+  }
+
+  private mergeCollections(topLevelCollections: Collections): Collections {
+    const collections: Collections = [];
+    const collectionNames = topLevelCollections.map(
+      collection => collection.name
+    );
+    const collectionNameSet = [...new Set(collectionNames)];
+    collectionNameSet.forEach(name => {
+      const similarCollections = topLevelCollections.filter(
+        topLevelCollection => topLevelCollection.name === name
+      );
+      const mergedCollection = _.mergeWith({}, ...similarCollections, (a, b) => {
+        if (_.isArray(a)) {
+          return b.concat(a);
+        }
+      });
+      collections.push(mergedCollection);
     });
+    return collections;
+  }
+
+  private addCollection(tree: string[], resources: Resources): Collection[] {
+    const collections: Collections = [];
+    if (tree.length > 0) {
+      collections.push({
+        name: tree.shift(),
+        resources: tree.length == 0 ? resources : [],
+        collections: this.addCollection(tree, resources)
+      });
+    }
+    return collections;
   }
 
   private getResources(exports: object[]) {

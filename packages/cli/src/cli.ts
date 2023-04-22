@@ -2,8 +2,6 @@ import * as yargs from "yargs";
 import { BuildCommand } from "./commands";
 import { CleanCommand } from "./commands";
 
-console.log("FUCK")
-
 yargs
   .scriptName("pintle-cli")
   .help()

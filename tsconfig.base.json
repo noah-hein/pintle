@@ -19,8 +19,6 @@
       "@pintle/core": ["packages/core/src/index.ts"],
       "@pintle/templates": ["packages/templates/src/index.ts"],
       "pintle": ["packages/pintle/src/index.ts"],
-      "pintle-cli": ["packages/pintle-cli/src/index.ts"],
-      "pintle-core": ["packages/pintle-core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

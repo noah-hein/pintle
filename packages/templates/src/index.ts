@@ -1,1 +1,1 @@
-export * from "./lib/templates";
+export * as Templates from "./templates";

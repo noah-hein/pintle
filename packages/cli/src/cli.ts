@@ -3,7 +3,7 @@ import { BuildCommand } from "./commands";
 import { CleanCommand } from "./commands";
 
 yargs
-  .scriptName("pintle-cli")
+  .scriptName("pintle")
   .help()
   .command(
     "build",

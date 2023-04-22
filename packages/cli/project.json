@@ -9,9 +9,32 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/cli",
-        "main": "packages/cli/src/index.ts",
+        "main": "packages/cli/src/cli.ts",
         "tsConfig": "packages/cli/tsconfig.lib.json",
         "assets": ["packages/cli/*.md"]
+      }
+    },
+    "node": {
+      "executor": "@nrwl/js:node",
+      "dependsOn": ["build"],
+      "defaultConfiguration": "--help",
+      "options": {
+        "buildTarget": "cli:build",
+        "watch": false
+      },
+      "configurations": {
+        "help": {
+          "args": ["--help"]
+        },
+        "version": {
+          "args": ["--version"]
+        },
+        "build": {
+          "args": ["build"]
+        },
+        "clean": {
+          "args": ["clean"]
+        }
       }
     },
     "publish": {

@@ -11,7 +11,7 @@ import {
   PintleOptions,
   ResourceFile,
   Resources,
-} from "pintle";
+} from "@pintle/core";
 import { glob } from "glob";
 import { Command } from "./command";
 import { Options } from "../options";

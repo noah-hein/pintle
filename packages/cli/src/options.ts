@@ -1,4 +1,4 @@
-import { defaultPintleOptions, PintleOptions } from "pintle";
+import { defaultPintleOptions, PintleOptions } from "@pintle/core";
 
 export class Options {
   private optionsPath = "./pintle.cfg";

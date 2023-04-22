@@ -1,7 +1,0 @@
-{
-  "name": "pintle-cli",
-  "version": "0.0.6",
-  "bin": {
-    "pintle-cli": "node ./src/cli.ts"
-  }
-}

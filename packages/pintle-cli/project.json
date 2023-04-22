@@ -13,7 +13,7 @@
         "packageJson": "packages/pintle-cli/package.json",
         "main": "packages/pintle-cli/src/cli.ts",
         "assets": ["packages/pintle-cli/*.md"],
-
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "node": {

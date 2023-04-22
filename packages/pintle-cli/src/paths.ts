@@ -5,3 +5,11 @@ export interface Paths {
   sourceAbsolute: string;
   collectionsAbsolute: string;
 }
+
+export const defaultPaths: Paths = {
+  base: "",
+  collections: "",
+  collectionsAbsolute: "",
+  source: "",
+  sourceAbsolute: ""
+}

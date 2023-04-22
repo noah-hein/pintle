@@ -4,9 +4,8 @@ import * as fs from "fs";
 import * as _ from "lodash";
 import {
   Collection,
-  Collections,
+  Collections, defaultInputOptions,
   defaultPintleOptions,
-  InputOptions,
   isResourceFile,
   Pintle,
   PintleOptions,
@@ -16,7 +15,7 @@ import {
 import { glob } from "glob";
 import { Command } from "./command";
 import { Options } from "../options";
-import { Paths } from "../paths";
+import {defaultPaths, Paths} from "../paths";
 
 export class BuildCommand extends Command {
   /*==================================================================================================================
@@ -25,9 +24,9 @@ export class BuildCommand extends Command {
 
   private options: PintleOptions = defaultPintleOptions;
 
-  private collections: Collections = [];
+  private paths: Paths = defaultPaths;
 
-  private paths: Paths;
+  private collections: Collections = [];
 
   /*==================================================================================================================
         Public Methods
@@ -55,7 +54,7 @@ export class BuildCommand extends Command {
 
   private determineProjectPaths() {
     //Determine Paths
-    const inputOptions = this.options.input;
+    const inputOptions = this.options.input || defaultInputOptions;
     const baseDir = process.cwd();
     const sourceDir = inputOptions.source;
     const collectionsDir = inputOptions.collections;
@@ -105,7 +104,7 @@ export class BuildCommand extends Command {
       const mergedCollection = _.mergeWith(
         {},
         ...similarCollections,
-        (a, b) => {
+        (a: any, b: any) => {
           if (_.isArray(a)) {
             return b.concat(a);
           }
@@ -119,11 +118,14 @@ export class BuildCommand extends Command {
   private addCollection(tree: string[], resources: Resources): Collection[] {
     const collections: Collections = [];
     if (tree.length > 0) {
-      collections.push({
-        name: tree.shift(),
-        resources: tree.length == 0 ? resources : [],
-        collections: this.addCollection(tree, resources),
-      });
+      const name = tree.shift();
+      if (name) {
+        collections.push({
+          name,
+          resources: tree.length == 0 ? resources : [],
+          collections: this.addCollection(tree, resources),
+        });
+      }
     }
     return collections;
   }
@@ -143,7 +145,7 @@ export class BuildCommand extends Command {
   }
 
   private getTsFiles(): string[] {
-    const inputOptions = this.options.input;
+    const inputOptions = this.options.input || defaultInputOptions;
     const sourceDir = inputOptions.source;
     const collectionsDir = inputOptions.collections;
     //Build path for file search

@@ -1,3 +1,3 @@
 export abstract class Command {
-  abstract run();
+  abstract run(): void;
 }

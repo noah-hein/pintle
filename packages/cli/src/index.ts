@@ -1,1 +1,1 @@
-export * from "./lib/cli";
+export * as Commands from "./commands";

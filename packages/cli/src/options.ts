@@ -20,7 +20,7 @@ export class Options {
       }
       console.log(chalk.blue("config = " + JSON.stringify(config, null, 3)));
     } catch (error) {
-      console.error("Could not read pintle config options, using default");
+      throw new Error("Could not read pintle config options, using default" + error);
     }
     return config;
   }

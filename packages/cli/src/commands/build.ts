@@ -162,11 +162,10 @@ export class BuildCommand extends Command {
   }
 
   private inputDirExists(inputDirPath: string) {
-    console.debug(
-      chalk.blue("Checking for resource directory ") + inputDirPath
-    );
+    console.debug("Checking for collections resource directory");
+    console.log("collections path = " + chalk.blue(inputDirPath));
     if (!fs.existsSync(inputDirPath)) {
-      throw new Error("Could not find resource directory");
+      throw new Error("Could not find collections directory");
     }
   }
 }

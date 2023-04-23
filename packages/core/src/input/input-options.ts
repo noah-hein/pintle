@@ -4,6 +4,6 @@ export interface InputOptions {
 }
 
 export const defaultInputOptions: InputOptions = {
-  source: "packages/pintle-cli/src/",
+  source: "packages/cli/src/",
   collections: "collections",
 };

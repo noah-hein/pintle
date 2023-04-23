@@ -1,11 +1,15 @@
-import { defaultPintleOptions, PintleOptions } from "@pintle/core";
+import {defaultPintleOptions, PintleOptions} from "@pintle/core";
+import * as chalk from "chalk";
 
 export class Options {
   private optionsPath = "./pintle.cfg";
 
-  public async import() {
+  public async import(): Promise<PintleOptions> {
     let config = defaultPintleOptions;
     try {
+      console.log("Importing config file...");
+      console.log("path = " + this.optionsPath);
+
       const modules = await import(this.optionsPath);
       const importedOptions = modules.options;
       if (importedOptions) {
@@ -14,6 +18,7 @@ export class Options {
           ...importedOptions,
         };
       }
+      console.log(chalk.blue("config = " + JSON.stringify(config, null, 3)));
     } catch (error) {
       console.error("Could not read pintle config options, using default");
     }

@@ -17,7 +17,7 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs core 0.0.1 0.0.1"
+        "command": "npm publish dist/packages/core --access public"
       },
       "dependsOn": ["build"]
     },

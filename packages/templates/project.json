@@ -17,7 +17,7 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs templates {args.ver} {args.tag}"
+        "command": "npm publish dist/packages/templates --access public"
       },
       "dependsOn": ["build"]
     },

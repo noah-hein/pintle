@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import * as yargs from "yargs";
 import { BuildCommand } from "./commands";
 import { CleanCommand } from "./commands";

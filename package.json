@@ -6,13 +6,12 @@
   "private": true,
   "dependencies": {
     "@kubernetes/client-node": "^0.18.1",
-    "@types/prompts": "^2.4.4",
     "boxen": "^7.0.2",
     "chalk": "4.1.2",
     "glob": "^10.2.1",
+    "inquirer": "^9.1.5",
     "lodash": "^4.17.21",
     "ora": "^6.3.0",
-    "prompts": "^2.4.2",
     "tslib": "^2.3.0",
     "yaml": "^2.2.1",
     "yargs": "^17.7.1"
@@ -30,6 +29,7 @@
     "@swc-node/register": "^1.4.2",
     "@swc/cli": "~0.1.55",
     "@swc/core": "^1.2.173",
+    "@types/inquirer": "^9.0.3",
     "@types/jest": "^29.4.0",
     "@types/lodash": "^4.14.194",
     "@types/node": "~18.7.1",

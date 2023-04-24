@@ -1,9 +1,8 @@
-import * as fs from "fs";
-import { Command } from "./command";
 import {QuestionCollection} from "inquirer";
-import {isValidFolder} from "../tools";
+import {isValidFolder} from "../../tools";
+import * as fs from "fs";
 
-const questions: QuestionCollection = [
+export const newQuestions: QuestionCollection = [
   {
     name: "name",
     message: "Project Name:",
@@ -35,18 +34,3 @@ const questions: QuestionCollection = [
     }
   }
 ];
-
-export class NewCommand extends Command {
-
-  async run() {
-    const inquirer = await import("inquirer");
-    const prompt = inquirer.createPromptModule();
-
-    prompt(questions).then(answers => {
-
-    })
-
-
-
-  }
-}

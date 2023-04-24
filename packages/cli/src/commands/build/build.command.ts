@@ -13,9 +13,9 @@ import {
   Resources,
 } from "@pintle/core";
 import { glob } from "glob";
-import { Command } from "./command";
-import { Options } from "../options";
-import {defaultPaths, Paths} from "../paths";
+import { Command } from "../command";
+import { Options } from "../../options";
+import {defaultPaths, Paths} from "../../paths";
 
 export class BuildCommand extends Command {
   /*==================================================================================================================

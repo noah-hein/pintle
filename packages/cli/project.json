@@ -18,7 +18,7 @@
     "node": {
       "executor": "@nrwl/js:node",
       "dependsOn": ["build"],
-      "defaultConfiguration": "new",
+      "defaultConfiguration": "help",
       "options": {
         "buildTarget": "cli:build",
         "watch": false

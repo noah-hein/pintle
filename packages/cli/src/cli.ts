@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 import * as yargs from "yargs";
-import { BuildCommand, NewCommand } from "./commands";
-import { CleanCommand } from "./commands";
+import {NewCommand} from "./commands/new/new.command";
+import {BuildCommand} from "./commands/build/build.command";
+import {CleanCommand} from "./commands/clean";
 
 yargs
   .scriptName("pintle")
@@ -10,7 +11,9 @@ yargs
   .command(
     "new",
     "Creates a new pintle app",
-    () => null,
+    () => [
+
+    ],
     async () => new NewCommand().run()
   )
   .command(

@@ -4,18 +4,14 @@ import * as yargs from "yargs";
 import {NewCommand} from "./commands/new/new.command";
 import {BuildCommand} from "./commands/build/build.command";
 import {CleanCommand} from "./commands/clean";
+import {newYargs} from "./commands/new/new.yargs";
 
 yargs
   .scriptName("pintle")
-  .help()
-  .command(
-    "new",
-    "Creates a new pintle app",
-    () => [
-
-    ],
-    async () => new NewCommand().run()
-  )
+  .help("h")
+  .alias('h', 'help')
+  .alias('v', 'version')
+  .command(newYargs)
   .command(
     "build",
     "Finds and compiles all resources into a configurable distribution",
@@ -27,4 +23,6 @@ yargs
     "Foobar",
     () => null,
     async () => new CleanCommand().run()
-  ).argv;
+  )
+  .epilog("Does some stuff")
+  .argv;

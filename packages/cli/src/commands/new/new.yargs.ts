@@ -1,15 +1,27 @@
-import {NewCommand} from "./new.command";
-import {command} from "yargs";
+import {CommandModule} from "yargs";
 
-export interface NewYargs {
-
+export const newYargs: CommandModule = {
+  command: "new",
+  describe: "Creates a new Pintle app",
+  builder: {
+    name: {
+      describe: "Project folder name",
+      demandOption: true,
+      alias: "n",
+      type: "string"
+    },
+    packageManager: {
+      describe: "Package manager for the workspace",
+      default: "npm",
+      alias: "p",
+      type: "string",
+      choices: [
+        "npm",
+        "yarn"
+      ]
+    }
+  },
+  handler: (argv: any) => {
+    console.log(argv)
+  }
 }
-
-export const newYargs = command(
-  "new",
-  "Creates a new pintle app",
-  () => [
-
-  ],
-  async () => new NewCommand().run()
-);

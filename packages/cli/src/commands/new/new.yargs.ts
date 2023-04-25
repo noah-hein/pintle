@@ -1,4 +1,6 @@
 import {CommandModule} from "yargs";
+import { NewCommand } from "./new.command";
+import { NewCommandOptions } from "./new.interfaces";
 
 export const newYargsCommand: CommandModule = {
   command: "new",
@@ -7,17 +9,19 @@ export const newYargsCommand: CommandModule = {
     projectName: {
       describe: "Project folder name",
       alias: "n",
-      type: "string"
+      type: "string",
+      default: "pintle-app"
     },
     packageName: {
       describe: "Name in the package.json",
-      alias: "n",
-      type: "string"
+      alias: "p",
+      type: "string",
+      default: "pintle-app"
     },
     packageManager: {
       describe: "Package manager for the workspace",
       default: "npm",
-      alias: "p",
+      alias: "m",
       type: "string",
       choices: [
         "npm",
@@ -25,7 +29,8 @@ export const newYargsCommand: CommandModule = {
       ]
     }
   },
-  handler: (argv: any) => {
-    console.log(argv)
+  handler: (argv: unknown) => {
+    const options = argv as NewCommandOptions;
+    new NewCommand(options).run().then();
   }
 }

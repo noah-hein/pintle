@@ -1,33 +1,33 @@
-import {QuestionCollection} from "inquirer";
-import {isValidFolder} from "../../tools";
-import * as fs from "fs";
+import { QuestionCollection} from "inquirer";
+import { NewCommandOptions } from "./new.interfaces";
+import { validateProjectName } from "./new.validators";
 
-export const newQuestions: QuestionCollection = [
+export const newQuestions = (options: NewCommandOptions): QuestionCollection => [
   {
-    name: "name",
+    name: "projectName",
     message: "Project Name:",
     type: "input",
-    default: "pintle",
+    default: options.projectName,
+    validate: validateProjectName
+  },
+  {
+    name: "projectName",
+    message: "Project Name:",
+    type: "input",
+    default: options.projectName,
     validate: (input: any): string | boolean => {
-      const folderName = input;
-      if (isValidFolder(folderName)) {
-        return "Invalid project name";
-      }
-      if (fs.existsSync(folderName)) {
-        return "Folder already in use";
-      }
       return true;
     }
   },
   {
-    name: "package manager",
+    name: "packageManager",
     message: "Package Manager:",
     type: "list",
     choices: [
       "npm",
       "yarn"
     ],
-    default: "npm",
+    default: options.packageManager,
     validate: (input: any): string | boolean => {
 
       return true;

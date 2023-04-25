@@ -1,7 +1,7 @@
 import * as yargs from "yargs";
 import { newYargsCommand } from "./commands/new/new.yargs";
-import { CleanCommand } from "./commands/clean/clean";
 import { buildYargsCommand } from "./commands/build/build.yargs";
+import { cleanYargsCommand } from "./commands/clean/clean.yargs";
 
 export const cli = yargs
   .scriptName("pintle")
@@ -10,11 +10,6 @@ export const cli = yargs
   .alias('v', 'version')
   .command(newYargsCommand)
   .command(buildYargsCommand)
-  .command(
-    "clean",
-    "Foobar",
-    () => null,
-    async () => new CleanCommand().run()
-  )
+  .command(cleanYargsCommand)
   .epilog("Does some stuff")
   .argv;

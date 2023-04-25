@@ -8,7 +8,7 @@ export class Options {
     let config = defaultPintleOptions;
     try {
       console.log("Importing config file...");
-      console.log("path = " + this.optionsPath);
+      console.log("path = " + chalk.yellow(this.optionsPath));
 
       const modules = await import(this.optionsPath);
       const importedOptions = modules.options;
@@ -18,7 +18,7 @@ export class Options {
           ...importedOptions,
         };
       }
-      console.log(chalk.blue("config = " + JSON.stringify(config, null, 3)));
+      console.log("config = " + chalk.blue(JSON.stringify(config, null, 3)));
     } catch (error) {
       throw new Error("Could not read pintle config options, using default" + error);
     }

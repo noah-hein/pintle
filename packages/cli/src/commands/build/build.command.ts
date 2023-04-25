@@ -75,7 +75,7 @@ export class BuildCommand extends Command {
     const collectionsDir = this.paths.collections;
     //Loop through each file string
     for (const file of files) {
-      const relativePath = "../" + file;
+      const relativePath = "../../" + file;
       const treeString = file.replace(collectionsDir + "/", "");
       //Dynamically import file by relative path
       await import(relativePath).then((module) => {

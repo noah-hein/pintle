@@ -18,12 +18,10 @@
     "node": {
       "executor": "@nrwl/js:node",
       "dependsOn": ["build"],
+      "defaultConfiguration": "build",
       "options": {
         "buildTarget": "cli:build",
-        "watch": false,
-        "args": [
-          "new"
-        ]
+        "watch": false
       },
       "configurations": {
         "help": {

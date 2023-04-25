@@ -1,5 +1,6 @@
 import { Command } from "../command";
 import {newQuestions} from "./new.questions";
+import inquirer from "inquirer";
 
 export class NewCommand extends Command {
 
@@ -8,11 +9,10 @@ export class NewCommand extends Command {
   }
 
   async run() {
-    const inquirer = await import("inquirer");
     const prompt = inquirer.createPromptModule();
 
     prompt(newQuestions).then(answers => {
-
+      console.log(answers)
     });
   }
 }

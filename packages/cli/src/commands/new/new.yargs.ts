@@ -1,12 +1,16 @@
 import {CommandModule} from "yargs";
 
-export const newYargs: CommandModule = {
+export const newYargsCommand: CommandModule = {
   command: "new",
   describe: "Creates a new Pintle app",
   builder: {
-    name: {
+    projectName: {
       describe: "Project folder name",
-      demandOption: true,
+      alias: "n",
+      type: "string"
+    },
+    packageName: {
+      describe: "Name in the package.json",
       alias: "n",
       type: "string"
     },

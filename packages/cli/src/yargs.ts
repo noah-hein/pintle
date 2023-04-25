@@ -1,6 +1,6 @@
 import * as yargs from "yargs";
 import { newYargsCommand } from "./commands/new/new.yargs";
-import { CleanCommand } from "./commands/clean";
+import { CleanCommand } from "./commands/clean/clean";
 import { buildYargsCommand } from "./commands/build/build.yargs";
 
 export const cli = yargs

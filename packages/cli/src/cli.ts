@@ -5,19 +5,19 @@ import * as yargs from "yargs";
 import { newYargsCommand } from "./commands/new/new.yargs";
 import { buildYargsCommand } from "./commands/build/build.yargs";
 import { cleanYargsCommand } from "./commands/clean/clean.yargs";
-import {cyan} from "chalk";
+import {help} from "yargs";
 
 function main() {
   logo();
   yargs
     .scriptName("pintle")
-    .alias('h', 'help')
-    .alias('v', 'version')
-    .help("h")
-    .showHelpOnFail(true)
     .command(newYargsCommand)
     .command(buildYargsCommand)
     .command(cleanYargsCommand)
+    .alias('h', 'help')
+    .alias('v', 'version')
+    .showHelpOnFail(true)
+    .help()
     .epilog("Does some stuff")
     .demandCommand()
     .argv;
@@ -28,8 +28,8 @@ function logo() {
   const text = figlet.textSync(
     "Pintle",
     {
-      font: "Standard",
-      horizontalLayout: "default",
+      font: "Small",
+      horizontalLayout: "full",
       verticalLayout: "default",
       whitespaceBreak: true
     }

@@ -5,9 +5,10 @@ import * as yargs from "yargs";
 import { newYargsCommand } from "./commands/new/new.yargs";
 import { buildYargsCommand } from "./commands/build/build.yargs";
 import { cleanYargsCommand } from "./commands/clean/clean.yargs";
+import {cyan} from "chalk";
 
 function main() {
-  //logo()
+  logo();
   yargs
     .scriptName("pintle")
     .help("h")
@@ -22,18 +23,16 @@ function main() {
 main();
 
 function logo() {
-  figlet.text(
-    "Pintle - cli",
+  const text = figlet.textSync(
+    "Pintle",
     {
       font: "Standard",
       horizontalLayout: "default",
       verticalLayout: "default",
       whitespaceBreak: true
-    },
-    (error, data) => {
-      console.log(chalk.cyan(data));
     }
   );
+  console.log(chalk.cyanBright(text))
 }
 
 

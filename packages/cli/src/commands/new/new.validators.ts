@@ -3,7 +3,7 @@ import { isValidFolder } from "../../tools";
 
 export const validateProjectName = (input: never) => {
   const folderName = input;
-  if (isValidFolder(folderName)) {
+  if (!isValidFolder(folderName)) {
     return "Invalid project name";
   }
   if (fs.existsSync(folderName)) {

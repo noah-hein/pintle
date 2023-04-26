@@ -11,13 +11,15 @@ function main() {
   logo();
   yargs
     .scriptName("pintle")
-    .help("h")
     .alias('h', 'help')
     .alias('v', 'version')
+    .help("h")
+    .showHelpOnFail(true)
     .command(newYargsCommand)
     .command(buildYargsCommand)
     .command(cleanYargsCommand)
     .epilog("Does some stuff")
+    .demandCommand()
     .argv;
 }
 main();

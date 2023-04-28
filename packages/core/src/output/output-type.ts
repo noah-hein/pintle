@@ -2,7 +2,7 @@ import * as fs from "fs";
 import {defaultPintleOptions, PintleOptions} from "../pintle-options";
 import {defaultOutputOptions, OutputOptions} from "./output-options";
 import {Collection, Collections} from "../collection";
-import {FsUtil} from "../util/fs";
+import {FsUtil} from "../util";
 
 export abstract class OutputType {
   /*==================================================================================================================

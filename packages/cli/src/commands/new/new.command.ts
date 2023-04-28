@@ -1,15 +1,14 @@
 import * as inquirer from "inquirer";
 import * as fs from "fs";
-import * as shell from "shelljs";
-import { Command } from "../command";
-import { newQuestions } from "./new.questions";
-import { name as cliName} from "../../../package.json"
-import { NewCommandOptions, PackageManagers } from "./new.interfaces";
-import {defaultInputOptions, FsUtil} from "@pintle/core";
-import {glob, globSync} from "glob";
 import * as path from "path";
 import * as process from "process";
+import { Command } from "../command";
+import { newQuestions } from "./new.questions";
+import { NewCommandOptions } from "./new.interfaces";
+import { defaultInputOptions } from "@pintle/core";
+import { globSync } from "glob";
 
+//TODO Convert fs stuff to async to improve performance
 export class NewCommand extends Command {
 
   private readonly options: NewCommandOptions;
@@ -37,7 +36,10 @@ export class NewCommand extends Command {
     // FsUtil.createFolder(collectionsFolderName);
 
 
-    const templateFiles = this.getTemplateFiles();
+    const templateStrings = this.getTemplateFiles();
+    const root = templateStrings[0];
+    const files = this.findFiles(templateStrings);
+    this.buildTemplateFiles(root, files);
 
     //fs.writeFileSync(projectName + "/package.json", packageJson);
 
@@ -49,12 +51,28 @@ export class NewCommand extends Command {
     // }
   }
 
-  private getTemplateFiles() {
+  private getTemplateFiles(): string[] {
     const basePath = process.cwd();
     const libraryPath = path.resolve(__dirname, "../../..");
     const templatePath = path.join(libraryPath, "packages/starter/src");
     const relativePath = path.relative(basePath, templatePath);
     const searchPath = path.join(relativePath, "/**").replace(/\\/g, "/");
     return globSync(searchPath);
+  }
+
+  private findFiles(templateStrings: string[]): string[] {
+    return templateStrings.filter(fileString => (
+      fs.existsSync(fileString) &&
+      fs.lstatSync(fileString).isFile()
+    ));
+  }
+
+  private buildTemplateFiles(root: string, files: string[]) {
+    files.forEach(file => {
+      const filename = file.replace(root, "");
+      const content = fs.readFileSync(file, "utf-8");
+      console.log(content)
+
+    });
   }
 }

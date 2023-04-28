@@ -1,0 +1,17 @@
+{
+   "name": "pintle-app",
+   "version": "0.0.1",
+   "description": "Kubernetes Definition Layer",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "keywords": [
+      "kubernetes",
+      "typescript",
+      "pintle"
+   ],
+   "license": "MIT",
+   "dependencies": {
+      "@pintle/cli": "^0.0.7"
+   }
+}

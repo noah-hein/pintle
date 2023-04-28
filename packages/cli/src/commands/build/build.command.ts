@@ -56,8 +56,8 @@ export class BuildCommand extends Command {
     //Determine Paths
     const inputOptions = this.options.input || defaultInputOptions;
     const baseDir = process.cwd();
-    const sourceDir = inputOptions.source;
-    const collectionsDir = inputOptions.collections;
+    const sourceDir = inputOptions.source || defaultInputOptions.source;
+    const collectionsDir = inputOptions.collections || defaultInputOptions.collections;
     const sourceDirPath = path.resolve(baseDir, sourceDir);
     const collectionsDirPath = path.resolve(sourceDirPath, collectionsDir);
     //Place paths into object
@@ -146,8 +146,8 @@ export class BuildCommand extends Command {
 
   private getTsFiles(): string[] {
     const inputOptions = this.options.input || defaultInputOptions;
-    const sourceDir = inputOptions.source;
-    const collectionsDir = inputOptions.collections;
+    const sourceDir = inputOptions.source || defaultInputOptions.source || "";
+    const collectionsDir = inputOptions.collections || defaultInputOptions.collections || "";
     //Build path for file search
     const sourceWithCollections = path
       .join(sourceDir + collectionsDir)
@@ -157,7 +157,9 @@ export class BuildCommand extends Command {
     const tsFilesWithEnding = glob.sync(collectionsPath);
     //Parse file and return paths
     return tsFilesWithEnding.map((file) =>
-      file.replace(/\\/g, "/").replace(".ts", "").replace(sourceDir, "")
+      file.replace(/\\/g, "/")
+        .replace(".ts", "")
+        .replace(sourceDir, "")
     );
   }
 

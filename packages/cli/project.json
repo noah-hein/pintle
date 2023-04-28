@@ -13,7 +13,7 @@
         "tsConfig": "packages/cli/tsconfig.lib.json",
         "packageJson": "packages/cli/package.json",
         "assets": [
-          "packages/starter/src/*.ts",
+          "packages/starter/src/**",
           "packages/cli/*.md"
         ],
         "external": "none"

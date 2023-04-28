@@ -8,6 +8,7 @@ import { NewCommandOptions, PackageManagers } from "./new.interfaces";
 import {defaultInputOptions, FsUtil} from "@pintle/core";
 import {glob, globSync} from "glob";
 import * as path from "path";
+import * as process from "process";
 
 export class NewCommand extends Command {
 
@@ -35,11 +36,8 @@ export class NewCommand extends Command {
     // FsUtil.createFolder(projectName);
     // FsUtil.createFolder(collectionsFolderName);
 
-    const templatePath = path.resolve(__dirname, "../../template");
-    const templateSearchPath = path.join(templatePath, "/**/*")
-    console.log(templateSearchPath)
-    const files = globSync(templateSearchPath);
-    console.log(files)
+
+    const templateFiles = this.getTemplateFiles();
 
     //fs.writeFileSync(projectName + "/package.json", packageJson);
 
@@ -49,5 +47,14 @@ export class NewCommand extends Command {
     //   shell.exec(npmInstall + " " + cliName);
     //   //shell.exec(npmInstall);
     // }
+  }
+
+  private getTemplateFiles() {
+    const basePath = process.cwd();
+    const libraryPath = path.resolve(__dirname, "../../..");
+    const templatePath = path.join(libraryPath, "packages/starter/src");
+    const relativePath = path.relative(basePath, templatePath);
+    const searchPath = path.join(relativePath, "/**").replace(/\\/g, "/");
+    return globSync(searchPath);
   }
 }

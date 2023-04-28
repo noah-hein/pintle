@@ -8,7 +8,7 @@ import { cleanYargsCommand } from "./commands/clean/clean.yargs";
 import {help} from "yargs";
 
 function main() {
-  logo();
+  //logo();
   yargs
     .scriptName("pintle")
     .command(newYargsCommand)

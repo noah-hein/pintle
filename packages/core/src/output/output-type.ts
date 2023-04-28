@@ -2,6 +2,7 @@ import * as fs from "fs";
 import {defaultPintleOptions, PintleOptions} from "../pintle-options";
 import {defaultOutputOptions, OutputOptions} from "./output-options";
 import {Collection, Collections} from "../collection";
+import {FsUtil} from "../util/fs";
 
 export abstract class OutputType {
   /*==================================================================================================================
@@ -48,7 +49,7 @@ export abstract class OutputType {
   private ensureDirExists(outputDir: string | undefined) {
     const dirExists = outputDir && fs.existsSync(outputDir);
     if (!dirExists) {
-      this.createFolder(outputDir);
+      FsUtil.createFolder(outputDir);
     }
   }
 
@@ -83,8 +84,8 @@ export abstract class OutputType {
     const filePath = this.determinePath(
       outputOptions.filename + "." + outputOptions.type
     );
-    this.createFolder(outputOptions.outputDir);
-    this.createFile(fileContent, filePath);
+    FsUtil.createFolder(outputOptions.outputDir);
+    FsUtil.createFile(fileContent, filePath);
   }
 
   private multipleFiles() {
@@ -99,14 +100,14 @@ export abstract class OutputType {
     //Create folder
     if (children && children.length > 0) {
       const folderPath = this.determinePath(filename);
-      this.createFolder(folderPath);
+      FsUtil.createFolder(folderPath);
     }
     //Create file
     if (resources && resources.length > 0) {
       const content = this.parseSingle(collection);
       const filePath =
         this.determinePath(filename) + "." + this.outputOptions.type;
-      this.createFile(content, filePath);
+      FsUtil.createFile(content, filePath);
     }
     //Recurse through children
     children.forEach((child) => {
@@ -116,22 +117,5 @@ export abstract class OutputType {
 
   private determinePath(path: string) {
     return this.outputOptions.outputDir + "/" + path;
-  }
-
-  private createFile(content: string, filename: string) {
-    this.clearFile(filename);
-    fs.appendFileSync(filename, content);
-  }
-
-  private createFolder(folderName: string | undefined) {
-    if (folderName) {
-      fs.mkdirSync(folderName, { recursive: true });
-    }
-  }
-
-  private clearFile(filename: string) {
-    if (fs.existsSync(filename)) {
-      fs.truncateSync(filename, 0);
-    }
   }
 }

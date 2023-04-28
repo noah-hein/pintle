@@ -1,8 +1,8 @@
 {
-  "name": "pintle-app",
+  "name": "<%= projectName %>",
   "version": "0.0.1",
   "license": "MIT",
-  "description": "Kubernetes Definition Layer",
+  "description": "Typescript kubernetes definition layer",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

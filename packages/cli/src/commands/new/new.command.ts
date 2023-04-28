@@ -5,6 +5,7 @@ import { Command } from "../command";
 import { newQuestions } from "./new.questions";
 import { name as cliName} from "../../../package.json"
 import { NewCommandOptions, PackageManagers } from "./new.interfaces";
+import {defaultInputOptions} from "@pintle/core";
 
 export class NewCommand extends Command {
 
@@ -22,15 +23,21 @@ export class NewCommand extends Command {
     const answers: NewCommandOptions = await prompt(questions) as NewCommandOptions;
 
     const projectName = answers.name;
+    const collectionsFolderName = projectName + "/" + defaultInputOptions.collections;
     const packageManager = answers.packageManager;
 
     //Create project folder with fs
-    const packageJson = this.createPackageJson(projectName);
-    fs.mkdirSync(projectName)
+    //const packageJson = this.createPackageJson(projectName);
 
     //Add content to main dir
-    fs.mkdirSync(projectName + "/collections");
-    fs.writeFileSync(projectName + "/package.json", packageJson);
+    if (!fs.existsSync(projectName)) {
+      fs.mkdirSync(projectName);
+    }
+    if (!fs.existsSync(collectionsFolderName)) {
+      fs.mkdirSync(collectionsFolderName);
+    }
+
+    //fs.writeFileSync(projectName + "/package.json", packageJson);
 
     //Install Pintle packages by default
     if (packageManager === PackageManagers.NPM) {
@@ -39,20 +46,4 @@ export class NewCommand extends Command {
       //shell.exec(npmInstall);
     }
   }
-
-  private createPackageJson(projectName: string) {
-    const jsonObject = {
-      "name": projectName,
-      "version": "0.0.1",
-      "description": "Kubernetes Definition Layer",
-      "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-      },
-      "keywords": ["kubernetes", "typescript", "pintle"],
-      "license": "MIT"
-    }
-    return JSON.stringify(jsonObject, null, 3)
-  }
-
-
 }

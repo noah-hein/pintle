@@ -12,7 +12,10 @@
         "main": "packages/cli/src/cli.ts",
         "tsConfig": "packages/cli/tsconfig.lib.json",
         "packageJson": "packages/cli/package.json",
-        "assets": ["packages/cli/*.md"],
+        "assets": [
+          "packages/starter/src/*.ts",
+          "packages/cli/*.md"
+        ],
         "external": "none"
       }
     },

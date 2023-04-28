@@ -5,7 +5,9 @@ import { Command } from "../command";
 import { newQuestions } from "./new.questions";
 import { name as cliName} from "../../../package.json"
 import { NewCommandOptions, PackageManagers } from "./new.interfaces";
-import {defaultInputOptions} from "@pintle/core";
+import {defaultInputOptions, FsUtil} from "@pintle/core";
+import {glob, globSync} from "glob";
+import * as path from "path";
 
 export class NewCommand extends Command {
 
@@ -30,20 +32,22 @@ export class NewCommand extends Command {
     //const packageJson = this.createPackageJson(projectName);
 
     //Add content to main dir
-    if (!fs.existsSync(projectName)) {
-      fs.mkdirSync(projectName);
-    }
-    if (!fs.existsSync(collectionsFolderName)) {
-      fs.mkdirSync(collectionsFolderName);
-    }
+    // FsUtil.createFolder(projectName);
+    // FsUtil.createFolder(collectionsFolderName);
+
+    const templatePath = path.resolve(__dirname, "../../template");
+    const templateSearchPath = path.join(templatePath, "/**/*")
+    console.log(templateSearchPath)
+    const files = globSync(templateSearchPath);
+    console.log(files)
 
     //fs.writeFileSync(projectName + "/package.json", packageJson);
 
     //Install Pintle packages by default
-    if (packageManager === PackageManagers.NPM) {
-      const npmInstall = "npm install --prefix ./" + projectName;
-      shell.exec(npmInstall + " " + cliName);
-      //shell.exec(npmInstall);
-    }
+    // if (packageManager === PackageManagers.NPM) {
+    //   const npmInstall = "npm install --prefix ./" + projectName;
+    //   shell.exec(npmInstall + " " + cliName);
+    //   //shell.exec(npmInstall);
+    // }
   }
 }

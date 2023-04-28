@@ -1,4 +1,4 @@
-import { OutputTypes, PintleOptions } from "@pintle/core";
+import {OutputTypes, PintleOptions} from "@pintle/core";
 
 export const options: PintleOptions = {
   input: {

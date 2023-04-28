@@ -17,6 +17,7 @@
     "paths": {
       "@pintle/cli": ["packages/cli/src/index.ts"],
       "@pintle/core": ["packages/core/src/index.ts"],
+      "@pintle/starter": ["packages/starter/src/index.ts"],
       "@pintle/templates": ["packages/templates/src/index.ts"]
     }
   },

@@ -2,6 +2,7 @@ import * as inquirer from "inquirer";
 import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
+import * as ejs from "ejs";
 import { Command } from "../command";
 import { newQuestions } from "./new.questions";
 import { NewCommandOptions } from "./new.interfaces";
@@ -27,6 +28,8 @@ export class NewCommand extends Command {
     const projectName = answers.name;
     const collectionsFolderName = projectName + "/" + defaultInputOptions.collections;
     const packageManager = answers.packageManager;
+
+
 
     //Create project folder with fs
     //const packageJson = this.createPackageJson(projectName);
@@ -71,7 +74,11 @@ export class NewCommand extends Command {
     files.forEach(file => {
       const filename = file.replace(root, "");
       const content = fs.readFileSync(file, "utf-8");
-      console.log(content)
+      const renderedContent = ejs.render(content, this.options);
+
+      console.log(renderedContent)
+
+
 
     });
   }

@@ -5,7 +5,6 @@ import * as yargs from "yargs";
 import { newYargsCommand } from "./commands/new/new.yargs";
 import { buildYargsCommand } from "./commands/build/build.yargs";
 import { cleanYargsCommand } from "./commands/clean/clean.yargs";
-import {help} from "yargs";
 
 function main() {
   //logo();

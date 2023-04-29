@@ -1,18 +1,19 @@
 import * as inquirer from "inquirer";
 import * as fs from "fs";
+import * as fse from "fs-extra";
 import * as path from "path";
 import * as process from "process";
 import * as ejs from "ejs";
+import * as async from "async";
 import { Command } from "../command";
 import { newQuestions } from "./new.questions";
 import { NewCommandOptions } from "./new.interfaces";
-import { defaultInputOptions } from "@pintle/core";
 import { globSync } from "glob";
 
 //TODO Convert fs stuff to async to improve performance
 export class NewCommand extends Command {
 
-  private readonly options: NewCommandOptions;
+  private options: NewCommandOptions;
 
   constructor(options: NewCommandOptions) {
     super();
@@ -23,26 +24,13 @@ export class NewCommand extends Command {
     //Prompt user with build options
     const prompt = inquirer.createPromptModule();
     const questions = newQuestions(this.options);
-    const answers: NewCommandOptions = await prompt(questions) as NewCommandOptions;
+    this.options = await prompt(questions) as NewCommandOptions;
 
-    const projectName = answers.name;
-    const collectionsFolderName = projectName + "/" + defaultInputOptions.collections;
-    const packageManager = answers.packageManager;
-
-
-
-    //Create project folder with fs
-    //const packageJson = this.createPackageJson(projectName);
-
-    //Add content to main dir
-    // FsUtil.createFolder(projectName);
-    // FsUtil.createFolder(collectionsFolderName);
-
-
+    //Build template files
     const templateStrings = this.getTemplateFiles();
     const root = templateStrings[0];
     const files = this.findFiles(templateStrings);
-    this.buildTemplateFiles(root, files);
+    await this.buildTemplateFiles(root, files);
 
     //fs.writeFileSync(projectName + "/package.json", packageJson);
 
@@ -70,16 +58,17 @@ export class NewCommand extends Command {
     ));
   }
 
-  private buildTemplateFiles(root: string, files: string[]) {
-    files.forEach(file => {
+  private async buildTemplateFiles(root: string, files: string[]) {
+    await async.each(files, (file, callback) => {
+      //Determine file output path
       const filename = file.replace(root, "");
       const content = fs.readFileSync(file, "utf-8");
+      const projectFilename = path.join(this.options.name, filename);
+      const filePath = path.resolve(process.cwd(), projectFilename);
+
+      //Inject data into templates and create files
       const renderedContent = ejs.render(content, this.options);
-
-      console.log(renderedContent)
-
-
-
+      fse.outputFile(filePath, renderedContent, callback);
     });
   }
 }

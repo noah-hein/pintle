@@ -40,7 +40,7 @@ export class NewCommand extends Command {
     const packageManager = options.packageManager;
     const projectName = options.name;
     if (packageManager === PackageManagers.NPM) {
-      shell.exec("npm install --prefix ./" + projectName + " " + cliName);
+      shell.exec("npm install --prefix ./" + projectName + " " + cliName, {silent: true});
     }
   }
 

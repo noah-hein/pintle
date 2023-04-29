@@ -15,8 +15,7 @@
         "assets": [
           "packages/starter/src/**",
           "packages/cli/*.md"
-        ],
-        "external": "none"
+        ]
       }
     },
     "node": {
@@ -47,7 +46,7 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npm publish dist/packages/cli --access public"
+        "command": "npm publish dist/packages/templates --access public"
       },
       "dependsOn": ["build"]
     },

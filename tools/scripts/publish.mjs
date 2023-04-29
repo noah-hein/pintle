@@ -6,7 +6,7 @@
  *
  * You might need to authenticate with NPM before running this script.
  */
-import { readCachedProjectGraph } from "@nrwl/devkit";
+import devkit from '@nx/devkit';
 import { execSync } from "child_process";
 import { readFileSync, writeFileSync } from "fs";
 import chalk from "chalk";
@@ -29,6 +29,7 @@ invariant(
   `No version provided or version did not match Semantic Versioning, expected: #.#.#-tag.# or #.#.#, got ${version}.`
 );
 
+const { readCachedProjectGraph } = devkit;
 const graph = readCachedProjectGraph();
 const project = graph.nodes[name];
 

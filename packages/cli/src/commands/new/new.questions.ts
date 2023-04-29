@@ -1,6 +1,7 @@
 import { QuestionCollection} from "inquirer";
-import { NewCommandOptions, PackageManagers } from "./new.interfaces";
 import { validateProjectName } from "./new.validators";
+import { PackageManagers } from "../../package-managers/package-manager";
+import { NewCommandOptions } from "./new.yargs";
 
 export const newQuestions = (options: NewCommandOptions): QuestionCollection => [
   {

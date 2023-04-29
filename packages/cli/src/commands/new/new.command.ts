@@ -5,10 +5,13 @@ import * as path from "path";
 import * as process from "process";
 import * as ejs from "ejs";
 import * as async from "async";
+import * as shell from "shelljs";
 import { Command } from "../command";
 import { newQuestions } from "./new.questions";
-import { NewCommandOptions } from "./new.interfaces";
 import { globSync } from "glob";
+import {name as cliName} from "../../../package.json";
+import { PackageManagers } from "../../package-managers/package-manager";
+import { NewCommandOptions } from "./new.yargs";
 
 //TODO Convert fs stuff to async to improve performance
 export class NewCommand extends Command {
@@ -32,14 +35,13 @@ export class NewCommand extends Command {
     const files = this.findFiles(templateStrings);
     await this.buildTemplateFiles(root, files);
 
-    //fs.writeFileSync(projectName + "/package.json", packageJson);
-
     //Install Pintle packages by default
-    // if (packageManager === PackageManagers.NPM) {
-    //   const npmInstall = "npm install --prefix ./" + projectName;
-    //   shell.exec(npmInstall + " " + cliName);
-    //   //shell.exec(npmInstall);
-    // }
+    const options = this.options;
+    const packageManager = options.packageManager;
+    const projectName = options.name;
+    if (packageManager === PackageManagers.NPM) {
+      shell.exec("npm install --prefix ./" + projectName + " " + cliName);
+    }
   }
 
   private getTemplateFiles(): string[] {

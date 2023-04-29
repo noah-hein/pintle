@@ -1,6 +1,11 @@
-import {CommandModule} from "yargs";
+import { CommandModule } from "yargs";
 import { NewCommand } from "./new.command";
-import { NewCommandOptions, PackageManagers } from "./new.interfaces";
+import { PackageManagers } from "../../package-managers/package-manager";
+
+export interface NewCommandOptions {
+  name: string;
+  packageManager: PackageManagers;
+}
 
 export const newYargsCommand: CommandModule = {
   command: "new",

@@ -22,7 +22,7 @@ export interface Discover {
 export function discover(): Discover {
   const workDir = process.cwd();
   const libraryDir = __dirname;
-  const configPath = path.join(workDir, "pintle.cfg.ts")
+  const configPath = path.join(workDir, "pintle.cfg.ts");
   return {
     workDir,
     libraryDir,

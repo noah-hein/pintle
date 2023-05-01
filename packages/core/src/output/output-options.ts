@@ -3,7 +3,7 @@ import { OutputTypes } from "./output-types";
 export interface OutputOptions {
   type?: OutputTypes;
   create?: boolean;
-  outputDir?: string;
+  dir?: string;
   singleFile?: boolean;
   filename?: string;
 }
@@ -11,7 +11,7 @@ export interface OutputOptions {
 export const defaultOutputOptions: OutputOptions = {
   type: OutputTypes.YAML,
   create: true,
-  outputDir: ".",
+  dir: ".",
   singleFile: true,
   filename: "definitions",
 };

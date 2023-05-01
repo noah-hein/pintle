@@ -6,7 +6,7 @@ export const options: PintleOptions = {
     collections: "collections"
   },
   output: {
-    outputDir: "dist/out",
+    dir: "dist/out",
     singleFile: false,
     type: OutputTypes.YAML,
   },

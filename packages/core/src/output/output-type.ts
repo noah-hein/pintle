@@ -38,7 +38,7 @@ export abstract class OutputType {
     ==================================================================================================================*/
 
   public build() {
-    this.ensureDirExists(this.outputOptions.outputDir);
+    this.ensureDirExists(this.outputOptions.dir);
     this.determineBuilder(this.outputOptions.singleFile);
   }
 
@@ -84,7 +84,7 @@ export abstract class OutputType {
     const filePath = this.determinePath(
       outputOptions.filename + "." + outputOptions.type
     );
-    FsUtil.createFolder(outputOptions.outputDir);
+    FsUtil.createFolder(outputOptions.dir);
     FsUtil.createFile(fileContent, filePath);
   }
 
@@ -116,6 +116,6 @@ export abstract class OutputType {
   }
 
   private determinePath(path: string) {
-    return this.outputOptions.outputDir + "/" + path;
+    return this.outputOptions.dir + "/" + path;
   }
 }

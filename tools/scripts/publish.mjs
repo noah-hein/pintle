@@ -7,9 +7,9 @@
  * You might need to authenticate with NPM before running this script.
  */
 import devkit from '@nx/devkit';
-import { execSync } from "child_process";
-import { readFileSync, writeFileSync } from "fs";
 import chalk from "chalk";
+import * as shell from "shelljs";
+import { readFileSync, writeFileSync } from "fs";
 
 function invariant(condition, message) {
   if (!condition) {
@@ -58,4 +58,4 @@ try {
 }
 
 // Execute "npm publish" to publish
-execSync(`npm publish --access public --tag ${tag}`);
+shell.exec(`npm publish --access public --tag ${tag}`);

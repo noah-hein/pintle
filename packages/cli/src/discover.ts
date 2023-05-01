@@ -14,6 +14,11 @@ export interface Discover {
   libraryDir: string;
 
   /**
+   * Source folder for the current library.
+   */
+  librarySrcDir: string;
+
+  /**
    * Location of config file
    */
   configPath: string;
@@ -21,10 +26,12 @@ export interface Discover {
 
 export function discover(): Discover {
   const workDir = process.cwd();
-  const libraryDir = __dirname;
+  const librarySrcDir = __dirname;
+  const libraryDir = path.normalize(path.join(librarySrcDir, '..'));
   const configPath = path.join(workDir, "pintle.cfg.ts");
   return {
     workDir,
+    librarySrcDir,
     libraryDir,
     configPath
   }

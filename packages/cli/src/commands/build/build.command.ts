@@ -7,7 +7,6 @@ import {
   Collections, defaultInputOptions,
   defaultPintleOptions,
   isResourceFile,
-  Pintle,
   PintleOptions,
   ResourceFile,
   Resources,
@@ -38,7 +37,7 @@ export class BuildCommand extends Command {
 
 
 
-    // this.paths = this.determineProjectPaths();
+    //this.paths = this.determineProjectPaths();
     // await this.compileCollections();
     // new Pintle(this.options, this.collections);
   }

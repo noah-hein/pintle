@@ -1,17 +1,22 @@
 import * as inquirer from "inquirer";
 import * as fs from "fs";
+import * as fse from "fs-extra";
 import * as path from "path";
 import * as process from "process";
+import * as ejs from "ejs";
+import * as async from "async";
+import * as shell from "shelljs";
 import { Command } from "../command";
 import { newQuestions } from "./new.questions";
-import { NewCommandOptions } from "./new.interfaces";
-import { defaultInputOptions } from "@pintle/core";
 import { globSync } from "glob";
+import {name as cliName} from "../../../package.json";
+import { PackageManagers } from "../../package-managers/package-manager";
+import { NewCommandOptions } from "./new.yargs";
 
 //TODO Convert fs stuff to async to improve performance
 export class NewCommand extends Command {
 
-  private readonly options: NewCommandOptions;
+  private options: NewCommandOptions;
 
   constructor(options: NewCommandOptions) {
     super();
@@ -22,33 +27,21 @@ export class NewCommand extends Command {
     //Prompt user with build options
     const prompt = inquirer.createPromptModule();
     const questions = newQuestions(this.options);
-    const answers: NewCommandOptions = await prompt(questions) as NewCommandOptions;
+    this.options = await prompt(questions) as NewCommandOptions;
 
-    const projectName = answers.name;
-    const collectionsFolderName = projectName + "/" + defaultInputOptions.collections;
-    const packageManager = answers.packageManager;
-
-    //Create project folder with fs
-    //const packageJson = this.createPackageJson(projectName);
-
-    //Add content to main dir
-    // FsUtil.createFolder(projectName);
-    // FsUtil.createFolder(collectionsFolderName);
-
-
+    //Build template files
     const templateStrings = this.getTemplateFiles();
     const root = templateStrings[0];
     const files = this.findFiles(templateStrings);
-    this.buildTemplateFiles(root, files);
-
-    //fs.writeFileSync(projectName + "/package.json", packageJson);
+    await this.buildTemplateFiles(root, files);
 
     //Install Pintle packages by default
-    // if (packageManager === PackageManagers.NPM) {
-    //   const npmInstall = "npm install --prefix ./" + projectName;
-    //   shell.exec(npmInstall + " " + cliName);
-    //   //shell.exec(npmInstall);
-    // }
+    const options = this.options;
+    const packageManager = options.packageManager;
+    const projectName = options.name;
+    if (packageManager === PackageManagers.NPM) {
+      shell.exec("npm install --prefix ./" + projectName + " " + cliName);
+    }
   }
 
   private getTemplateFiles(): string[] {
@@ -67,12 +60,17 @@ export class NewCommand extends Command {
     ));
   }
 
-  private buildTemplateFiles(root: string, files: string[]) {
-    files.forEach(file => {
+  private async buildTemplateFiles(root: string, files: string[]) {
+    await async.each(files, (file, callback) => {
+      //Determine file output path
       const filename = file.replace(root, "");
       const content = fs.readFileSync(file, "utf-8");
-      console.log(content)
+      const projectFilename = path.join(this.options.name, filename);
+      const filePath = path.resolve(process.cwd(), projectFilename);
 
+      //Inject data into templates and create files
+      const renderedContent = ejs.render(content, this.options);
+      fse.outputFile(filePath, renderedContent, callback);
     });
   }
 }

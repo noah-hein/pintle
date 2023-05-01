@@ -34,6 +34,19 @@
           "codeCoverage": true
         }
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm publish dist/packages/starter --access public"
+      },
+      "dependsOn": ["build"]
     }
   },
   "tags": []

@@ -17,7 +17,8 @@ export class Options {
     try {
       console.log("Importing config file...");
       console.log(configPath)
-      const modules = await import(configPath);
+      const test: string = "./pintle.cfg";
+      const modules = await import(test);
       const imported = modules.options;
       if (imported) {
         config = {
@@ -28,6 +29,7 @@ export class Options {
       console.log("config = " + chalk.blue(JSON.stringify(config, null, 3)));
     } catch (error) {
       console.log(chalk.red("Could not read pintle config options, using default"));
+      console.log(error)
     }
     return config;
   }

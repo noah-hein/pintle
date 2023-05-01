@@ -34,9 +34,13 @@ export class BuildCommand extends Command {
 
   public async run() {
     this.options = await new Options().import();
-    this.paths = this.determineProjectPaths();
-    await this.compileCollections();
-    new Pintle(this.options, this.collections);
+
+
+
+
+    // this.paths = this.determineProjectPaths();
+    // await this.compileCollections();
+    // new Pintle(this.options, this.collections);
   }
 
   /*==================================================================================================================

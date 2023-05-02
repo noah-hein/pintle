@@ -3,8 +3,8 @@ import * as chalk from "chalk";
 import * as fs from "fs";
 import * as _ from "lodash";
 import {
-  Collection,
-  Collections, defaultInputOptions,
+  ResourceFile,
+  ResourceFiles, defaultInputOptions,
   defaultPintleOptions,
   isResourceFile,
   PintleOptions,
@@ -26,7 +26,7 @@ export class BuildCommand extends Command {
 
   private paths: Paths = defaultPaths;
 
-  private collections: Collections = [];
+  private collections: ResourceFiles = [];
 
   /*==================================================================================================================
         Public Methods
@@ -58,7 +58,7 @@ export class BuildCommand extends Command {
     });
   }
 
-  private async compileCollections(): Promise<Collections> {
+  private async compileCollections(): Promise<ResourceFiles> {
     //Ensure the collections dir exists
     this.inputDirExists(this.paths.collectionsAbsolute);
     //Import typescript files in collections folder
@@ -86,7 +86,7 @@ export class BuildCommand extends Command {
   }
 
   private async importFiles(files: string[]) {
-    const topLevelCollections: Collection[] = [];
+    const topLevelCollections: ResourceFile[] = [];
     const collectionsDir = this.paths.collections;
     //Loop through each file string
     for (const file of files) {
@@ -106,8 +106,8 @@ export class BuildCommand extends Command {
     this.collections = this.mergeCollections(topLevelCollections);
   }
 
-  private mergeCollections(topLevelCollections: Collections): Collections {
-    const collections: Collections = [];
+  private mergeCollections(topLevelCollections: ResourceFiles): ResourceFiles {
+    const collections: ResourceFiles = [];
     const collectionNames = topLevelCollections.map(
       (collection) => collection.name
     );
@@ -130,15 +130,15 @@ export class BuildCommand extends Command {
     return collections;
   }
 
-  private addCollection(tree: string[], resources: Resources): Collection[] {
-    const collections: Collections = [];
+  private addCollection(tree: string[], resources: Resources): ResourceFile[] {
+    const collections: ResourceFiles = [];
     if (tree.length > 0) {
       const name = tree.shift();
       if (name) {
         collections.push({
           name,
           resources: tree.length == 0 ? resources : [],
-          collections: this.addCollection(tree, resources),
+          files: this.addCollection(tree, resources),
         });
       }
     }

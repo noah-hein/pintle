@@ -1,18 +1,18 @@
 import { defaultPintleOptions, PintleOptions } from "./pintle-options";
-import { Collections } from "./collection";
 import {
   OutputType,
   outputTypes,
   OutputTypes,
   defaultOutputOptions,
 } from "./output";
+import {ResourceFiles} from "./resource";
 
 export class Pintle {
   /*==================================================================================================================
         Private Members
     ==================================================================================================================*/
 
-  private readonly collections: Collections;
+  private readonly resourceFiles: ResourceFiles;
 
   private readonly options: PintleOptions;
 
@@ -24,18 +24,18 @@ export class Pintle {
 
   constructor(
     options: PintleOptions = defaultPintleOptions,
-    collections: Collections
+    resourceFiles: ResourceFiles
   ) {
     //Parse options and log
-    this.collections = collections;
+    this.resourceFiles = resourceFiles;
     this.options = this.parseOptions(options);
     this.resourceFactory = this.selectFactories();
     console.log("Options:", options);
 
-    //Build collections
-    console.log("Building collections");
+    //Build resourceFiles
+    console.log("Building resourceFiles");
     this.build();
-    console.log("Finished building collections");
+    console.log("Finished building resource files");
   }
 
   /*==================================================================================================================
@@ -44,7 +44,7 @@ export class Pintle {
 
   public static create(
     options: PintleOptions = defaultPintleOptions,
-    collections: Collections
+    collections: ResourceFiles
   ): Pintle {
     return new Pintle(options, collections);
   }
@@ -64,7 +64,7 @@ export class Pintle {
   private selectFactories(): OutputType {
     const outputOptions = this.options.output || defaultOutputOptions;
     const fileType = outputOptions.type ? outputOptions.type : OutputTypes.YAML;
-    return outputTypes(this.options, this.collections)[fileType];
+    return outputTypes(this.options, this.resourceFiles)[fileType];
   }
 
   private parseOptions(options: PintleOptions) {

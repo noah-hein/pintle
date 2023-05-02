@@ -1,10 +1,10 @@
 import * as YAML from "yaml";
-import { Collection, Collections } from "../../collection";
 import { OutputType } from "../output-type";
+import {ResourceFile, ResourceFiles} from "../../resource";
 
 export class Yaml extends OutputType {
-  parseSingle(collection: Collection): string {
-    const resources = collection.resources;
+  parseSingle(resourceFile: ResourceFile): string {
+    const resources = resourceFile.resources;
     let outputString = "";
     resources?.forEach((resource) => {
       outputString = outputString + YAML.stringify(resource) + "---\r\n";
@@ -12,10 +12,10 @@ export class Yaml extends OutputType {
     return outputString;
   }
 
-  parseMany(collections: Collections): string {
+  parseMany(resourceFiles: ResourceFiles): string {
     let yaml = "";
-    collections.forEach((collection) => {
-      const collectionString = this.parseSingle(collection);
+    resourceFiles.forEach((resourceFile) => {
+      const collectionString = this.parseSingle(resourceFile);
       yaml = yaml + collectionString;
     });
     return yaml;

@@ -1,8 +1,8 @@
 import * as fs from "fs";
 import {defaultPintleOptions, PintleOptions} from "../pintle-options";
 import {defaultOutputOptions, OutputOptions} from "./output-options";
-import {Collection, Collections} from "../collection";
 import {FsUtil} from "../util";
+import {ResourceFile, ResourceFiles} from "../resource";
 
 export abstract class OutputType {
   /*==================================================================================================================
@@ -13,25 +13,25 @@ export abstract class OutputType {
 
   private readonly outputOptions: OutputOptions;
 
-  private readonly collections: Collections;
+  private readonly resourceFiles: ResourceFiles;
 
   /*==================================================================================================================
         Constructors
     ==================================================================================================================*/
 
-  constructor(options: PintleOptions, collections: Collections) {
+  constructor(options: PintleOptions, collections: ResourceFiles) {
     this.options = options || defaultPintleOptions;
     this.outputOptions = options.output || defaultOutputOptions;
-    this.collections = collections;
+    this.resourceFiles = collections;
   }
 
   /*==================================================================================================================
         Abstract Methods
     ==================================================================================================================*/
 
-  abstract parseSingle(collection: Collection): string;
+  abstract parseSingle(resourceFile: ResourceFile): string;
 
-  abstract parseMany(collections: Collections): string;
+  abstract parseMany(resourceFiles: ResourceFiles): string;
 
   /*==================================================================================================================
         Public methods
@@ -61,22 +61,22 @@ export abstract class OutputType {
     }
   }
 
-  private flattenCollections(collections: Collections): Collections {
-    let flattenedCollections: Collections = [];
-    collections.forEach((collection) => {
-      flattenedCollections.push(collection);
-      const children = collection.collections;
+  private flattenResourceFiles(resourceFiles: ResourceFiles): ResourceFiles {
+    let flattenedFiles: ResourceFiles = [];
+    resourceFiles.forEach((resourceFile) => {
+      flattenedFiles.push(resourceFile);
+      const children = resourceFile.files;
       const hasChildren = children && children.length > 0;
       if (hasChildren) {
-        const flattenedChildren = this.flattenCollections(children);
-        flattenedCollections = flattenedCollections.concat(flattenedChildren);
+        const flattenedChildren = this.flattenResourceFiles(children);
+        flattenedFiles = flattenedFiles.concat(flattenedChildren);
       }
     });
-    return flattenedCollections;
+    return flattenedFiles;
   }
 
   private singleFile() {
-    const flattenCollections = this.flattenCollections(this.collections);
+    const flattenCollections = this.flattenResourceFiles(this.resourceFiles);
     const fileContent = this.parseMany(flattenCollections);
 
     //Create folder and file
@@ -89,14 +89,14 @@ export abstract class OutputType {
   }
 
   private multipleFiles() {
-    this.collections.forEach((collection) => {
-      this.createCollection(collection, collection.name);
+    this.resourceFiles.forEach((resourceFile) => {
+      this.createResourceFile(resourceFile, resourceFile.name);
     });
   }
 
-  private createCollection(collection: Collection, filename: string) {
-    const children = collection.collections || [];
-    const resources = collection.resources || [];
+  private createResourceFile(resourceFile: ResourceFile, filename: string) {
+    const children = resourceFile.files || [];
+    const resources = resourceFile.resources || [];
     //Create folder
     if (children && children.length > 0) {
       const folderPath = this.determinePath(filename);
@@ -104,14 +104,14 @@ export abstract class OutputType {
     }
     //Create file
     if (resources && resources.length > 0) {
-      const content = this.parseSingle(collection);
+      const content = this.parseSingle(resourceFile);
       const filePath =
         this.determinePath(filename) + "." + this.outputOptions.type;
       FsUtil.createFile(content, filePath);
     }
     //Recurse through children
     children.forEach((child) => {
-      this.createCollection(child, filename + "/" + child.name);
+      this.createResourceFile(child, filename + "/" + child.name);
     });
   }
 

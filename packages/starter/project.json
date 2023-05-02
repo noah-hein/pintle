@@ -4,6 +4,25 @@
   "sourceRoot": "packages/starter/src",
   "projectType": "library",
   "targets": {
+    "node": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd packages/starter/src && node ../../../dist/packages/cli/src/cli.js {args.pass}",
+        "forwardAllArgs": true,
+        "color": true
+      },
+      "configurations": {
+        "help": {
+          "args": "--pass='--help'"
+        },
+        "new": {
+          "args": "--pass='new'"
+        },
+        "build": {
+          "args": "--pass='build'"
+        }
+      }
+    },
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],

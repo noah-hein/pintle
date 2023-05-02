@@ -42,10 +42,10 @@ export class Pintle {
     ==================================================================================================================*/
 
   public static create(
-    options: PintleOptions = defaultPintleOptions,
-    collections: ResourceFiles
+    collections?: ResourceFiles
   ): Pintle {
-    return new Pintle(options, collections);
+    collections = collections || []
+    return new Pintle(defaultPintleOptions, collections);
   }
 
   /*==================================================================================================================

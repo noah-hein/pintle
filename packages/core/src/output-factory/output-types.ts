@@ -1,5 +1,5 @@
-import { YamlOutputFactory } from "./output-factory.yaml";
-import { JsonOutputFactory } from "./output-factory.json";
+import { YamlFactory } from "./factory/factory.yaml";
+import { JsonFactory } from "./factory/factory.json";
 import { OutputFactory } from "./output-factory";
 import { PintleOptions } from "../pintle-options";
 import { ResourceFiles } from "../resource"
@@ -14,7 +14,7 @@ export const outputTypes = (
   resourceFiles: ResourceFiles
 ): { [name in OutputTypes]: OutputFactory } => {
   return {
-    yaml: new YamlOutputFactory(options, resourceFiles),
-    json: new JsonOutputFactory(options, resourceFiles)
+    yaml: new YamlFactory(options, resourceFiles),
+    json: new JsonFactory(options, resourceFiles)
   };
 };

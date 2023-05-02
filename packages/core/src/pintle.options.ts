@@ -11,7 +11,7 @@ export interface PintleOptions {
 export const defaultPintleOptions: PintleOptions = {
   type: OutputTypes.YAML,
   create: true,
-  outputPath: ".",
-  singleFile: true,
-  filename: "definitions",
+  outputPath: "./generated",
+  singleFile: false,
+  filename: "resources",
 };

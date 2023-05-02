@@ -9,31 +9,32 @@ export interface Discover {
   workDir: string;
 
   /**
-   * Location of where this is in the current module.
+   * Location of cli source folder.
+   * Typically, in the node modules
    */
   libraryDir: string;
-
-  /**
-   * Source folder for the current library.
-   */
-  librarySrcDir: string;
 
   /**
    * Location of config file
    */
   configPath: string;
+
+  /**
+   * Location of where the collections folder is located
+   */
+  collectionsDir: string;
 }
 
 export function discover(): Discover {
   const workDir = process.cwd();
-  const librarySrcDir = __dirname;
-  const libraryDir = path.normalize(path.join(librarySrcDir, '..'));
+  const libraryDir = __dirname;
   const configPath = path.join(workDir, "pintle.cfg.ts");
+  const collectionsDir = path.join(workDir, "collections");
   return {
     workDir,
-    librarySrcDir,
     libraryDir,
-    configPath
+    configPath,
+    collectionsDir
   }
 }
 

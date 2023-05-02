@@ -13,8 +13,9 @@ import {
 } from "@pintle/core";
 import { glob } from "glob";
 import { Command } from "../command";
-import { Options } from "../../options";
 import {defaultPaths, Paths} from "../../paths";
+import ts = require("typescript");
+import { discovered } from "../../discover";
 
 export class BuildCommand extends Command {
   /*==================================================================================================================
@@ -32,11 +33,12 @@ export class BuildCommand extends Command {
     ==================================================================================================================*/
 
   public async run() {
-    this.options = await new Options().import();
+
+    console.log(discovered)
 
 
 
-
+    //this.options = await new Options().import();
     //this.paths = this.determineProjectPaths();
     // await this.compileCollections();
     // new Pintle(this.options, this.collections);
@@ -45,6 +47,16 @@ export class BuildCommand extends Command {
   /*==================================================================================================================
         Private Methods
     ==================================================================================================================*/
+
+  private transpile() {
+    ts.createProgram({
+      rootNames: [discovered.collectionsDir],
+      options: {
+        target: ts.ScriptTarget.ESNext,
+        module: ts.ModuleKind.CommonJS,
+      }
+    });
+  }
 
   private async compileCollections(): Promise<Collections> {
     //Ensure the collections dir exists

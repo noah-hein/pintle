@@ -1,10 +1,10 @@
-import { defaultPintleOptions, PintleOptions } from "./pintle-options";
+import { defaultPintleOptions, PintleOptions } from "./pintle.options";
 import {
   outputTypes,
   OutputTypes,
-} from "./output-factory";
+} from "./output";
 import {ResourceFiles} from "./resource";
-import { OutputFactory } from "./output-factory/output-factory";
+import { OutputFactory } from "./output/output.factory";
 
 export class Pintle {
   /*==================================================================================================================

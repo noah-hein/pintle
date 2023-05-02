@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { defaultPintleOptions, PintleOptions } from "../pintle-options";
+import { defaultPintleOptions, PintleOptions } from "../pintle.options";
 import { FsUtil } from "../util";
 import { ResourceFile, ResourceFiles } from "../resource";
 

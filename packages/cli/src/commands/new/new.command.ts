@@ -62,7 +62,7 @@ export class NewCommand extends Command {
 
   private async buildTemplateFiles(root: string, files: string[]) {
     await async.each(files, (file, callback) => {
-      //Determine file output-factory path
+      //Determine file output path
       const filename = file.replace(root, "");
       const content = fs.readFileSync(file, "utf-8");
       const projectFilename = path.join(this.options.name, filename);

@@ -1,5 +1,5 @@
 import * as YAML from "yaml";
-import { OutputFactory } from "../output-factory";
+import { OutputFactory } from "../output.factory";
 import {ResourceFile, ResourceFiles} from "../../resource";
 
 export class YamlFactory extends OutputFactory {

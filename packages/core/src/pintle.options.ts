@@ -1,4 +1,4 @@
-import { OutputTypes } from "./output-factory";
+import { OutputTypes } from "./output";
 
 export interface PintleOptions {
   type?: OutputTypes;

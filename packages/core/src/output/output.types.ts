@@ -1,7 +1,7 @@
 import { YamlFactory } from "./factory/factory.yaml";
 import { JsonFactory } from "./factory/factory.json";
-import { OutputFactory } from "./output-factory";
-import { PintleOptions } from "../pintle-options";
+import { OutputFactory } from "./output.factory";
+import { PintleOptions } from "../pintle.options";
 import { ResourceFiles } from "../resource"
 
 export enum OutputTypes {

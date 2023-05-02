@@ -20,7 +20,7 @@ export interface Discover {
   configPath: string;
 
   /**
-   * Location of where the collections folder is located
+   * Location of where the src folder is located
    */
   collectionsDir: string;
 }
@@ -29,7 +29,7 @@ export function discover(): Discover {
   const workDir = process.cwd();
   const libraryDir = __dirname;
   const configPath = path.join(workDir, "pintle.cfg.ts");
-  const collectionsDir = path.join(workDir, "collections");
+  const collectionsDir = path.join(workDir, "src");
   return {
     workDir,
     libraryDir,

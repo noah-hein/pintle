@@ -1,8 +1,7 @@
+import { OutputFactory } from "./output-factory";
+import {ResourceFile, ResourceFiles} from "../resource";
 
-import { OutputType } from "../output-type";
-import {ResourceFile, ResourceFiles} from "../../resource";
-
-export class Json extends OutputType {
+export class JsonOutputFactory extends OutputFactory {
   parseSingle(resourceFile: ResourceFile): string {
     const resources = resourceFile.resources;
     return JSON.stringify(resources, null, 3);

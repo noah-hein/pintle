@@ -1,11 +1,10 @@
 import { defaultPintleOptions, PintleOptions } from "./pintle-options";
 import {
-  OutputType,
   outputTypes,
   OutputTypes,
-  defaultOutputOptions,
-} from "./output";
+} from "./output-factory";
 import {ResourceFiles} from "./resource";
+import { OutputFactory } from "./output-factory/output-factory";
 
 export class Pintle {
   /*==================================================================================================================
@@ -16,7 +15,7 @@ export class Pintle {
 
   private readonly options: PintleOptions;
 
-  private readonly resourceFactory: OutputType;
+  private readonly factory: OutputFactory;
 
   /*==================================================================================================================
         Constructors
@@ -29,7 +28,7 @@ export class Pintle {
     //Parse options and log
     this.resourceFiles = resourceFiles;
     this.options = this.parseOptions(options);
-    this.resourceFactory = this.selectFactories();
+    this.factory = this.selectFactories();
     console.log("Options:", options);
 
     //Build resourceFiles
@@ -54,24 +53,20 @@ export class Pintle {
     ==================================================================================================================*/
 
   private build() {
-    const type = this.options.output?.type;
+    const type = this.options.type;
     if (type) {
-      const resourceFactory = this.resourceFactory;
+      const resourceFactory = this.factory;
       resourceFactory.build();
     }
   }
 
-  private selectFactories(): OutputType {
-    const outputOptions = this.options.output || defaultOutputOptions;
-    const fileType = outputOptions.type ? outputOptions.type : OutputTypes.YAML;
+  private selectFactories(): OutputFactory {
+    const options = this.options;
+    const fileType = options.type ? options.type : OutputTypes.YAML;
     return outputTypes(this.options, this.resourceFiles)[fileType];
   }
 
   private parseOptions(options: PintleOptions) {
-    options.output = {
-      ...defaultOutputOptions,
-      ...options.output,
-    };
     return {
       ...defaultPintleOptions,
       ...options,

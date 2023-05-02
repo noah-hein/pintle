@@ -1,17 +1,14 @@
 import * as fs from "fs";
-import {defaultPintleOptions, PintleOptions} from "../pintle-options";
-import {defaultOutputOptions, OutputOptions} from "./output-options";
-import {FsUtil} from "../util";
-import {ResourceFile, ResourceFiles} from "../resource";
+import { defaultPintleOptions, PintleOptions } from "../pintle-options";
+import { FsUtil } from "../util";
+import { ResourceFile, ResourceFiles } from "../resource";
 
-export abstract class OutputType {
+export abstract class OutputFactory {
   /*==================================================================================================================
         Private Members
     ==================================================================================================================*/
 
   private readonly options: PintleOptions;
-
-  private readonly outputOptions: OutputOptions;
 
   private readonly resourceFiles: ResourceFiles;
 
@@ -21,7 +18,6 @@ export abstract class OutputType {
 
   constructor(options: PintleOptions, collections: ResourceFiles) {
     this.options = options || defaultPintleOptions;
-    this.outputOptions = options.output || defaultOutputOptions;
     this.resourceFiles = collections;
   }
 
@@ -38,8 +34,8 @@ export abstract class OutputType {
     ==================================================================================================================*/
 
   public build() {
-    this.ensureDirExists(this.outputOptions.dir);
-    this.determineBuilder(this.outputOptions.singleFile);
+    this.ensureDirExists(this.options.outputPath);
+    this.determineBuilder(this.options.singleFile);
   }
 
   /*==================================================================================================================
@@ -80,11 +76,11 @@ export abstract class OutputType {
     const fileContent = this.parseMany(flattenCollections);
 
     //Create folder and file
-    const outputOptions = this.outputOptions;
+    const options = this.options;
     const filePath = this.determinePath(
-      outputOptions.filename + "." + outputOptions.type
+      options.filename + "." + options.type
     );
-    FsUtil.createFolder(outputOptions.dir);
+    FsUtil.createFolder(options.outputPath);
     FsUtil.createFile(fileContent, filePath);
   }
 
@@ -106,7 +102,7 @@ export abstract class OutputType {
     if (resources && resources.length > 0) {
       const content = this.parseSingle(resourceFile);
       const filePath =
-        this.determinePath(filename) + "." + this.outputOptions.type;
+        this.determinePath(filename) + "." + this.options.type;
       FsUtil.createFile(content, filePath);
     }
     //Recurse through children
@@ -116,6 +112,7 @@ export abstract class OutputType {
   }
 
   private determinePath(path: string) {
-    return this.outputOptions.dir + "/" + path;
+    return this.options.outputPath + "/" + path;
   }
 }
+

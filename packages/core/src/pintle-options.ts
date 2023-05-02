@@ -1,12 +1,17 @@
-import { defaultOutputOptions, OutputOptions } from "./output";
-import { defaultInputOptions, InputOptions } from "./input";
+import { OutputTypes } from "./output-factory";
 
 export interface PintleOptions {
-  input?: InputOptions;
-  output?: OutputOptions;
+  type?: OutputTypes;
+  create?: boolean;
+  outputPath?: string;
+  singleFile?: boolean;
+  filename?: string;
 }
 
 export const defaultPintleOptions: PintleOptions = {
-  input: defaultInputOptions,
-  output: defaultOutputOptions,
+  type: OutputTypes.YAML,
+  create: true,
+  outputPath: ".",
+  singleFile: true,
+  filename: "definitions",
 };

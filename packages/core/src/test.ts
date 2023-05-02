@@ -1,11 +1,8 @@
 import {Pintle} from "./pintle";
 import {ResourceFile, Resources} from "./resource";
 
-interface MinecraftServerOptions {
 
-}
-
-const minecraftServer = (options: MinecraftServerOptions): ResourceFile => ({
+const minecraftServer = (): ResourceFile => ({
   name: "foobar",
   resources: [
 
@@ -18,6 +15,6 @@ const minecraftServer = (options: MinecraftServerOptions): ResourceFile => ({
 const pintle = new Pintle(
   {},
   [
-    minecraftServer({})
+    minecraftServer()
   ]
 );

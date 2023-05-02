@@ -1,8 +1,8 @@
 import * as YAML from "yaml";
-import { OutputType } from "../output-type";
-import {ResourceFile, ResourceFiles} from "../../resource";
+import { OutputFactory } from "./output-factory";
+import {ResourceFile, ResourceFiles} from "../resource";
 
-export class Yaml extends OutputType {
+export class YamlOutputFactory extends OutputFactory {
   parseSingle(resourceFile: ResourceFile): string {
     const resources = resourceFile.resources;
     let outputString = "";

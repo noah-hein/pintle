@@ -1,9 +1,9 @@
 import * as fs from "fs";
-import { isValidFolder } from "../../tools";
+import {FsUtil} from "@pintle/core";
 
 export const validateProjectName = (input: never) => {
   const folderName = input;
-  if (!isValidFolder(folderName)) {
+  if (!FsUtil.isValidFolder(folderName)) {
     return "Invalid project name";
   }
   if (fs.existsSync(folderName)) {

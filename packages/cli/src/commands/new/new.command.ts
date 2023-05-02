@@ -12,6 +12,7 @@ import { globSync } from "glob";
 import {name as cliName} from "../../../package.json";
 import { PackageManagers } from "../../package-managers/package-manager";
 import { NewCommandOptions } from "./new.yargs";
+import * as chalk from "chalk";
 
 //TODO Convert fs stuff to async to improve performance
 export class NewCommand extends Command {
@@ -71,6 +72,7 @@ export class NewCommand extends Command {
       //Inject data into templates and create files
       const renderedContent = ejs.render(content, this.options);
       fse.outputFile(filePath, renderedContent, callback);
+      console.log(chalk.greenBright("GENERATE") + " " + file);
     });
   }
 }

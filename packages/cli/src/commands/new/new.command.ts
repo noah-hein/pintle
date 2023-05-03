@@ -48,7 +48,13 @@ export class NewCommand extends Command {
 
   private getTemplateFiles(): string[] {
     const relativePath = path.relative(discovered.workDir, discovered.templatePath);
-    const searchPath = path.join(relativePath, "/**").replace(/\\/g, "/");
+    const normalFiles = this.globRelativePath(relativePath, "/**");
+    const hiddenFiles = this.globRelativePath(relativePath, "**/.*")
+    return [...normalFiles, ...hiddenFiles];
+  }
+
+  private globRelativePath(relativePath: string, format: string) {
+    const searchPath = path.join(relativePath, format).replace(/\\/g, "/");
     return globSync(searchPath);
   }
 

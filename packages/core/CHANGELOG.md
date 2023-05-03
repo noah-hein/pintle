@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.4](https://github.com/noah-hein/pintle/compare/v0.1.3...v0.1.4) (2023-05-03)
+
+
+
 ## [0.1.3](https://github.com/noah-hein/pintle/compare/v0.1.2...v0.1.3) (2023-05-01)
 
 

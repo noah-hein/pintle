@@ -31,12 +31,15 @@ export interface Discover {
   templatePath: string;
 }
 
+const TEMPLATE = "packages/starter/src/default";
+const CONFIG_FILE_NAME = "pintle.cfg.json";
+
 export function discover(): Discover {
   const workDir = process.cwd();
   const librarySrcPath = __dirname;
-  const libraryPath = path.resolve(librarySrcPath, "../../..");
-  const templatePath = path.join(libraryPath, "packages/starter/src");
-  const configPath = path.join(workDir, "pintle.cfg.json");
+  const libraryPath = path.resolve(librarySrcPath, "../");
+  const templatePath = path.join(libraryPath, TEMPLATE);
+  const configPath = path.join(workDir, CONFIG_FILE_NAME);
   return {
     workDir,
     librarySrcPath,

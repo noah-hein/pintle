@@ -8,8 +8,8 @@
   "keywords": ["pintle", "kubernetes", "typescript"],
   "scripts": {
     "compile": "pintle compile",
-    "format": "prettier --write .",
-    "lint": "eslint --fix .",
+    "format": "prettier --write ..",
+    "lint": "eslint --fix ..",
     "test": "jest"
   },
   "devDependencies": {

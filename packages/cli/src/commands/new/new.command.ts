@@ -2,7 +2,6 @@ import * as inquirer from "inquirer";
 import * as fs from "fs";
 import * as fse from "fs-extra";
 import * as path from "path";
-import * as process from "process";
 import * as ejs from "ejs";
 import * as async from "async";
 import * as shell from "shelljs";
@@ -13,6 +12,7 @@ import {name as cliName} from "../../../package.json";
 import { PackageManagers } from "../../package-managers/package-manager";
 import { NewCommandOptions } from "./new.yargs";
 import * as chalk from "chalk";
+import { discovered } from "../../discover";
 
 //TODO Convert fs stuff to async to improve performance
 export class NewCommand extends Command {
@@ -46,10 +46,7 @@ export class NewCommand extends Command {
   }
 
   private getTemplateFiles(): string[] {
-    const basePath = process.cwd();
-    const libraryPath = path.resolve(__dirname, "../../..");
-    const templatePath = path.join(libraryPath, "packages/starter/src");
-    const relativePath = path.relative(basePath, templatePath);
+    const relativePath = path.relative(discovered.workDir, discovered.templatePath);
     const searchPath = path.join(relativePath, "/**").replace(/\\/g, "/");
     return globSync(searchPath);
   }
@@ -67,7 +64,7 @@ export class NewCommand extends Command {
       const filename = file.replace(root, "");
       const content = fs.readFileSync(file, "utf-8");
       const projectFilename = path.join(this.options.name, filename);
-      const filePath = path.resolve(process.cwd(), projectFilename);
+      const filePath = path.resolve(discovered.workDir, projectFilename);
 
       //Inject data into templates and create files
       const renderedContent = ejs.render(content, this.options);

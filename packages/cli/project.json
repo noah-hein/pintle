@@ -40,8 +40,8 @@
         "new": {
           "args": ["new"]
         },
-        "build": {
-          "args": ["build"]
+        "run": {
+          "args": ["run"]
         },
         "clean": {
           "args": ["clean"]

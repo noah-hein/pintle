@@ -9,7 +9,6 @@ import * as chalk from "chalk";
 import { Command } from "../command";
 import { newQuestions } from "./new.questions";
 import { globSync } from "glob";
-import {name as cliName} from "../../../package.json";
 import { PackageManagers } from "../../package-managers/package-manager";
 import { NewCommandOptions } from "./new.yargs";
 import { discovered } from "../../discover";
@@ -41,9 +40,14 @@ export class NewCommand extends Command {
     const packageManager = options.packageManager;
     const projectName = options.name;
     if (packageManager === PackageManagers.NPM) {
-      shell.exec("npm install --prefix ./" + projectName + " " + cliName, {silent: true});
-      shell.exec("npm install --prefix ./" + projectName, {silent: true})
+      this.installDependency(projectName, "@pintle/cli");
+      this.installDependency(projectName, "@pintle/templates");
+      this.installDependency(projectName, "");
     }
+  }
+
+  private installDependency(projectName: string, dependencyName: string) {
+    shell.exec("npm install --prefix ./" + projectName + " " + dependencyName, {silent: true});
   }
 
   private getTemplateFiles(): string[] {

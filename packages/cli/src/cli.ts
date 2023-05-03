@@ -4,6 +4,7 @@ import * as chalk from "chalk";
 import * as yargs from "yargs";
 import { newYargsCommand } from "./commands/new/new.yargs";
 import { cleanYargsCommand } from "./commands/clean/clean.yargs";
+import {runYargsCommand} from "./commands/run/run.yargs";
 
 function main() {
   //logo();
@@ -11,6 +12,7 @@ function main() {
     .scriptName("pintle")
     .command(newYargsCommand)
     .command(cleanYargsCommand)
+    .command(runYargsCommand)
     .alias('h', 'help')
     .alias('v', 'version')
     .showHelpOnFail(true)

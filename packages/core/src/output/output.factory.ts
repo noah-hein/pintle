@@ -1,4 +1,6 @@
 import * as fs from "fs";
+import * as chalk from "chalk";
+import ora from 'ora';
 import { defaultPintleOptions, PintleOptions } from "../pintle.options";
 import { FsUtil } from "../util";
 import { ResourceFile, ResourceFiles } from "../resource";
@@ -43,8 +45,15 @@ export abstract class OutputFactory {
     ==================================================================================================================*/
 
   private ensureDirExists(outputDir: string | undefined) {
+    const spinner = ora("Searching for " + outputDir).start()
     const dirExists = outputDir && fs.existsSync(outputDir);
-    if (!dirExists) {
+
+
+
+    if (dirExists) {
+      console.log("Found " + chalk.green(outputDir));
+    } else {
+      console.log(chalk.yellow(outputDir) + " directory does not exist, creating...")
       FsUtil.createFolder(outputDir);
     }
   }

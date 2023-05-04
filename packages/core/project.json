@@ -4,6 +4,14 @@
   "sourceRoot": "packages/core/src",
   "projectType": "library",
   "targets": {
+    "node": {
+      "executor": "@nrwl/js:node",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "core:build",
+        "watch": false
+      }
+    },
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],

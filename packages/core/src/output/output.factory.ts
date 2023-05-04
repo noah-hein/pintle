@@ -1,6 +1,5 @@
 import * as fs from "fs";
 import * as chalk from "chalk";
-import ora from 'ora';
 import { defaultPintleOptions, PintleOptions } from "../pintle.options";
 import { FsUtil } from "../util";
 import { ResourceFile, ResourceFiles } from "../resource";
@@ -45,11 +44,8 @@ export abstract class OutputFactory {
     ==================================================================================================================*/
 
   private ensureDirExists(outputDir: string | undefined) {
-    const spinner = ora("Searching for " + outputDir).start()
+    console.log("Searching for " + outputDir);
     const dirExists = outputDir && fs.existsSync(outputDir);
-
-
-
     if (dirExists) {
       console.log("Found " + chalk.green(outputDir));
     } else {
@@ -110,8 +106,7 @@ export abstract class OutputFactory {
     //Create file
     if (resources && resources.length > 0) {
       const content = this.parseSingle(resourceFile);
-      const filePath =
-        this.determinePath(filename) + "." + this.options.type;
+      const filePath = this.determinePath(filename) + "." + this.options.type;
       FsUtil.createFile(content, filePath);
     }
     //Recurse through children

@@ -2,7 +2,6 @@ import { OutputTypes } from "./output";
 
 export interface PintleOptions {
   type?: OutputTypes;
-  create?: boolean;
   outputPath?: string;
   singleFile?: boolean;
   filename?: string;
@@ -10,7 +9,6 @@ export interface PintleOptions {
 
 export const defaultPintleOptions: PintleOptions = {
   type: OutputTypes.YAML,
-  create: true,
   outputPath: "./generated",
   singleFile: false,
   filename: "resources",

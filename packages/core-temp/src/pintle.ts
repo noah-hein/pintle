@@ -1,8 +1,9 @@
+import * as path from "path";
+import * as fs from "fs";
 import {ResourceFiles} from "./resource";
 import {defaultPintleConfig, PintleConfig} from "./pintle.config";
-import {FsUtil} from "@pintle/core";
 import {File, Folder} from "./folder";
-import * as path from "path";
+import {FsUtil} from "./util";
 
 export class Pintle {
   /*==================================================================================================================
@@ -47,7 +48,7 @@ export class Pintle {
         Private Methods
     ==================================================================================================================*/
 
-  private build() {
+  private async build() {
     //Create factory from config
     const factoryConstructor = this.config.factory
     const factory = new factoryConstructor();
@@ -55,17 +56,17 @@ export class Pintle {
     //Build folders and files
     const root = factory.compile(this.resourceFiles) as Folder;
     root.name = this.config.outputPath;
-    this.createFolder(root);
+    await this.createFolder(root);
   }
 
-  private createFolder(folder: Folder, basePath?: string) {
+  private async createFolder(folder: Folder, basePath?: string) {
     const folderPath = path.join(basePath || "", folder.name);
     const files = folder.files
     const folders = folder.folders;
 
     //Create folder and its files
     FsUtil.createFolder(folderPath);
-    this.createFilesInFolder(folderPath, files);
+    await this.createFilesInFolder(folderPath, files);
 
     //Base case
     if (folders) {
@@ -76,11 +77,17 @@ export class Pintle {
   }
 
   private createFilesInFolder(folderPath: string, files: File[]) {
+    const filePromises: Promise<void>[] = []
     files.forEach(async file => {
       const filepath = path.join(folderPath, file.name);
-      const content = await file.data.text();
-      FsUtil.createFile(filepath, content);
+      filePromises.push(this.writeFile(filepath, file.data));
     });
+    return Promise.all(filePromises);
+  }
+
+  private async writeFile(filePath: string, blob: Blob) {
+    const content = await blob.text()
+    fs.writeFileSync(filePath, content);
   }
 
 

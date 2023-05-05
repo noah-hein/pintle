@@ -7,7 +7,7 @@ export class YamlFactory extends PintleFactory {
 
 
     const file: File = {
-      name: "foobar",
+      name: "foobar.txt",
       data: new Blob(["foobar"], {type: "text/plain"})
     }
 

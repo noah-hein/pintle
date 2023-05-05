@@ -1,7 +1,8 @@
-import {PintleFactory} from "./factory/factory";
 import {ResourceFiles} from "./resource";
 import {defaultPintleConfig, PintleConfig} from "./pintle.config";
-import {YamlFactory} from "./factory/factory.yaml";
+import {FsUtil} from "@pintle/core";
+import {File, Folder} from "./folder";
+import * as path from "path";
 
 export class Pintle {
   /*==================================================================================================================
@@ -51,9 +52,44 @@ export class Pintle {
     const factoryConstructor = this.config.factory
     const factory = new factoryConstructor();
 
-
-    const files = factory.compile(this.resourceFiles);
+    //Build folders and files
+    const root = factory.compile(this.resourceFiles) as Folder;
+    root.name = this.config.outputPath;
+    this.createFolder(root);
   }
+
+  private createFolder(folder: Folder, basePath?: string) {
+    const folderPath = path.join(basePath || "", folder.name);
+    const files = folder.files
+    const folders = folder.folders;
+
+    //Create folder and its files
+    FsUtil.createFolder(folderPath);
+    this.createFilesInFolder(folderPath, files);
+
+    //Base case
+    if (folders) {
+      folders.forEach(folder => {
+        this.createFolder(folder, folderPath);
+      });
+    }
+  }
+
+  private createFilesInFolder(folderPath: string, files: File[]) {
+    files.forEach(async file => {
+      const filepath = path.join(folderPath, file.name);
+      const content = await file.data.text();
+      FsUtil.createFile(filepath, content);
+    });
+  }
+
+
+
+
+
+
+
+
 
   private parseConfig(config: PintleConfig): PintleConfig {
     return {

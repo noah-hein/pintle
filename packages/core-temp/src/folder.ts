@@ -4,7 +4,12 @@ export interface Folder {
   folders: Folder[];
 }
 
-export interface PintleOutput {
+export interface File {
+  name: string;
+  data: Blob
+}
+
+export interface RootFolder {
   files: File[];
   folders: Folder[];
 }

@@ -1,21 +1,20 @@
 import {ResourceFiles} from "../resource";
 import { PintleFactory} from "./factory";
-import {Folder, PintleOutput} from "../folder";
+import {RootFolder, File} from "../folder";
 
 export class YamlFactory extends PintleFactory {
-  compile(resourceFiles: ResourceFiles): PintleOutput {
+  compile(resourceFiles: ResourceFiles): RootFolder {
 
 
+    const file: File = {
+      name: "foobar",
+      data: new Blob(["foobar"], {type: "text/plain"})
+    }
 
-
-
-
-
-    //const file = new File(["test"], "name", {type: "text/plain"})
 
 
     return {
-      files: [],
+      files: [file],
       folders: []
     }
   }

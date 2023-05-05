@@ -14,6 +14,14 @@
         "assets": ["packages/core-temp/*.md"]
       }
     },
+    "node": {
+      "executor": "@nrwl/js:node",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "core-temp:build",
+        "watch": false
+      }
+    },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],

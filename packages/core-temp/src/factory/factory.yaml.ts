@@ -11,7 +11,7 @@ export class YamlFactory extends PintleFactory {
 
 
 
-    const file = new File(["test"], "name", {type: "text/plain"})
+    //const file = new File(["test"], "name", {type: "text/plain"})
 
 
     return {

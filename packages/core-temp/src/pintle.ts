@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
-import {ResourceFiles} from "./resource";
+import {Modules} from "./resource";
 import {defaultPintleConfig, PintleConfig} from "./pintle.config";
 import {File, Folder} from "./folder";
 import {FsUtil} from "./util";
@@ -10,7 +10,7 @@ export class Pintle {
         Private Members
     ==================================================================================================================*/
 
-  private readonly resourceFiles: ResourceFiles;
+  private readonly modules: Modules;
 
   private readonly config: PintleConfig;
 
@@ -20,17 +20,18 @@ export class Pintle {
 
   constructor(
     config: PintleConfig,
-    resourceFiles: ResourceFiles
+    modules: Modules
   ) {
     //Parse options and log
-    this.resourceFiles = resourceFiles;
+    this.modules = modules;
     this.config = this.parseConfig(config);
     console.log("Config:", this.config);
 
     //Build resourceFiles
     console.log("Building resources");
-    this.build();
-    console.log("Completed!");
+    this.build().then(() => {
+      console.log("Build completed!");
+    });
   }
 
   /*==================================================================================================================
@@ -38,10 +39,10 @@ export class Pintle {
     ==================================================================================================================*/
 
   public static create(
-    collections?: ResourceFiles
+    modules?: Modules
   ): Pintle {
-    collections = collections || []
-    return new Pintle(defaultPintleConfig, collections);
+    modules = modules || []
+    return new Pintle(defaultPintleConfig, modules);
   }
 
   /*==================================================================================================================
@@ -54,13 +55,14 @@ export class Pintle {
     const factory = new factoryConstructor();
 
     //Build folders and files
-    const root = factory.compile(this.resourceFiles) as Folder;
-    root.name = this.config.outputPath;
+    const rootModule = {name: "root", modules: this.modules, resources: []};
+    const root = factory.compile(rootModule) as Folder;
+    root.folderName = this.config.outputPath;
     await this.createFolder(root);
   }
 
   private async createFolder(folder: Folder, basePath?: string) {
-    const folderPath = path.join(basePath || "", folder.name);
+    const folderPath = path.join(basePath || "", folder.folderName);
     const files = folder.files
     const folders = folder.folders;
 
@@ -79,24 +81,16 @@ export class Pintle {
   private createFilesInFolder(folderPath: string, files: File[]) {
     const filePromises: Promise<void>[] = []
     files.forEach(async file => {
-      const filepath = path.join(folderPath, file.name);
+      const filepath = path.join(folderPath, file.fileName);
       filePromises.push(this.writeFile(filepath, file.data));
     });
     return Promise.all(filePromises);
   }
 
   private async writeFile(filePath: string, blob: Blob) {
-    const content = await blob.text()
+    const content = await blob.text();
     fs.writeFileSync(filePath, content);
   }
-
-
-
-
-
-
-
-
 
   private parseConfig(config: PintleConfig): PintleConfig {
     return {

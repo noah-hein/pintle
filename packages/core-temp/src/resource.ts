@@ -1,14 +1,14 @@
 export type Resource = object;
 export type Resources = Resource[];
 
-export interface ResourceFile {
+export interface Module {
   name: string;
   resources: Resources;
-  files?: ResourceFiles;
+  modules?: Modules;
 }
-export type ResourceFiles = ResourceFile[];
+export type Modules = Module[];
 
-export function isResourceFile(object: unknown): object is ResourceFile {
+export function isModule(object: unknown): object is Module {
   return (
     typeof object === "object" &&
     object != null &&

@@ -1,13 +1,15 @@
 export interface Folder {
-  name: string;
+  folderName: string;
   files: File[];
   folders: Folder[];
 }
+export type Folders = Folder[];
 
 export interface File {
-  name: string;
+  fileName: string;
   data: Blob
 }
+export type Files = File[];
 
 export interface RootFolder {
   files: File[];

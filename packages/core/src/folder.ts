@@ -10,8 +10,3 @@ export interface File {
   data: Blob
 }
 export type Files = File[];
-
-export interface RootFolder {
-  files: File[];
-  folders: Folder[];
-}

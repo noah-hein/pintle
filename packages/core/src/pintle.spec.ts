@@ -1,5 +1,5 @@
 import { Pintle } from "./pintle";
-import { Templates } from "@pintle/templates";
+import { DefaultTemplates } from "@pintle/templates";
 
 describe("pintle", () => {
   test("create", () => {
@@ -7,15 +7,15 @@ describe("pintle", () => {
       {
         name: "foobar",
         resources: [
-          Templates.namespace("foobar"),
-          Templates.namespace("what"),
-          Templates.namespace("the")
+          DefaultTemplates.namespace("foobar"),
+          DefaultTemplates.namespace("what"),
+          DefaultTemplates.namespace("the")
         ],
         modules: [
           {
             name: "ark-server",
             resources: [
-              Templates.namespace("ark-server")
+              DefaultTemplates.namespace("ark-server")
             ],
           }
         ]

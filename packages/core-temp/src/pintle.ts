@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
-import {Modules} from "./resource";
+import { Module, Modules } from "./resource";
 import {defaultPintleConfig, PintleConfig} from "./pintle.config";
 import {File, Folder} from "./folder";
 import {FsUtil} from "./util";
@@ -55,7 +55,11 @@ export class Pintle {
     const factory = new factoryConstructor();
 
     //Build folders and files
-    const rootModule = {name: "root", modules: this.modules, resources: []};
+    const rootModule: Module = {
+      name: "main",
+      resources: [], modules:
+      this.modules
+    }
     const root = factory.compile(rootModule) as Folder;
     root.folderName = this.config.outputPath;
     await this.createFolder(root);

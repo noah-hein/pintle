@@ -1,5 +1,5 @@
-import {Module} from "../resource";
-import {Folder, RootFolder} from "../folder";
+import { Module } from "../resource";
+import {Folder} from "../folder";
 
 export abstract class PintleFactory {
   abstract compile(module: Module): Folder;

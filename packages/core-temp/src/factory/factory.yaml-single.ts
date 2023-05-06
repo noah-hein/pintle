@@ -1,9 +1,9 @@
 import * as Yaml from "yaml";
 import { Module, Resources } from "../resource";
 import { PintleFactory} from "./factory";
-import { File, Files, Folder, Folders } from "../folder";
+import { Folder } from "../folder";
 
-export class YamlFactory extends PintleFactory {
+export class YamlSingleFactory extends PintleFactory {
 
   /*==================================================================================================================
         Private Members
@@ -16,54 +16,37 @@ export class YamlFactory extends PintleFactory {
     ==================================================================================================================*/
 
   public compile(module: Module): Folder {
-    return this.moduleToFolder(module);
+    const fileName = module.name + "." + this.FILE_ENDING;
+    const yaml = this.combineResources(module);
+    const data = new Blob([yaml], {type: "text/plain"});
+    return {
+      folderName: "root",
+      files: [{
+        fileName,
+        data
+      }],
+      folders: []
+    }
   }
 
   /*==================================================================================================================
         Private Methods
     ==================================================================================================================*/
 
-  private moduleToFolder(module: Module): Folder {
-    const folderName = module.name;
-    const folders: Folders = [];
-    const files: Files = [];
-
-    const children = module.modules;
-    children?.forEach(child => {
-      const childName = child.name;
-      const childModules = child.modules;
-      const childResources = child.resources;
-
-      if (childModules && childModules.length > 0) {
-        const folder = this.moduleToFolder(child);
-        folders.push(folder);
-      }
-
-      if (childResources && childResources.length > 0) {
-        const fileName = childName + "." + this.FILE_ENDING;
-        const file = this.resourcesToYamlFile(fileName, childResources);
-        files.push(file);
-      }
+  private combineResources(module: Module): string {
+    let content = this.resourcesToYaml(module.resources);
+    module.modules?.forEach(child => {
+      content = content + this.combineResources(child);
     });
-    return {
-      folderName,
-      folders,
-      files
-    }
+    return content;
   }
 
-  private resourcesToYamlFile(fileName: string, resources: Resources): File {
+  private resourcesToYaml(resources: Resources) {
     let content = "";
     resources.forEach(resource => {
       const resourceYaml = Yaml.stringify(resource);
       content = content + resourceYaml + "---\r\n";
     });
-    const fileType = {type: "text/plain"}
-    const data = new Blob([content], fileType);
-    return {
-      fileName,
-      data
-    };
+    return content;
   }
-
 }

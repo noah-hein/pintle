@@ -19,6 +19,18 @@
           "releaseAs": "major"
         }
       }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "check",
+      "configurations": {
+        "write": {
+          "command": "nx format:write"
+        },
+        "check": {
+          "command": "nx format:check"
+        }
+      }
     }
   },
   "tags": []

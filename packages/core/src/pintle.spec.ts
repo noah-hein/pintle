@@ -9,17 +9,15 @@ describe("pintle", () => {
         resources: [
           DefaultTemplates.namespace("foobar"),
           DefaultTemplates.namespace("what"),
-          DefaultTemplates.namespace("the")
+          DefaultTemplates.namespace("the"),
         ],
         modules: [
           {
             name: "ark-server",
-            resources: [
-              DefaultTemplates.namespace("ark-server")
-            ],
-          }
-        ]
-      }
+            resources: [DefaultTemplates.namespace("ark-server")],
+          },
+        ],
+      },
     ]);
   });
-})
+});

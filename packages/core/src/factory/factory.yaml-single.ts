@@ -1,10 +1,9 @@
 import * as Yaml from "yaml";
 import { Module, Resources } from "../resource";
-import { PintleFactory} from "./factory";
+import { PintleFactory } from "./factory";
 import { Folder } from "../folder";
 
 export class YamlSingleFactory extends PintleFactory {
-
   /*==================================================================================================================
         Private Members
     ==================================================================================================================*/
@@ -18,15 +17,17 @@ export class YamlSingleFactory extends PintleFactory {
   public compile(module: Module): Folder {
     const fileName = module.name + "." + this.FILE_ENDING;
     const yaml = this.combineResources(module);
-    const data = new Blob([yaml], {type: "text/plain"});
+    const data = new Blob([yaml], { type: "text/plain" });
     return {
       folderName: "root",
-      files: [{
-        fileName,
-        data
-      }],
-      folders: []
-    }
+      files: [
+        {
+          fileName,
+          data,
+        },
+      ],
+      folders: [],
+    };
   }
 
   /*==================================================================================================================
@@ -35,7 +36,7 @@ export class YamlSingleFactory extends PintleFactory {
 
   private combineResources(module: Module): string {
     let content = this.resourcesToYaml(module.resources);
-    module.modules?.forEach(child => {
+    module.modules?.forEach((child) => {
       content = content + this.combineResources(child);
     });
     return content;
@@ -43,7 +44,7 @@ export class YamlSingleFactory extends PintleFactory {
 
   private resourcesToYaml(resources: Resources) {
     let content = "";
-    resources.forEach(resource => {
+    resources.forEach((resource) => {
       const resourceYaml = Yaml.stringify(resource);
       content = content + resourceYaml + "---\r\n";
     });

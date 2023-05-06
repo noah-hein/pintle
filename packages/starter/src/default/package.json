@@ -5,7 +5,11 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "keywords": ["pintle", "kubernetes", "typescript"],
+  "keywords": [
+    "pintle",
+    "kubernetes",
+    "typescript"
+  ],
   "scripts": {
     "run": "pintle run src/main.ts",
     "format": "prettier --write ..",

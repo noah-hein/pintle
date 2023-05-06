@@ -15,7 +15,6 @@ import { discovered } from "../../discover";
 
 //TODO Convert fs stuff to async to improve performance
 export class NewCommand extends Command {
-
   private options: NewCommandOptions;
 
   constructor(options: NewCommandOptions) {
@@ -27,7 +26,7 @@ export class NewCommand extends Command {
     //Prompt user with build options
     const prompt = inquirer.createPromptModule();
     const questions = newQuestions(this.options);
-    this.options = await prompt(questions) as NewCommandOptions;
+    this.options = (await prompt(questions)) as NewCommandOptions;
 
     //Build template files
     const templateStrings = this.getTemplateFiles();
@@ -47,13 +46,18 @@ export class NewCommand extends Command {
   }
 
   private installDependency(projectName: string, dependencyName: string) {
-    shell.exec("npm install --prefix ./" + projectName + " " + dependencyName, {silent: true});
+    shell.exec("npm install --prefix ./" + projectName + " " + dependencyName, {
+      silent: true,
+    });
   }
 
   private getTemplateFiles(): string[] {
-    const relativePath = path.relative(discovered.workDir, discovered.templatePath);
+    const relativePath = path.relative(
+      discovered.workDir,
+      discovered.templatePath
+    );
     const normalFiles = this.globRelativePath(relativePath, "/**");
-    const hiddenFiles = this.globRelativePath(relativePath, "**/.*")
+    const hiddenFiles = this.globRelativePath(relativePath, "**/.*");
     return [...normalFiles, ...hiddenFiles];
   }
 
@@ -63,10 +67,10 @@ export class NewCommand extends Command {
   }
 
   private findFiles(templateStrings: string[]): string[] {
-    return templateStrings.filter(fileString => (
-      fs.existsSync(fileString) &&
-      fs.lstatSync(fileString).isFile()
-    ));
+    return templateStrings.filter(
+      (fileString) =>
+        fs.existsSync(fileString) && fs.lstatSync(fileString).isFile()
+    );
   }
 
   private async buildTemplateFiles(root: string, files: string[]) {

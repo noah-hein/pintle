@@ -9,4 +9,4 @@ export const namespace = (name: string, options?: V1Namespace): V1Namespace => {
     },
     ...options,
   };
-}
+};

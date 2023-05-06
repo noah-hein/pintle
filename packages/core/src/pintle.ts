@@ -1,9 +1,9 @@
 import * as path from "path";
 import * as fs from "fs";
 import { Module, Modules } from "./resource";
-import {defaultPintleConfig, PintleConfig} from "./pintle.config";
-import {File, Folder} from "./folder";
-import {FsUtil} from "./util";
+import { defaultPintleConfig, PintleConfig } from "./pintle.config";
+import { File, Folder } from "./folder";
+import { FsUtil } from "./util";
 
 export class Pintle {
   /*==================================================================================================================
@@ -18,10 +18,7 @@ export class Pintle {
         Constructors
     ==================================================================================================================*/
 
-  constructor(
-    config: PintleConfig,
-    modules: Modules
-  ) {
+  constructor(config: PintleConfig, modules: Modules) {
     //Parse options and log
     this.modules = modules;
     this.config = this.parseConfig(config);
@@ -38,10 +35,8 @@ export class Pintle {
         Public Methods
     ==================================================================================================================*/
 
-  public static create(
-    modules?: Modules
-  ): Pintle {
-    modules = modules || []
+  public static create(modules?: Modules): Pintle {
+    modules = modules || [];
     return new Pintle(defaultPintleConfig, modules);
   }
 
@@ -51,15 +46,15 @@ export class Pintle {
 
   private async build() {
     //Create factory from config
-    const factoryConstructor = this.config.factory
+    const factoryConstructor = this.config.factory;
     const factory = new factoryConstructor();
 
     //Build folders and files
     const rootModule: Module = {
       name: "main",
-      resources: [], modules:
-      this.modules
-    }
+      resources: [],
+      modules: this.modules,
+    };
     const root = factory.compile(rootModule) as Folder;
     root.folderName = this.config.outputPath;
     await this.createFolder(root);
@@ -67,7 +62,7 @@ export class Pintle {
 
   private async createFolder(folder: Folder, basePath?: string) {
     const folderPath = path.join(basePath || "", folder.folderName);
-    const files = folder.files
+    const files = folder.files;
     const folders = folder.folders;
 
     //Create folder and its files
@@ -76,15 +71,15 @@ export class Pintle {
 
     //Base case
     if (folders) {
-      folders.forEach(folder => {
+      folders.forEach((folder) => {
         this.createFolder(folder, folderPath);
       });
     }
   }
 
   private createFilesInFolder(folderPath: string, files: File[]) {
-    const filePromises: Promise<void>[] = []
-    files.forEach(async file => {
+    const filePromises: Promise<void>[] = [];
+    files.forEach(async (file) => {
       const filepath = path.join(folderPath, file.fileName);
       filePromises.push(this.writeFile(filepath, file.data));
     });
@@ -102,6 +97,4 @@ export class Pintle {
       ...config,
     };
   }
-
-
 }

@@ -7,6 +7,6 @@ export type Folders = Folder[];
 
 export interface File {
   fileName: string;
-  data: Blob
+  data: Blob;
 }
 export type Files = File[];

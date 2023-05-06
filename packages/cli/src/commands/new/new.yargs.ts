@@ -15,18 +15,18 @@ export const newYargsCommand: CommandModule = {
       describe: "Project folder name",
       alias: "n",
       type: "string",
-      default: "pintle-app"
+      default: "pintle-app",
     },
     packageManager: {
       describe: "Package manager for the workspace",
       default: "npm",
       alias: "m",
       type: "string",
-      choices: Object.values(PackageManagers)
-    }
+      choices: Object.values(PackageManagers),
+    },
   },
   handler: (argv: unknown) => {
     const options = argv as NewCommandOptions;
     new NewCommand(options).run().then();
-  }
-}
+  },
+};

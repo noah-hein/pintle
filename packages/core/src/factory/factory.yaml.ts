@@ -1,10 +1,9 @@
 import * as Yaml from "yaml";
 import { Module, Resources } from "../resource";
-import { PintleFactory} from "./factory";
+import { PintleFactory } from "./factory";
 import { File, Files, Folder, Folders } from "../folder";
 
 export class YamlFactory extends PintleFactory {
-
   /*==================================================================================================================
         Private Members
     ==================================================================================================================*/
@@ -29,7 +28,7 @@ export class YamlFactory extends PintleFactory {
     const files: Files = [];
 
     const children = module.modules;
-    children?.forEach(child => {
+    children?.forEach((child) => {
       const childName = child.name;
       const childModules = child.modules;
       const childResources = child.resources;
@@ -48,22 +47,21 @@ export class YamlFactory extends PintleFactory {
     return {
       folderName,
       folders,
-      files
-    }
+      files,
+    };
   }
 
   private resourcesToYamlFile(fileName: string, resources: Resources): File {
     let content = "";
-    resources.forEach(resource => {
+    resources.forEach((resource) => {
       const resourceYaml = Yaml.stringify(resource);
       content = content + resourceYaml + "---\r\n";
     });
-    const fileType = {type: "text/plain"}
+    const fileType = { type: "text/plain" };
     const data = new Blob([content], fileType);
     return {
       fileName,
-      data
+      data,
     };
   }
-
 }

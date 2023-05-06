@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import {FsUtil} from "@pintle/core";
+import { FsUtil } from "@pintle/core";
 
 export const validateProjectName = (input: never) => {
   const folderName = input;
@@ -10,4 +10,4 @@ export const validateProjectName = (input: never) => {
     return "Folder already in use";
   }
   return true;
-}
+};

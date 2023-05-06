@@ -1,6 +1,6 @@
-import {CommandModule} from "yargs";
+import { CommandModule } from "yargs";
 import { RunCommand } from "./run.command";
-import {NewCommandOptions} from "../new/new.yargs";
+import { NewCommandOptions } from "../new/new.yargs";
 
 export interface RunCommandOptions {
   main: string;
@@ -14,11 +14,11 @@ export const runYargsCommand: CommandModule = {
       describe: "Entrypoint for project",
       alias: "n",
       type: "string",
-      default: "main.ts"
+      default: "main.ts",
     },
   },
   handler: (argv: unknown) => {
     const options = argv as RunCommandOptions;
     new RunCommand(options).run().then();
-  }
-}
+  },
+};

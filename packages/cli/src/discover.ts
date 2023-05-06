@@ -45,8 +45,8 @@ export function discover(): Discover {
     librarySrcPath,
     libraryPath,
     templatePath,
-    configPath
-  }
+    configPath,
+  };
 }
 
 export const discovered = discover();

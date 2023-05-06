@@ -4,8 +4,20 @@
   "targets": {
     "version": {
       "executor": "@jscutlery/semver:version",
+      "defaultConfiguration": "patch",
       "options": {
         "syncVersions": true
+      },
+      "configurations": {
+        "patch": {
+          "releaseAs": "patch"
+        },
+        "minor": {
+          "releaseAs": "minor"
+        },
+        "major": {
+          "releaseAs": "major"
+        }
       }
     }
   },

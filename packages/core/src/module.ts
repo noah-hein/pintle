@@ -7,7 +7,7 @@ import {Resources} from "./resource";
 // }
 
 export class Module {
-  name: string = "";
+  name = "unknown";
   resources?: Resources;
   modules?: Modules;
 }

@@ -4,6 +4,7 @@ import { DefaultTemplates } from "@pintle/templates";
 describe("pintle", () => {
   test("create", () => {
     Pintle.create([
+
       {
         name: "foobar",
         resources: [

@@ -35,9 +35,9 @@ export class Pintle {
         Public Methods
     ==================================================================================================================*/
 
-  public static async create(modules?: Modules) {
+  public static async create(modules?: Modules, config?: PintleConfig) {
     modules = modules || [];
-    const config = await findConfig();
+    config = config || await findConfig();
     new Pintle(config, modules);
   }
 

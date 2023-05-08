@@ -36,10 +36,13 @@ export class YamlSingleFactory extends PintleFactory {
     ==================================================================================================================*/
 
   private combineResources(module: Module): string {
-    let content = this.resourcesToYaml(module.resources);
-    module.modules?.forEach((child) => {
-      content = content + this.combineResources(child);
-    });
+    let content = "";
+    if (module.resources) {
+      content = this.resourcesToYaml(module.resources);
+      module.modules?.forEach((child) => {
+        content = content + this.combineResources(child);
+      });
+    }
     return content;
   }
 

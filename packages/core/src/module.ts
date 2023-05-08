@@ -2,9 +2,15 @@ import {Resources} from "./resource";
 
 export interface Module {
   name: string;
-  resources: Resources;
+  resources?: Resources;
   modules?: Modules;
 }
+
+// export class Module {
+//   name: string = "default";
+//   resources?: Resources;
+//   modules?: Modules;
+// }
 
 export type Modules = Module[];
 

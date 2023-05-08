@@ -13,7 +13,7 @@
   "scripts": {
     "clean": "pintle clean",
     "patch": "pintle patch",
-    "put": "pintle put",
+    "put": "pintle clean && pintle patch",
     "format": "prettier --write ..",
     "lint": "eslint --fix ..",
     "test": "jest"

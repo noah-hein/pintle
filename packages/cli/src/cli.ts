@@ -5,7 +5,6 @@ import * as yargs from "yargs";
 import { newYargsCommand } from "./commands/new/new.yargs";
 import { cleanYargsCommand } from "./commands/clean/clean.yargs";
 import { patchYargsCommand } from "./commands/patch/patch.yargs";
-import { putYargsCommand } from "./commands/put/put.yargs";
 
 function main() {
   //logo();
@@ -14,7 +13,6 @@ function main() {
     .command(newYargsCommand)
     .command(cleanYargsCommand)
     .command(patchYargsCommand)
-    .command(putYargsCommand)
     .alias("h", "help")
     .alias("v", "version")
     .showHelpOnFail(true)

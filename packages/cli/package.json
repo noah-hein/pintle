@@ -1,6 +1,6 @@
 {
   "name": "@pintle/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "commonjs",
   "bin": {
     "pintle": "./src/cli.js"

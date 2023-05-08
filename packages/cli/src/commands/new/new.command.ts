@@ -39,6 +39,7 @@ export class NewCommand extends Command {
     const packageManager = options.packageManager;
     const projectName = options.name;
     if (packageManager === PackageManagers.NPM) {
+      this.installDependency(projectName, "@pintle/core");
       this.installDependency(projectName, "@pintle/cli");
       this.installDependency(projectName, "@pintle/templates");
       this.installDependency(projectName, "");

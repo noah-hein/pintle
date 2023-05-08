@@ -3,4 +3,5 @@ export * from "./pintle.config";
 export * from "./resource";
 export * from "./folder";
 export * from "./module";
-export * from "./util"
+export * from "./util";
+export * from "./factory";

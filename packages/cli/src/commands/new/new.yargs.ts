@@ -25,8 +25,8 @@ export const newYargsCommand: CommandModule = {
       choices: Object.values(PackageManagers),
     },
   },
-  handler: (argv: unknown) => {
+  handler: async (argv: unknown) => {
     const options = argv as NewCommandOptions;
-    new NewCommand(options).run().then();
+    await new NewCommand(options).run();
   },
 };

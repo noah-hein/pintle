@@ -5,7 +5,7 @@ export const cleanYargsCommand: CommandModule = {
   command: "clean",
   describe: "Clears out the compiled build folder",
   builder: {},
-  handler: () => {
-    new CleanCommand().run()
+  handler: async () => {
+    await new CleanCommand().run();
   },
 };

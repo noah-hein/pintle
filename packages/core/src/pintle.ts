@@ -22,7 +22,7 @@ export class Pintle {
     //Parse options and log
     this.modules = modules;
     this.config = this.parseConfig(config);
-    console.log("Config:", this.config);
+    console.log("ConfigBuilder:", this.config);
 
     //Build resourceFiles
     console.log("Building resources");

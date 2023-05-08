@@ -1,9 +1,9 @@
 import * as path from "path";
 import * as fs from "fs";
-import { Module, Modules } from "./resource";
 import { defaultPintleConfig, PintleConfig } from "./pintle.config";
 import { File, Folder } from "./folder";
 import { FsUtil } from "./util";
+import {Module, Modules} from "./module";
 
 export class Pintle {
   /*==================================================================================================================

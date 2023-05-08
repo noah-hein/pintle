@@ -1,7 +1,8 @@
 import * as Yaml from "yaml";
-import { Module, Resources } from "../resource";
+import { Resources } from "../resource";
 import { PintleFactory } from "./factory";
 import { File, Files, Folder, Folders } from "../folder";
+import {Module} from "../module";
 
 export class YamlFactory extends PintleFactory {
   /*==================================================================================================================

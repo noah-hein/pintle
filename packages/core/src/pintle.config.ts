@@ -1,5 +1,5 @@
-import { PintleFactory } from "./factory/factory";
-import { YamlFactory } from "./factory/factory.yaml";
+import { PintleFactory } from "./factory";
+import { YamlFactory } from "./factory";
 
 export interface PintleConfig {
   outputPath: string;

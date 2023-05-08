@@ -2,4 +2,5 @@ export * from "./pintle";
 export * from "./pintle.config";
 export * from "./resource";
 export * from "./folder";
-export * from "./util";
+export * from "./module";
+export * from "./util"

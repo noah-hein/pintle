@@ -1,5 +1,5 @@
-import { Module } from "../resource";
 import { Folder } from "../folder";
+import {Module} from "../module";
 
 export type PintleFactoryConstructor = { new (): PintleFactory };
 

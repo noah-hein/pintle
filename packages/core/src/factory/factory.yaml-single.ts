@@ -1,7 +1,8 @@
 import * as Yaml from "yaml";
-import { Module, Resources } from "../resource";
+import { Resources } from "../resource";
 import { PintleFactory } from "./factory";
 import { Folder } from "../folder";
+import {Module} from "../module";
 
 export class YamlSingleFactory extends PintleFactory {
   /*==================================================================================================================
@@ -35,10 +36,13 @@ export class YamlSingleFactory extends PintleFactory {
     ==================================================================================================================*/
 
   private combineResources(module: Module): string {
-    let content = this.resourcesToYaml(module.resources);
-    module.modules?.forEach((child) => {
-      content = content + this.combineResources(child);
-    });
+    let content = "";
+    if (module.resources) {
+      content = this.resourcesToYaml(module.resources);
+      module.modules?.forEach((child) => {
+        content = content + this.combineResources(child);
+      });
+    }
     return content;
   }
 

@@ -6,7 +6,8 @@
       "executor": "@jscutlery/semver:version",
       "defaultConfiguration": "patch",
       "options": {
-        "syncVersions": true
+        "syncVersions": true,
+        "skipProjectChangelog": true
       },
       "configurations": {
         "patch": {

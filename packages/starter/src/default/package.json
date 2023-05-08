@@ -12,8 +12,8 @@
   ],
   "scripts": {
     "clean": "pintle clean",
-    "run": "pintle run src/main.ts",
-    "refresh": "pintle clean && pintle run src/main.ts",
+    "patch": "pintle patch",
+    "put": "pintle put",
     "format": "prettier --write ..",
     "lint": "eslint --fix ..",
     "test": "jest"

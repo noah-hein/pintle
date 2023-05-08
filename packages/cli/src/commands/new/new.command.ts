@@ -80,15 +80,20 @@ export class NewCommand extends Command {
       const filename = file.replace(root, "");
       const content = fs.readFileSync(file, "utf-8");
       const projectFilename = path.join(this.options.name, filename);
-      const filePath = path.resolve(discovered.workDir, projectFilename);
-
-      //Inject data into templates and create files
-      const renderedContent = ejs.render(content, this.options);
-      fse.outputFile(filePath, renderedContent, callback);
+      let filePath = path.resolve(discovered.workDir, projectFilename);
 
       //Display file name
       const shortenedFileName = file.split("starter\\src\\default\\")[1];
       console.log(chalk.greenBright("GENERATE") + " " + shortenedFileName);
+
+      //Check for git ignore
+      if (shortenedFileName === ".gitignore-temp") {
+        filePath = filePath.replace(".gitignore-temp", ".gitignore");
+      }
+
+      //Inject data into templates and create files
+      const renderedContent = ejs.render(content, this.options);
+      fse.outputFile(filePath, renderedContent, callback);
     });
   }
 }

@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
-import { defaultPintleConfig, PintleConfig } from "./pintle.config";
+import { defaultPintleConfig, findConfig, PintleConfig } from "./pintle.config";
 import { File, Folder } from "./folder";
 import { FsUtil } from "./util";
 import {Module, Modules} from "./module";
@@ -35,9 +35,10 @@ export class Pintle {
         Public Methods
     ==================================================================================================================*/
 
-  public static create(modules?: Modules): Pintle {
+  public static async create(modules?: Modules) {
     modules = modules || [];
-    return new Pintle(defaultPintleConfig, modules);
+    const config = await findConfig();
+    new Pintle(config, modules);
   }
 
   /*==================================================================================================================

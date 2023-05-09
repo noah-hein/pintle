@@ -17,6 +17,14 @@ import { discovered } from "../../discover";
 export class NewCommand extends Command {
   private options: NewCommandOptions;
 
+  private readonly dependencies: string[] = [
+    "@pintle/core",
+    "@pintle/cli",
+    "@pintle/templates",
+    "@kubernetes/client-node",
+    ""
+  ];
+
   constructor(options: NewCommandOptions) {
     super();
     this.options = options;
@@ -39,10 +47,9 @@ export class NewCommand extends Command {
     const packageManager = options.packageManager;
     const projectName = options.name;
     if (packageManager === PackageManagers.NPM) {
-      this.installDependency(projectName, "@pintle/core");
-      this.installDependency(projectName, "@pintle/cli");
-      this.installDependency(projectName, "@pintle/templates");
-      this.installDependency(projectName, "");
+      this.dependencies.forEach(dependency => {
+        this.installDependency(projectName, dependency);
+      });
     }
   }
 
